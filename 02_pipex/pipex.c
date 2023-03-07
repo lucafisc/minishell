@@ -6,12 +6,16 @@
 /*   By: tfregni <tfregni@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/29 12:55:28 by tfregni           #+#    #+#             */
-/*   Updated: 2023/02/01 21:20:02 by tfregni          ###   ########.fr       */
+/*   Updated: 2023/03/07 19:27:14 by tfregni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
+/*
+Question mark...?
+Maybe closing the stuff the child doesn't need?
+*/
 void	close_fd(t_pipe *p)
 {
 	int	i;
