@@ -6,7 +6,7 @@
 /*   By: lde-ross <lde-ross@student.42berlin.de     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 16:02:25 by tfregni           #+#    #+#             */
-/*   Updated: 2023/03/28 12:28:08 by lde-ross         ###   ########.fr       */
+/*   Updated: 2023/03/28 12:37:24 by lde-ross         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,15 @@
 # include <readline/history.h>
 # include "./libft/libft.h"
 
-enum Token{
+enum Token {
 	S_QUOTE = '\'',
 	D_QUOTE = '\"',
+};
+
+enum {
+	IN_NORMAL,
+	IN_S_QUOTE,
+	IN_D_QUOTE,
 };
 
 typedef struct s_shell

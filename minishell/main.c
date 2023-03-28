@@ -6,7 +6,7 @@
 /*   By: lde-ross <lde-ross@student.42berlin.de     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 15:41:38 by tfregni           #+#    #+#             */
-/*   Updated: 2023/03/28 12:30:11 by lde-ross         ###   ########.fr       */
+/*   Updated: 2023/03/28 12:39:09 by lde-ross         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,9 @@
 void	lexer(char *str)
 {
 	int	i;
+	int state;
 
+	state = IN_NORMAL;
 	i = 0;
 	while (str[i])
 	{
