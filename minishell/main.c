@@ -6,29 +6,28 @@
 /*   By: lde-ross <lde-ross@student.42berlin.de     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 15:41:38 by tfregni           #+#    #+#             */
-/*   Updated: 2023/03/28 12:39:09 by lde-ross         ###   ########.fr       */
+/*   Updated: 2023/03/28 14:42:05 by lde-ross         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	lexer(char *str)
-{
-	int	i;
-	int state;
+// void	lexer(char *str)
+// {
+// 	int	i;
+// 	int state;
 
-	state = IN_NORMAL;
-	i = 0;
-	while (str[i])
-	{
-		if (str[i] == S_QUOTE)
-			printf("found S_QUOTE\n");
-		else if (str[i] == D_QUOTE)
-			printf("found D_QUOTE\n");
-		i++;
-	}
-	
-}
+// 	state = IN_NORMAL;
+// 	i = 0;
+// 	while (str[i])
+// 	{
+// 		if (str[i] == S_QUOTE)
+// 			printf("found S_QUOTE\n");
+// 		else if (str[i] == D_QUOTE)
+// 			printf("found D_QUOTE\n");
+// 		i++;
+// 	}
+// }
 
 void	get_prompt(void)
 {
@@ -39,6 +38,7 @@ void	get_prompt(void)
 	{
 		cmd = readline("> ");
 		add_history(cmd);
+		printf("here main\n");
 		lexer(cmd);
 		free(cmd);
 	}
@@ -79,6 +79,7 @@ int	main(int ac, char *av[], char *env[])
 	shell = init(env);
 	if (!shell)
 		return (throw_err());
+	// init_signals();
 	get_prompt();
 	free_shell(shell);
 }
