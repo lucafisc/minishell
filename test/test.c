@@ -1,32 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.h                                        :+:      :+:    :+:   */
+/*   test.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lde-ross <lde-ross@student.42berlin.de     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/03/27 16:02:25 by tfregni           #+#    #+#             */
-/*   Updated: 2023/03/28 12:28:08 by lde-ross         ###   ########.fr       */
+/*   Created: 2023/03/21 19:24:00 by lde-ross          #+#    #+#             */
+/*   Updated: 2023/03/21 19:26:25 by lde-ross         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINISHELL_H
-# define MINISHELL_H
+#include <stdio.h>
+#include <unistd.h>
 
-# include <stdio.h>
-# include <stdlib.h>
-# include <readline/readline.h>
-# include <readline/history.h>
-# include "./libft/libft.h"
-
-enum Token{
-	S_QUOTE = '\'',
-	D_QUOTE = '\"',
-};
-
-typedef struct s_shell
+int main(int ac __attribute__((unused)), char *av[] __attribute__((unused)))
 {
-	char	**env;
-	char	**path;
-}				t_shell;
-#endif
+	int	int_mode = 1;
+	while (int_mode)
+	{
+		int_mode = isatty(0);
+		if (int_mode == 1)
+		{
+			write(1, "~$", 13);
+		}
+		/* The code continues below */
+	}
+}

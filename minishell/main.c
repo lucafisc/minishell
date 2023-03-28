@@ -3,26 +3,41 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tfregni <tfregni@student.42berlin.de>      +#+  +:+       +#+        */
+/*   By: lde-ross <lde-ross@student.42berlin.de     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 15:41:38 by tfregni           #+#    #+#             */
-/*   Updated: 2023/03/27 17:19:27 by tfregni          ###   ########.fr       */
+/*   Updated: 2023/03/28 12:30:11 by lde-ross         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+void	lexer(char *str)
+{
+	int	i;
+
+	i = 0;
+	while (str[i])
+	{
+		if (str[i] == S_QUOTE)
+			printf("found S_QUOTE\n");
+		else if (str[i] == D_QUOTE)
+			printf("found D_QUOTE\n");
+		i++;
+	}
+	
+}
+
 void	get_prompt(void)
 {
 	char	*cmd;
-	int i = 2;
+	int	i = 2;
 
 	while (i-- > 0)
 	{
-		cmd = readline("minishell://");
+		cmd = readline("> ");
 		add_history(cmd);
-
-		printf("%s", cmd);
+		lexer(cmd);
 		free(cmd);
 	}
 }
@@ -42,7 +57,7 @@ t_shell	*init(char *env[])
 		return (NULL);
 	shell->env = env;
 	shell->path = ft_split(getenv("PATH"), ':');
-	ft_print_strarr(shell->path);
+	//ft_print_strarr(shell->path);
 	return (shell);
 }
 
