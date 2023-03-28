@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tfregni <tfregni@student.42berlin.de>      +#+  +:+       +#+        */
+/*   By: lde-ross <lde-ross@student.42berlin.de     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/28 14:12:19 by lde-ross          #+#    #+#             */
-/*   Updated: 2023/03/28 17:07:35 by tfregni          ###   ########.fr       */
+/*   Updated: 2023/03/28 18:17:20 by lde-ross         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,3 +61,45 @@ t_lexer	*lexer(char *fmt)
 	}
 	return (first);
 }
+
+char	*ft_joinnfree(char *existing, char new)
+{
+	size_t	i;
+	size_t	j;
+	char	*new_str;
+
+	if (!existing)
+		existing = ft_calloc(1, sizeof(char));
+	if (!new)
+		return (NULL);
+	new_str = ft_calloc((ft_strlen(existing) + 1 + 1), sizeof(char));
+	if (new_str == NULL)
+		return (NULL);
+	i = -1;
+	j = 0;
+	while (existing[++i])
+		new_str[i] = existing[i];
+	new_str[i] = new;
+	free(existing);
+	return (new_str);
+}
+
+// t_lexer	*lexer(char *fmt)
+// {
+// 	t_lexer	*first;
+// 	int	i;
+
+// 	first = ft_dbllstnew(NULL, 0);
+// 	i = 0;
+// 	while (fmt[i])
+// 	{
+// 		if (fmt[i] == '|')
+// 		{
+// 			ft_dbllst_addback(first, ft_dbllstnew(NULL, 0));
+// 			first = first->next;
+// 		}
+// 		else
+// 			first->data = ft_joinnfree(first->data, fmt[i]);
+// 		i++;
+// 	}
+// }
