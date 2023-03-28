@@ -1,35 +1,37 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   lexer.c                                            :+:      :+:    :+:   */
+/*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tfregni <tfregni@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/03/28 14:12:19 by lde-ross          #+#    #+#             */
-/*   Updated: 2023/03/28 17:07:35 by tfregni          ###   ########.fr       */
+/*   Created: 2023/03/28 16:31:54 by tfregni           #+#    #+#             */
+/*   Updated: 2023/03/28 17:10:34 by tfregni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-t_lexer	*ft_dbllstnew(char *data, int info)
+/* returns a node, the cmd list is already allocated and 0-term */
+t_command	*ft_dbllstnew(int len)
 {
-	t_lexer	*new;
+	t_command	*new;
 
 	new = malloc(sizeof(*new));
 	if (!new)
 		return (NULL);
-	new->data = ft_strdup(data);
-	new->info = info;
-	new->pipe = 0;
+	new->cmd = malloc(sizeof(*new->cmd) * (len + 1));
+	if (!new->cmd)
+		return (NULL);
+	new->cmd[len] = NULL;
 	new->prev = NULL;
 	new->next = NULL;
 	return (new);
 }
 
-void	ft_dbllst_addback(t_lexer **list, t_lexer *new)
+void	ft_dbllst_addback(t_command **list, t_command *new)
 {
-	t_lexer	*cur;
+	t_command	*cur;
 
 	if (!new)
 		return ;
@@ -41,23 +43,20 @@ void	ft_dbllst_addback(t_lexer **list, t_lexer *new)
 	new->next = NULL;
 }
 
-t_lexer	*lexer(char *fmt)
+t_command	*parser(t_lexer *lexer)
 {
-	t_lexer	*first;
-	char	**raw_tokens;
-	int		i;
+	int	len;
 
-	i = 0;
-	raw_tokens = ft_split(fmt, ' ');
-	first = ft_dbllstnew(raw_tokens[i], i);
-	while (raw_tokens[++i])
+	while (lexer)
 	{
-		ft_dbllst_addback(&first, ft_dbllstnew(raw_tokens[i], i));
+		len = 0;
+		/* inner loop to check for the pipe */
+		while (!lexer->pipe && lexer)
+		{
+
+			len++;
+			lexer = lexer->next;
+		}
+		lexer = lexer->next;
 	}
-	while (first)
-	{
-		printf("%d - %s\n", first->info, first->data);
-		first = first->next;
-	}
-	return (first);
 }

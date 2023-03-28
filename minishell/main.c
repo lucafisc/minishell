@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lde-ross <lde-ross@student.42berlin.de     +#+  +:+       +#+        */
+/*   By: tfregni <tfregni@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 15:41:38 by tfregni           #+#    #+#             */
-/*   Updated: 2023/03/28 14:42:05 by lde-ross         ###   ########.fr       */
+/*   Updated: 2023/03/28 16:50:43 by tfregni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,9 +32,8 @@
 void	get_prompt(void)
 {
 	char	*cmd;
-	int	i = 2;
 
-	while (i-- > 0)
+	while (1)
 	{
 		cmd = readline("> ");
 		add_history(cmd);
@@ -67,6 +66,8 @@ void	free_shell(t_shell *shell)
 {
 	ft_free_str_arr(shell->path);
 	rl_clear_history();
+	/* free(shell->lexer)*/
+	/* free(shell->parser)*/
 	free(shell);
 }
 

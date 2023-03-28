@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lde-ross <lde-ross@student.42berlin.de     +#+  +:+       +#+        */
+/*   By: tfregni <tfregni@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 16:02:25 by tfregni           #+#    #+#             */
-/*   Updated: 2023/03/28 14:37:55 by lde-ross         ###   ########.fr       */
+/*   Updated: 2023/03/28 16:49:56 by tfregni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,9 @@
 # include <signal.h>
 # include "./libft/libft.h"
 # include "lexer.h"
+# include "parser.h"
 
-enum Token {
+enum e_token {
 	S_QUOTE = '\'',
 	D_QUOTE = '\"',
 };
@@ -36,9 +37,11 @@ enum {
 
 typedef struct s_shell
 {
-	char	**env;
-	char	**path;
+	char		**env;
+	char		**path;
+	t_lexer		*lexer;
+	t_command	*cmd;
 }				t_shell;
 
-t_lexer	**lexer(char *fmt);
+t_lexer	*lexer(char *fmt);
 #endif

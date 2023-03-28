@@ -1,24 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   lexer.h                                            :+:      :+:    :+:   */
+/*   parser.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tfregni <tfregni@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/03/28 14:12:53 by lde-ross          #+#    #+#             */
-/*   Updated: 2023/03/28 16:59:37 by tfregni          ###   ########.fr       */
+/*   Created: 2023/03/28 16:28:27 by tfregni           #+#    #+#             */
+/*   Updated: 2023/03/28 16:30:58 by tfregni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef LEXER_H
-# define LEXER_H
+#ifndef PARSER_H
+# define PARSER_H
 
-typedef struct s_lexer
+typedef struct s_command
 {
-	char			*data;
-	int				info;
-	int				pipe;
-	struct s_lexer	*next;
-	struct s_lexer	*prev;
-}				t_lexer;
+	char		**cmd;
+	t_command	*next;
+	t_command	*prev;
+}				t_command;
 #endif
