@@ -1,17 +1,40 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   builtins.c                                         :+:      :+:    :+:   */
+/*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lde-ross <lde-ross@student.42berlin.de     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/29 15:19:22 by tfregni           #+#    #+#             */
-/*   Updated: 2023/03/29 18:53:22 by lde-ross         ###   ########.fr       */
+/*   Updated: 2023/03/29 19:19:11 by lde-ross         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../minishell.h"
 
+void ft_changeenv(char **env)
+{
+	while (*env)
+	{
+		if (!ft_strncmp(*env, "arg", 3))
+		{
+			char new_arg[] = "arg=changed";
+			*env = new_arg;
+		}
+		env++;
+	}
+}
+
+void	ft_mispoint(char ***env)
+{
+	char	**new;
+
+	new = malloc(sizeof(*new) * 3);
+	new[0] = ft_strdup("hello");
+	new[1] = ft_strdup("world");
+	new[2] = NULL;
+	*env = new;
+}
 char **matrix_dup(char **matrix)
 {
 	int		len;
@@ -54,27 +77,10 @@ char **matrix_append(char **matrix, char *var)
 	return (new);	
 }
 
-void	ft_pwd(void)
-{
-	printf("%s\n", getenv("PWD"));
-}
-
-void	ft_env(char **env)
-{
-	while (*env)
-	{
-		printf("%s\n", *env);
-		env++;
-	}
-}
-
-
-
 int	search_array(char **env, char *var)
 {
 	int		i;
 	int		len_eq;
-	char	eq[] = "=";
 
 	i = 0;
 	len_eq = 0;
@@ -91,19 +97,6 @@ int	search_array(char **env, char *var)
 	return (-1);
 }
 
-void	ft_export_replace(char **env, char *var, int index)
-{
-	free(env[index]);
-	env[index] = ft_strdup(var);
-}
-
-void	ft_export_append(char ***env, char *var)
-{
-	char **new_env;
-
-	new_env = matrix_append(*env, var);
-	*env = new_env;	
-}
 
 t_bool is_export_valid(char *var)
 {
@@ -118,9 +111,22 @@ t_bool is_export_valid(char *var)
 	return (true);
 }
 
+void	ft_export_replace(char **env, char *var, int index)
+{
+	free(env[index]);
+	env[index] = ft_strdup(var);
+}
+
+void	ft_export_append(char ***env, char *var)
+{
+	char **new_env;
+
+	new_env = matrix_append(*env, var);
+	*env = new_env;	
+}
+
 void	ft_export(char ***env, char *var)
 {
-	//char	**new_env;
 	int		var_index;
 
 	if (!is_export_valid(var))
@@ -133,29 +139,6 @@ void	ft_export(char ***env, char *var)
 		ft_export_append(env, var);
 }
 
-void ft_changeenv(char **env)
-{
-	while (*env)
-	{
-		if (!ft_strncmp(*env, "arg", 3))
-		{
-			char new_arg[] = "arg=changed";
-			*env = new_arg;
-		}
-		env++;
-	}
-}
-
-void	ft_mispoint(char ***env)
-{
-	char	**new;
-
-	new = malloc(sizeof(*new) * 3);
-	new[0] = ft_strdup("hello");
-	new[1] = ft_strdup("world");
-	new[2] = NULL;
-	*env = new;
-}
 
 int	main(int ac, char **av, char **environ)
 {
@@ -172,7 +155,7 @@ int	main(int ac, char **av, char **environ)
 
 	// char **new_env;
 	// new_env = matrix_dup(environ);
-	ft_export(&environ, "HELLO=hi");
+	ft_export(&environ, "SPACESHIP_VERSION=hi");
 	ft_print_strarr(environ);
 	// ft_env(environ);
 	
