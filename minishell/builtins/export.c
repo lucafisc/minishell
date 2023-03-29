@@ -6,7 +6,7 @@
 /*   By: lde-ross <lde-ross@student.42berlin.de     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/29 15:19:22 by tfregni           #+#    #+#             */
-/*   Updated: 2023/03/29 19:43:03 by lde-ross         ###   ########.fr       */
+/*   Updated: 2023/03/29 20:09:59 by lde-ross         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,45 +35,45 @@ void	ft_mispoint(char ***env)
 	new[2] = NULL;
 	*env = new;
 }
-char **matrix_dup(char **matrix)
+char **env_dup(char **env)
 {
 	int		len;
 	char	**new;
 	int		i;
 
-	len = ft_arrlen(matrix);
+	len = ft_arrlen(env);
 	new = malloc(sizeof(char *) * (len + 1));
 	if (!new)
 		return (NULL);
 	i = 0;
 	new[len] = NULL;
-	while (matrix[i])
+	while (env[i])
 	{
-		new[i] = ft_strdup(matrix[i]);
+		new[i] = ft_strdup(env[i]);
 		i++;
 	}
 	return (new);	
 }
 
-char **matrix_append(char **matrix, char *var)
+char **env_append(char **env, char *var)
 {
 	int		len;
 	char	**new;
 	int		i;
 
-	len = ft_arrlen(matrix);
+	len = ft_arrlen(env);
 	new = malloc(sizeof(char *) * (len + 2));
 	if (!new)
 		return (NULL);
 	i = 0;
-	while (matrix[i])
+	while (env[i])
 	{
-		new[i] = ft_strdup(matrix[i]);
+		new[i] = ft_strdup(env[i]);
 		i++;
 	}
 	new[len] = ft_strdup(var);
 	new[len + 1] = NULL;
-	ft_free_str_arr(matrix);
+	ft_free_str_arr(env);
 	return (new);	
 }
 
@@ -121,7 +121,7 @@ void	ft_export_append(char ***env, char *var)
 {
 	char **new_env;
 
-	new_env = matrix_append(*env, var);
+	new_env = env_append(*env, var);
 	*env = new_env;	
 	//ft_print_strarr(new_env);
 
@@ -146,7 +146,7 @@ int	main(int ac, char **av, char **environ)
 	(void) ac;
 	(void) av;
 
-	environ = matrix_dup(environ);
+	environ = env_dup(environ);
 	// ft_pwd();
 	// ft_env(environ);
 	// ft_changeenv(environ);
@@ -155,7 +155,7 @@ int	main(int ac, char **av, char **environ)
 	// ft_mispoint(&environ);
 
 	// char **new_env;
-	// new_env = matrix_dup(environ);
+	// new_env = env_dup(environ);
 	ft_export(&environ, "HELLOOOOO=hi");
 	ft_print_strarr(environ);
 	ft_free_str_arr(environ);
