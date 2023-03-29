@@ -6,13 +6,15 @@
 /*   By: lde-ross <lde-ross@student.42berlin.de     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/29 19:48:25 by lde-ross          #+#    #+#             */
-/*   Updated: 2023/03/29 20:17:13 by lde-ross         ###   ########.fr       */
+/*   Updated: 2023/03/29 20:20:28 by lde-ross         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-char **env_dup(char **env)
+//env_dup is also inside unset.c
+// duplicated here for testing purposes.
+char	**env_dup(char **env)
 {
 	int		len;
 	char	**new;
@@ -29,11 +31,10 @@ char **env_dup(char **env)
 		new[i] = ft_strdup(env[i]);
 		i++;
 	}
-	return (new);	
+	return (new);
 }
 
-
-char **env_remove(char **env, int index)
+char	**env_remove(char **env, int index)
 {
 	int		len;
 	char	**new;
@@ -57,18 +58,18 @@ char **env_remove(char **env, int index)
 	}
 	new[len] = NULL;
 	ft_free_str_arr(env);
-	return (new);	
+	return (new);
 }
 
 void	ft_unset_remove(char ***env, int index)
 {
-	char **new_env;
+	char	**new_env;
 
 	new_env = env_remove(*env, index);
-	*env = new_env;	
+	*env = new_env;
 }
 
-int arg_index(char **env, char *var)
+int	arg_index(char **env, char *var)
 {
 	int	i;
 	int	len;
@@ -94,12 +95,10 @@ void	ft_unset(char ***env, char *var)
 	return ;
 }
 
-
 int	main(int ac, char **av, char **environ)
 {
 	(void) ac;
 	(void) av;
-
 	environ = env_dup(environ);
 	ft_unset(&environ, "TERM_PROGRAM");
 	ft_print_strarr(environ);
