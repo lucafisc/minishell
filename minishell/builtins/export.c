@@ -6,7 +6,7 @@
 /*   By: lde-ross <lde-ross@student.42berlin.de     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/29 15:19:22 by tfregni           #+#    #+#             */
-/*   Updated: 2023/03/29 19:19:11 by lde-ross         ###   ########.fr       */
+/*   Updated: 2023/03/29 19:43:03 by lde-ross         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ char **matrix_append(char **matrix, char *var)
 		new[i] = ft_strdup(matrix[i]);
 		i++;
 	}
-	matrix[i] = ft_strdup(var);
+	new[len] = ft_strdup(var);
 	new[len + 1] = NULL;
 	ft_free_str_arr(matrix);
 	return (new);	
@@ -123,6 +123,8 @@ void	ft_export_append(char ***env, char *var)
 
 	new_env = matrix_append(*env, var);
 	*env = new_env;	
+	//ft_print_strarr(new_env);
+
 }
 
 void	ft_export(char ***env, char *var)
@@ -132,7 +134,6 @@ void	ft_export(char ***env, char *var)
 	if (!is_export_valid(var))
 		return ;
 	var_index = search_array(*env, var);
-	printf("%d \n", var_index);
 	if (var_index >= 0)
 		ft_export_replace(*env, var, var_index);
 	else
@@ -155,10 +156,7 @@ int	main(int ac, char **av, char **environ)
 
 	// char **new_env;
 	// new_env = matrix_dup(environ);
-	ft_export(&environ, "SPACESHIP_VERSION=hi");
+	ft_export(&environ, "HELLOOOOO=hi");
 	ft_print_strarr(environ);
-	// ft_env(environ);
-	
 	ft_free_str_arr(environ);
-
 }
