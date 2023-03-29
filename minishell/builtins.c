@@ -3,54 +3,55 @@
 /*                                                        :::      ::::::::   */
 /*   builtins.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tfregni <tfregni@student.42berlin.de>      +#+  +:+       +#+        */
+/*   By: lde-ross <lde-ross@student.42berlin.de     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/29 15:19:22 by tfregni           #+#    #+#             */
-/*   Updated: 2023/03/29 15:57:53 by tfregni          ###   ########.fr       */
+/*   Updated: 2023/03/29 18:53:22 by lde-ross         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-size_t	ft_strlen(const char *str)
+char **matrix_dup(char **matrix)
 {
-	int	i;
+	int		len;
+	char	**new;
+	int		i;
 
+	len = ft_arrlen(matrix);
+	new = malloc(sizeof(char *) * (len + 1));
+	if (!new)
+		return (NULL);
 	i = 0;
-	while (str && str[i])
-		i++;
-	return (i);
-}
-
-size_t	ft_strlcpy(char *dst, const char *src, size_t dstsize)
-{
-	size_t	i;
-
-	i = 0;
-	if (dstsize == 0)
-		return (ft_strlen(src));
-	while (i < dstsize - 1 && src[i])
+	new[len] = NULL;
+	while (matrix[i])
 	{
-		dst[i] = src[i];
+		new[i] = ft_strdup(matrix[i]);
 		i++;
 	}
-	dst[i] = '\0';
-	while (src[i])
-		i++;
-	return (i);
+	return (new);	
 }
 
-int	ft_strncmp(const char *s1, const char *s2, size_t n)
+char **matrix_append(char **matrix, char *var)
 {
-	if (n == 0)
-		return (0);
-	while (*s1 && (*s1 == *s2) && n - 1 > 0)
+	int		len;
+	char	**new;
+	int		i;
+
+	len = ft_arrlen(matrix);
+	new = malloc(sizeof(char *) * (len + 2));
+	if (!new)
+		return (NULL);
+	i = 0;
+	while (matrix[i])
 	{
-		s1++;
-		s2++;
-		n--;
+		new[i] = ft_strdup(matrix[i]);
+		i++;
 	}
-	return ((unsigned char)*s1 - (unsigned char)*s2);
+	matrix[i] = ft_strdup(var);
+	new[len + 1] = NULL;
+	ft_free_str_arr(matrix);
+	return (new);	
 }
 
 void	ft_pwd(void)
@@ -67,17 +68,69 @@ void	ft_env(char **env)
 	}
 }
 
-void	ft_export(char **env, char *var)
+
+
+int	search_array(char **env, char *var)
 {
-	int		len;
-	char 	**new_env;
+	int		i;
+	int		len_eq;
+	char	eq[] = "=";
 
-	len = 0;
-	while (env[len])
+	i = 0;
+	len_eq = 0;
+	while (var[len_eq] && var[len_eq] != '=')
 	{
-		len++;
+		len_eq++;
 	}
+	while (env[i])
+	{
+		if (!ft_strncmp(env[i], var, len_eq))
+			return (i);
+		i++;
+	}
+	return (-1);
+}
 
+void	ft_export_replace(char **env, char *var, int index)
+{
+	free(env[index]);
+	env[index] = ft_strdup(var);
+}
+
+void	ft_export_append(char ***env, char *var)
+{
+	char **new_env;
+
+	new_env = matrix_append(*env, var);
+	*env = new_env;	
+}
+
+t_bool is_export_valid(char *var)
+{
+	while (*var && *var != '=')
+	{
+		if (ft_is_space(*var))
+			return (false);
+		var++;
+	}
+	if (!*var)
+		return (false);
+	return (true);
+}
+
+void	ft_export(char ***env, char *var)
+{
+	//char	**new_env;
+	int		var_index;
+
+	if (!is_export_valid(var))
+		return ;
+	var_index = search_array(*env, var);
+	printf("%d \n", var_index);
+	if (var_index >= 0)
+		ft_export_replace(*env, var, var_index);
+	else
+		ft_export_append(env, var);
 }
 
 void ft_changeenv(char **env)
@@ -108,11 +161,21 @@ int	main(int ac, char **av, char **environ)
 {
 	(void) ac;
 	(void) av;
+
+	environ = matrix_dup(environ);
 	// ft_pwd();
-	ft_env(environ);
+	// ft_env(environ);
 	// ft_changeenv(environ);
 	// printf("------------------------\n");
 	// ft_env(environ);
-	ft_mispoint(&environ);
-	ft_env(environ);
+	// ft_mispoint(&environ);
+
+	// char **new_env;
+	// new_env = matrix_dup(environ);
+	ft_export(&environ, "HELLO=hi");
+	ft_print_strarr(environ);
+	// ft_env(environ);
+	
+	ft_free_str_arr(environ);
+
 }

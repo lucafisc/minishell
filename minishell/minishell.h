@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tfregni <tfregni@student.42berlin.de>      +#+  +:+       +#+        */
+/*   By: lde-ross <lde-ross@student.42berlin.de     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 16:02:25 by tfregni           #+#    #+#             */
-/*   Updated: 2023/03/28 16:49:56 by tfregni          ###   ########.fr       */
+/*   Updated: 2023/03/29 16:30:17 by lde-ross         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,12 @@
 # include "./libft/libft.h"
 # include "lexer.h"
 # include "parser.h"
+
+typedef enum s_bool
+{
+	false,
+	true
+}	t_bool;
 
 enum e_token {
 	S_QUOTE = '\'',

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tfregni <tfregni@student.42berlin.de>      +#+  +:+       +#+        */
+/*   By: lde-ross <lde-ross@student.42berlin.de     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 15:41:38 by tfregni           #+#    #+#             */
-/*   Updated: 2023/03/28 16:50:43 by tfregni          ###   ########.fr       */
+/*   Updated: 2023/03/29 16:47:23 by lde-ross         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,14 +49,35 @@ int	throw_err()
 	return (1);
 }
 
-t_shell	*init(char *env[])
+char **matrix_dup(char **matrix, int extra)
+{
+	int		len;
+	char	**new;
+	int		i;
+
+	len = ft_arrlen(matrix);
+	new = malloc(sizeof(char *) * (len + 1 + extra));
+	if (!new)
+		return (NULL);
+	i = 0;
+	new[len] = NULL;
+	while (matrix[i])
+	{
+		new[i] = ft_strdup(matrix[i]);
+		i++;
+	}
+	return (new);	
+}
+
+t_shell	*init(char ***env)
 {
 	t_shell	*shell;
 
 	shell = malloc(sizeof(t_shell));
 	if (!shell)
 		return (NULL);
-	shell->env = env;
+	shell->env = matrix_dup(env, 0);
+	*env = shell->env;
 	shell->path = ft_split(getenv("PATH"), ':');
 	//ft_print_strarr(shell->path);
 	return (shell);
@@ -77,7 +98,7 @@ int	main(int ac, char *av[], char *env[])
 
 	(void) ac;
 	(void) av;
-	shell = init(env);
+	shell = init(&env);
 	if (!shell)
 		return (throw_err());
 	// init_signals();
