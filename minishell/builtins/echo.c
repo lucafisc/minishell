@@ -6,7 +6,7 @@
 /*   By: tfregni <tfregni@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/30 15:46:57 by lde-ross          #+#    #+#             */
-/*   Updated: 2023/03/30 17:54:28 by tfregni          ###   ########.fr       */
+/*   Updated: 2023/03/30 18:01:46 by tfregni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,9 +49,9 @@ void	ft_echo(char **args)
 		printf("\n");
 }
 
-int	main(void)
+int	main(int ac, char **av)
 {
-	char **my_args = ft_split("", ' ');
+	char **my_args = ft_split("-n hello", ' ');
 	// ft_print_strarr(my_args);
 	ft_echo(my_args);
 }

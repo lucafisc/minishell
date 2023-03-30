@@ -6,7 +6,7 @@
 /*   By: tfregni <tfregni@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/29 15:19:22 by tfregni           #+#    #+#             */
-/*   Updated: 2023/03/30 13:36:48 by tfregni          ###   ########.fr       */
+/*   Updated: 2023/03/30 18:38:26 by tfregni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,12 +104,11 @@ int	search_array(char **env, char *var)
 	return (-1);
 }
 
-
 t_bool	is_export_valid(char *var)
 {
 	while (*var && *var != '=')
 	{
-		if (ft_is_space(*var))
+		if (ft_isdigit(var[0]) || ft_is_space(*var) || !ft_isalnum(*var))
 			return (false);
 		var++;
 	}
@@ -165,23 +164,23 @@ char	*ft_getenv(char **env, char *key)
 	return (NULL);
 }
 
-int	main(int ac, char **av, char **environ)
-{
-	(void) ac;
-	(void) av;
+// int	main(int ac, char **av, char **environ)
+// {
+// 	(void) ac;
+// 	(void) av;
 
-	environ = env_dup(environ);
-	// ft_pwd();
-	// ft_env(environ);
-	// ft_changeenv(environ);
-	// printf("------------------------\n");
-	// ft_env(environ);
-	// ft_mispoint(&environ);
-	// char **new_env;
-	// new_env = env_dup(environ);
-	ft_export(&environ, "HELLOOOOO=hi");
-	ft_print_strarr(environ);
-	printf("%s\n", getenv("HELLOOOOO"));
-	printf("%s\n", ft_getenv(environ, "HELLOOOOO"));
-	ft_free_str_arr(environ);
-}
+// 	environ = env_dup(environ);
+// 	// ft_pwd();
+// 	// ft_env(environ);
+// 	// ft_changeenv(environ);
+// 	// printf("------------------------\n");
+// 	// ft_env(environ);
+// 	// ft_mispoint(&environ);
+// 	// char **new_env;
+// 	// new_env = env_dup(environ);
+// 	ft_export(&environ, "HELLOOOOO=hi");
+// 	ft_print_strarr(environ);
+// 	printf("%s\n", getenv("HELLOOOOO"));
+// 	printf("%s\n", ft_getenv(environ, "HELLOOOOO"));
+// 	ft_free_str_arr(environ);
+// }
