@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lde-ross <lde-ross@student.42berlin.de     +#+  +:+       +#+        */
+/*   By: tfregni <tfregni@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 15:41:38 by tfregni           #+#    #+#             */
-/*   Updated: 2023/03/29 16:47:23 by lde-ross         ###   ########.fr       */
+/*   Updated: 2023/03/30 10:53:58 by tfregni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@ void	get_prompt(void)
 	}
 }
 
+/* Alternative version in builtins/cd.c */
 int	throw_err()
 {
 	write(2, "Error\n", 6);
@@ -66,7 +67,7 @@ char **matrix_dup(char **matrix, int extra)
 		new[i] = ft_strdup(matrix[i]);
 		i++;
 	}
-	return (new);	
+	return (new);
 }
 
 t_shell	*init(char ***env)

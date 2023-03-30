@@ -3,15 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lde-ross <lde-ross@student.42berlin.de     +#+  +:+       +#+        */
+/*   By: tfregni <tfregni@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/29 15:19:22 by tfregni           #+#    #+#             */
-/*   Updated: 2023/03/29 20:09:59 by lde-ross         ###   ########.fr       */
+/*   Updated: 2023/03/30 12:07:59 by tfregni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
+/* test function to modify the environment */
 void ft_changeenv(char **env)
 {
 	while (*env)
@@ -25,6 +26,8 @@ void ft_changeenv(char **env)
 	}
 }
 
+/* test function to make the original env matrix
+pointing to a newly allocated one */
 void	ft_mispoint(char ***env)
 {
 	char	**new;
@@ -35,6 +38,8 @@ void	ft_mispoint(char ***env)
 	new[2] = NULL;
 	*env = new;
 }
+
+/* returns an allocated 0-terminated copy of the env */
 char **env_dup(char **env)
 {
 	int		len;
@@ -52,10 +57,12 @@ char **env_dup(char **env)
 		new[i] = ft_strdup(env[i]);
 		i++;
 	}
-	return (new);	
+	return (new);
 }
 
-char **env_append(char **env, char *var)
+/* given env matrix and a string, it appends the
+string a returns the new matrix */
+char	**env_append(char **env, char *var)
 {
 	int		len;
 	char	**new;
@@ -74,7 +81,7 @@ char **env_append(char **env, char *var)
 	new[len] = ft_strdup(var);
 	new[len + 1] = NULL;
 	ft_free_str_arr(env);
-	return (new);	
+	return (new);
 }
 
 int	search_array(char **env, char *var)
@@ -98,7 +105,7 @@ int	search_array(char **env, char *var)
 }
 
 
-t_bool is_export_valid(char *var)
+t_bool	is_export_valid(char *var)
 {
 	while (*var && *var != '=')
 	{
@@ -111,20 +118,19 @@ t_bool is_export_valid(char *var)
 	return (true);
 }
 
-void	ft_export_replace(char **env, char *var, int index)
+static void	ft_export_replace(char **env, char *var, int index)
 {
 	free(env[index]);
 	env[index] = ft_strdup(var);
 }
 
-void	ft_export_append(char ***env, char *var)
+static void	ft_export_append(char ***env, char *var)
 {
-	char **new_env;
+	char	**new_env;
 
 	new_env = env_append(*env, var);
-	*env = new_env;	
+	*env = new_env;
 	//ft_print_strarr(new_env);
-
 }
 
 void	ft_export(char ***env, char *var)
@@ -140,23 +146,21 @@ void	ft_export(char ***env, char *var)
 		ft_export_append(env, var);
 }
 
+// int	main(int ac, char **av, char **environ)
+// {
+// 	(void) ac;
+// 	(void) av;
 
-int	main(int ac, char **av, char **environ)
-{
-	(void) ac;
-	(void) av;
-
-	environ = env_dup(environ);
-	// ft_pwd();
-	// ft_env(environ);
-	// ft_changeenv(environ);
-	// printf("------------------------\n");
-	// ft_env(environ);
-	// ft_mispoint(&environ);
-
-	// char **new_env;
-	// new_env = env_dup(environ);
-	ft_export(&environ, "HELLOOOOO=hi");
-	ft_print_strarr(environ);
-	ft_free_str_arr(environ);
-}
+// 	environ = env_dup(environ);
+// 	// ft_pwd();
+// 	// ft_env(environ);
+// 	// ft_changeenv(environ);
+// 	// printf("------------------------\n");
+// 	// ft_env(environ);
+// 	// ft_mispoint(&environ);
+// 	// char **new_env;
+// 	// new_env = env_dup(environ);
+// 	ft_export(&environ, "HELLOOOOO=hi");
+// 	ft_print_strarr(environ);
+// 	ft_free_str_arr(environ);
+// }

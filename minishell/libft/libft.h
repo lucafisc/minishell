@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lde-ross <lde-ross@student.42berlin.de     +#+  +:+       +#+        */
+/*   By: tfregni <tfregni@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/30 17:35:35 by lde-ross          #+#    #+#             */
-/*   Updated: 2023/03/29 18:35:47 by lde-ross         ###   ########.fr       */
+/*   Updated: 2023/03/30 08:28:21 by tfregni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,5 +75,6 @@ int			ft_bintoi(int binary[]);
 void		ft_print_strarr(char **arr);
 void		ft_free_str_arr(char **arr);
 int			ft_arrlen(char **argv);
+char		*ft_strnjoin(ssize_t n, ...);
 
 #endif
