@@ -6,12 +6,13 @@
 /*   By: tfregni <tfregni@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/30 07:33:56 by tfregni           #+#    #+#             */
-/*   Updated: 2023/03/30 12:47:22 by tfregni          ###   ########.fr       */
+/*   Updated: 2023/03/30 17:44:05 by tfregni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 #include "export.c"
+#include "pwd_env.c"
 
 /* more elaborate version of throw error */
 int	throw_err(char *str, char *arg)
@@ -63,6 +64,9 @@ void	ft_cd(char *path, char ***env)
 	// case of ~/something -> expand ~ to HOME
 	else if (path[0] == '~')
 		dir = ft_strnjoin(2, getenv("HOME"), (path + 1));
+	// case normal
+	else
+		dir = ft_strdup(path);
 	if (chdir(dir) == -1)
 		throw_err("cd", dir);
 	/* Update environment: OLDPWD=old_dir, PWD=dir */
@@ -71,13 +75,14 @@ void	ft_cd(char *path, char ***env)
 	free(dir);
 }
 
-// int	main(int ac, char **av, char **env)
-// {
-// 	(void) ac;
-// 	(void) av;
-// 	env = env_dup(env);
-// 	ft_cd("~/bin", &env);
-// 	printf("PWD: %s\nOLDPWD: %s\n", getenv("PWD"), getenv("OLDPWD"));
-// 	ft_free_str_arr(env);
-// }
+int	main(int ac, char **av, char **env)
+{
+	(void) ac;
+	(void) av;
+	env = env_dup(env);
+	ft_cd("/bin", &env);
+	printf("PWD: %s\nOLDPWD: %s\n", ft_getenv(env, "PWD"), ft_getenv(env, "OLDPWD"));
+	ft_pwd();
+	ft_free_str_arr(env);
+}
 
