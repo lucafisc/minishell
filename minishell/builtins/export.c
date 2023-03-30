@@ -6,7 +6,7 @@
 /*   By: tfregni <tfregni@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/29 15:19:22 by tfregni           #+#    #+#             */
-/*   Updated: 2023/03/30 12:07:59 by tfregni          ###   ########.fr       */
+/*   Updated: 2023/03/30 13:36:48 by tfregni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -146,21 +146,42 @@ void	ft_export(char ***env, char *var)
 		ft_export_append(env, var);
 }
 
-// int	main(int ac, char **av, char **environ)
-// {
-// 	(void) ac;
-// 	(void) av;
+/* Didn't think about many edge cases... */
+char	*ft_getenv(char **env, char *key)
+{
+	int	len;
+	int	i;
 
-// 	environ = env_dup(environ);
-// 	// ft_pwd();
-// 	// ft_env(environ);
-// 	// ft_changeenv(environ);
-// 	// printf("------------------------\n");
-// 	// ft_env(environ);
-// 	// ft_mispoint(&environ);
-// 	// char **new_env;
-// 	// new_env = env_dup(environ);
-// 	ft_export(&environ, "HELLOOOOO=hi");
-// 	ft_print_strarr(environ);
-// 	ft_free_str_arr(environ);
-// }
+	if (!env)
+		return (NULL);
+	len = ft_strlen(key);
+	i = 0;
+	while (env[i])
+	{
+		if (!ft_strncmp(env[i], key, len) && env[i][len] == '=')
+			return (env[i] + len + 1);
+		i++;
+	}
+	return (NULL);
+}
+
+int	main(int ac, char **av, char **environ)
+{
+	(void) ac;
+	(void) av;
+
+	environ = env_dup(environ);
+	// ft_pwd();
+	// ft_env(environ);
+	// ft_changeenv(environ);
+	// printf("------------------------\n");
+	// ft_env(environ);
+	// ft_mispoint(&environ);
+	// char **new_env;
+	// new_env = env_dup(environ);
+	ft_export(&environ, "HELLOOOOO=hi");
+	ft_print_strarr(environ);
+	printf("%s\n", getenv("HELLOOOOO"));
+	printf("%s\n", ft_getenv(environ, "HELLOOOOO"));
+	ft_free_str_arr(environ);
+}
