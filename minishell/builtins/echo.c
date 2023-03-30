@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lde-ross <lde-ross@student.42berlin.de     +#+  +:+       +#+        */
+/*   By: tfregni <tfregni@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/30 15:46:57 by lde-ross          #+#    #+#             */
-/*   Updated: 2023/03/30 17:02:37 by lde-ross         ###   ########.fr       */
+/*   Updated: 2023/03/30 17:54:28 by tfregni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,9 +29,11 @@ void	ft_echo(char **args)
 	t_bool	n;
 	int		i;
 
+	if (!args)
+		return ;
 	n = true;
 	i = 0;
-	if (!ft_strcmp(args[i], "-n"))
+	if (args[i] && !ft_strcmp(args[i], "-n"))
 	{
 		i++;
 		n = false;
@@ -50,5 +52,6 @@ void	ft_echo(char **args)
 int	main(void)
 {
 	char **my_args = ft_split("", ' ');
+	// ft_print_strarr(my_args);
 	ft_echo(my_args);
 }
