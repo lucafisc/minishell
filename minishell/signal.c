@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signal.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lde-ross <lde-ross@student.42berlin.de     +#+  +:+       +#+        */
+/*   By: tfregni <tfregni@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/28 13:34:05 by lde-ross          #+#    #+#             */
-/*   Updated: 2023/03/28 13:49:26 by lde-ross         ###   ########.fr       */
+/*   Updated: 2023/03/31 09:31:09 by tfregni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,9 @@
 
 void	handler(int signal)
 {
-	if (signal == SIGINT)
-	else if (signal == SIGQUIT)
-	else if ()
+	if (signal == SIGINT);
+	else if (signal == SIGQUIT);
+	else if ();
 }
 
 void	init_act(struct sigaction *act, void (*handler)(int))
