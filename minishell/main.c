@@ -6,7 +6,7 @@
 /*   By: lde-ross <lde-ross@student.42berlin.de     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 15:41:38 by tfregni           #+#    #+#             */
-/*   Updated: 2023/03/31 20:53:45 by lde-ross         ###   ########.fr       */
+/*   Updated: 2023/03/31 20:58:36 by lde-ross         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,8 @@ void	get_prompt(void)
 	while (1)
 	{
 		cmd = readline("> ");
+		// rl_on_new_line();
+		// rl_redisplay();
 		if (*cmd)
 		{
 			add_history(cmd);
@@ -90,8 +92,6 @@ void	free_shell(t_shell *shell)
 {
 	ft_free_str_arr(shell->path);
 	rl_clear_history();
-	rl_on_new_line();
-	rl_redisplay();
 	/* free(shell->lexer)*/
 	/* free(shell->parser)*/
 	free(shell);
