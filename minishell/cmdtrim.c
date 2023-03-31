@@ -6,7 +6,7 @@
 /*   By: lde-ross <lde-ross@student.42berlin.de     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/30 17:51:42 by lde-ross          #+#    #+#             */
-/*   Updated: 2023/03/31 14:53:56 by lde-ross         ###   ########.fr       */
+/*   Updated: 2023/03/31 17:13:34 by lde-ross         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,6 @@
 // IN_NORMAL,
 // IN_S_QUOTE,
 // IN_D_QUOTE,
-
-//"hey   hi	\"hello\"   goodbye"
 
 void count_in_normal(char *cmds, int *i, int *count, int *state)
 {
