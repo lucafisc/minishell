@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tfregni <tfregni@student.42berlin.de>      +#+  +:+       +#+        */
+/*   By: lde-ross <lde-ross@student.42berlin.de     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 15:41:38 by tfregni           #+#    #+#             */
-/*   Updated: 2023/03/30 10:53:58 by tfregni          ###   ########.fr       */
+/*   Updated: 2023/03/31 19:00:42 by lde-ross         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ t_shell	*init(char ***env)
 	shell = malloc(sizeof(t_shell));
 	if (!shell)
 		return (NULL);
-	shell->env = matrix_dup(env, 0);
+	shell->env = matrix_dup(*env, 0);
 	*env = shell->env;
 	shell->path = ft_split(getenv("PATH"), ':');
 	//ft_print_strarr(shell->path);
@@ -102,7 +102,7 @@ int	main(int ac, char *av[], char *env[])
 	shell = init(&env);
 	if (!shell)
 		return (throw_err());
-	// init_signals();
+	init_signal();
 	get_prompt();
 	free_shell(shell);
 }
