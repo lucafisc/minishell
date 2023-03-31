@@ -6,7 +6,7 @@
 /*   By: lde-ross <lde-ross@student.42berlin.de     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/30 17:51:42 by lde-ross          #+#    #+#             */
-/*   Updated: 2023/03/31 17:13:34 by lde-ross         ###   ########.fr       */
+/*   Updated: 2023/03/31 18:08:47 by lde-ross         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,7 @@ void count_in_normal(char *cmds, int *i, int *count, int *state)
 			*state = IN_S_QUOTE;
 		if (*state != IN_NORMAL)
 			break;
-		if ((*i == 0 && !ft_is_space(cmds[*i])) || (ft_is_space(cmds[*i - 1]) && !ft_is_space(cmds[*i]))
-			|| (cmds[*i - 1] == '\"' && !ft_is_space(cmds[*i])) || (cmds[*i - 1] == '\'' && !ft_is_space(cmds[*i])))
+		if ((*i == 0 && !ft_is_space(cmds[*i])) || (ft_is_space(cmds[*i - 1]) && !ft_is_space(cmds[*i])) || (cmds[*i - 1] == '\"' && !ft_is_space(cmds[*i])) || (cmds[*i - 1] == '\'' && !ft_is_space(cmds[*i])))
 			*count += 1;
 		*i += 1;
 	}
@@ -90,72 +89,57 @@ int count_cmds(char *cmds)
 	return (count);
 }
 
-// t_bool	is_new_cmd_normal(char *cmds, int i, int *state)
-// {
-// 	if ((i == 0 && !ft_is_space(cmds[i])) || (!ft_is_space(cmds[i]) && ft_is_space(cmds[i - 1]))
-// 		|| (cmds[i - 1] == '\"' && !ft_is_space(cmds[i])) || (cmds[i - 1] == '\'' && !ft_is_space(cmds[i])))
-// 			return (true);
-// 	if (cmds[i] == "\"")
-// 		{
-// 			*state = IN_D_QUOTE;
-// 			return (true);
-// 		}
-// 	else if (cmds[i] == "\'")
-// 		{
-// 			*state = IN_S_QUOTE;
-// 			return (true);	
-// 		}
-// 	return (false);
-// }
-
-t_bool	is_new_cmd(char *cmds, int i)
-{
-	static int	state = IN_NORMAL;
-
-	if (state == IN_NORMAL)
-		return (is_new_cmd_normal(cmds, i, &state));	
-}
-
-void	modify_state(int *state, char c)
+t_bool is_new_cmd(int *state, char *cmds, int i)
 {
 	if (*state == IN_NORMAL)
-		
+	{
+	}
 	else if (*state == IN_D_QUOTE)
+	{
+		
+	}
 	else if (*state == IN_S_QUOTE)
+	{
+	}
+}
+
+void populate_cmds(char **arr, int n_cmds, char *cmds)
+{
+	int i;
+	int state;
+
+	i = 0;
+	state = IN_NORMAL;
+	while (str[i] && n_cmds > 0)
+	{
+		if (is_new_cmd(&state, cmds, i))
+
+			i++;
+	}
 }
 
 char **cmd_trim(char *cmds)
 {
-	char	**arr;
-	int		n_cmds;
-	int		i;
-	int		j;
-	int		len;
-	int		state;
+	char **arr;
+	int n_cmds;
+	int i;
 
 	if (!cmds)
 		return (NULL);
 	n_cmds = count_cmds(cmds);
 	printf("n of words: %d\n", n_cmds);
-	arr = malloc(sizeof(char*) * (n_cmds + 1));
+	arr = malloc(sizeof(char *) * (n_cmds + 1));
 	if (!arr)
 		return (NULL);
 	arr[n_cmds] = NULL;
-	state = IN_NORMAL;
-	while (cmds[i])
-	{
-		modify_state(&state, cmds[i]);
-		if (state == IN_NORMAL)
-			
-		i++;
-	}
-	return (arr);	
+	populate_cmds(arr, n_cmds, cmds);
+	return (arr);
 }
 
 int main(void)
 {
 	char cmd[] = "\"hello      there\"\"how\"are\'you \'doing? $USER |wc -l >outfile";
-	// char cmd[] = "\"hiiiii\"	hey   hi	\"hello\" abc  goodbye      ";
+	char cmd[] = "\"hiiiii\"	hey   hi	\"hello\" abc  goodbye      ";
 	cmd_trim(cmd);
 	// printf("%s\n", cmd);
 }
