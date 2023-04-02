@@ -6,7 +6,7 @@
 /*   By: tfregni <tfregni@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 15:41:38 by tfregni           #+#    #+#             */
-/*   Updated: 2023/04/02 08:26:14 by tfregni          ###   ########.fr       */
+/*   Updated: 2023/04/02 09:45:11 by tfregni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,6 +85,8 @@ char **matrix_dup(char **matrix, int extra)
 	return (new);
 }
 
+/* Since getenv will not work anyway maybe we don't
+need the real env to point to our duplicated one */
 t_shell	*init(char ***env)
 {
 	t_shell	*shell;

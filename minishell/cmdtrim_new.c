@@ -6,13 +6,16 @@
 /*   By: tfregni <tfregni@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/01 12:54:23 by tfregni           #+#    #+#             */
-/*   Updated: 2023/04/02 08:18:04 by tfregni          ###   ########.fr       */
+/*   Updated: 2023/04/02 14:28:25 by tfregni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-/* Updates the status for the given character and returns a code */
+char	**g_env;
+
+/* Updates the status for the character the given matrix
+is pointing to, moves on the pointer and returns a code */
 /* 0 - no change */
 /* 1 - close quotes */
 /* 2 - open quotes */
@@ -20,6 +23,8 @@ int	ft_update_state(char **str, int *state)
 {
 	int	res;
 
+	if (!str || !state)
+		return (-1);
 	res = 1;
 	if (*state == IN_D_QUOTE && **str == '"')
 		*state = IN_NORMAL;
@@ -132,6 +137,61 @@ int	ft_cmd_split(char **arr, char *str, int *state)
 	return (cmd);
 }
 
+char	*ft_strtrunc(char *s1, char *set)
+{
+	int		i;
+	int		j;
+	char	*ret;
+
+	if (!s1)
+		return (NULL);
+	ret = ft_strdup(s1);
+	i = 0;
+	while (set && s1[i])
+	{
+		j = 0;
+		while (set[j])
+		{
+			// printf("%c vs %c\n", s1[i], set[j]);
+			if (s1[i] == set[j])
+			{
+				// printf("terminating at %c\n", s1[i]);
+				ret[i] = '\0';
+				return (ret);
+			}
+			j++;
+		}
+		i++;
+	}
+	return (s1);
+}
+
+/* At the moment the lookup is in the "real" environment */
+char	**ft_expander(char **cmds)
+{
+	int		state;
+	char	*cur;
+
+	while (*cmds)
+	{
+		state = IN_NORMAL;
+		cur = *cmds;
+		while (*cur)
+		{
+			ft_update_state(&cur, &state);
+			if ((state == 0 || state == 2) && *(cur - 1) == '$')
+			{
+				*(cur - 1) = '\0';
+				if (getenv(ft_strtrunc(cur, TRAIL_CHAR)))
+					*cmds = ft_strjoin(*cmds, getenv(ft_strtrunc(cur, TRAIL_CHAR)));
+				break ;
+			}
+		}
+		cmds++;
+	}
+	return (NULL);
+}
+
 char	**ft_cmd_trim(char *str)
 {
 	char	**arr;
@@ -149,19 +209,23 @@ char	**ft_cmd_trim(char *str)
 		ft_free_str_arr(arr);
 		arr = NULL;
 	}
+	ft_expander(arr);
 	return (arr);
 }
 
-int	main(void)
+int	main(int ac, char **av, char **env)
 {
-	// char cmd[] = "    \"hello      there\"\"how\"are\'you \'doing? $USER |wc -l >outfile";
-	// char cmd[] = "\"hiiiii\"	hey   hi	\"hello\" abc  goodbye      ";
-	char cmd[] = "\"these are 'single quotes' in double quotes\" and '\"double quotes\" in single'\"followed by\" a command without'space'";
-
+	(void) ac;
+	(void) av;
+	g_env = env;
+	// // char cmd[] = "    \"hello      there\"\"how\"are\'you \'doing? $USER |wc -l >outfile";
+	// // char cmd[] = "\"hiiiii\"	hey   hi	\"hello\" abc  goodbye      ";
+	char cmd[] = "\"these are 'single quotes' in double quotes\" and \"hi$USER in d_quotes\" 'and$HOME in s_quotes'| '\"double quotes\" in single'\"followed by\" a command without'space'";
 	char **cmds = ft_cmd_trim(cmd);
 	ft_print_strarr(cmds);
 	// printf("%s\n", cmd);
 	ft_free_str_arr(cmds);
+	// printf("%s\n", ft_strtrunc("$USER| bla ><|", "| <>"));
 }
 
 /*
