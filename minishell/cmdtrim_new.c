@@ -6,7 +6,7 @@
 /*   By: tfregni <tfregni@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/01 12:54:23 by tfregni           #+#    #+#             */
-/*   Updated: 2023/04/02 14:28:25 by tfregni          ###   ########.fr       */
+/*   Updated: 2023/04/02 20:37:57 by tfregni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -137,6 +137,39 @@ int	ft_cmd_split(char **arr, char *str, int *state)
 	return (cmd);
 }
 
+char	*ft_insstr(char *s1, char *s2, int len, int idx)
+{
+	int		len_s1;
+	char	*ret;
+	int		i;
+
+	if (!s1 || !s2)
+		return (NULL);
+	len_s1 = ft_strlen(s1);
+	ret = malloc(sizeof(*ret) * (len_s1 + ft_strlen(s2) - len + 1));
+	i = -1;
+	while (++i < idx)
+		ret[i] = s1[i];
+	while (s2[i - idx])
+	{
+		ret[i] = s2[i - idx];
+		i++;
+	}
+	while (s1[idx + len])
+	{
+		ret[i] = s1[idx + len];
+		i++;
+		len++;
+	}
+	ret[i] = '\0';
+	//free(s1);
+	//free(s2);
+	return (ret);
+}
+
+//"HELLO $USER WORLD"
+//
+
 char	*ft_strtrunc(char *s1, char *set)
 {
 	int		i;
@@ -166,28 +199,58 @@ char	*ft_strtrunc(char *s1, char *set)
 	return (s1);
 }
 
+
+char	*ft_expand_var(char **cur, char *cmds, int steps)
+{
+	char	*trimmed;
+	int		len_trim;
+	int		len_expanded;
+	char	*new_cmd;
+
+	trimmed = ft_strtrunc(*cur, TRAIL_CHAR);
+	len_trim = ft_strlen(trimmed);
+	len_expanded = ft_strlen(getenv(trimmed));
+	write(1, "here\n", 5);
+	new_cmd = ft_strnjoin(3, cmds, getenv(trimmed), (*cur + len_trim));
+	*cur = new_cmd + steps + len_expanded;
+	printf("getenv:%s\n", getenv("bullshit"));
+	free(cmds);
+	free(trimmed);
+	return (new_cmd);
+}
+
 /* At the moment the lookup is in the "real" environment */
-char	**ft_expander(char **cmds)
+char	*ft_expander(char *cmds)
 {
 	int		state;
 	char	*cur;
+	int		steps;
 
-	while (*cmds)
+	if (!cmds || *cmds == '\'')
+		return (cmds);
+	state = IN_NORMAL;
+	cur = cmds;
+	steps = 0;
+	while (*cur)
 	{
-		state = IN_NORMAL;
-		cur = *cmds;
-		while (*cur)
+		ft_update_state(&cur, &state);
+		steps++;
+		if (*(cur - 1) == '~')
 		{
-			ft_update_state(&cur, &state);
-			if ((state == 0 || state == 2) && *(cur - 1) == '$')
-			{
-				*(cur - 1) = '\0';
-				if (getenv(ft_strtrunc(cur, TRAIL_CHAR)))
-					*cmds = ft_strjoin(*cmds, getenv(ft_strtrunc(cur, TRAIL_CHAR)));
-				break ;
-			}
+			steps -= 1;
+			cmds = ft_insstr(cmds, "$HOME", 1, steps);
+			printf("cmds: %s\n", cmds);
+			cur = &cmds[steps + 1];
+			printf("new cur: %s\n", cur);
 		}
-		cmds++;
+		else if (*(cur - 1) == '$')
+		{
+			char *expanded = getenv(ft_strtrunc(cur, TRAIL_CHAR));
+			write(1, "bla", 3);
+			// *(cur - 1) = '\0';
+			// cmds = ft_expand_var(&cur, cmds, steps);
+			cmds = ft_insstr(cmds, expanded, 5, steps - 1);
+		}
 	}
 	return (NULL);
 }
@@ -209,7 +272,11 @@ char	**ft_cmd_trim(char *str)
 		ft_free_str_arr(arr);
 		arr = NULL;
 	}
-	ft_expander(arr);
+	while (*arr)
+	{
+		printf("%s\n", ft_expander(*arr));
+		arr++;
+	}
 	return (arr);
 }
 
@@ -220,17 +287,19 @@ int	main(int ac, char **av, char **env)
 	g_env = env;
 	// // char cmd[] = "    \"hello      there\"\"how\"are\'you \'doing? $USER |wc -l >outfile";
 	// // char cmd[] = "\"hiiiii\"	hey   hi	\"hello\" abc  goodbye      ";
-	char cmd[] = "\"these are 'single quotes' in double quotes\" and \"hi$USER in d_quotes\" 'and$HOME in s_quotes'| '\"double quotes\" in single'\"followed by\" a command without'space'";
+	// char cmd[] = "\"these are 'single quotes' in double quotes\" and \"hi$USER | $PATH in d_quotes\" 'and$HOME in s_quotes'| '\"double quotes\" in single'\"followed by\" a command without'space'";
+	char cmd[] = "\"hi$USER| ~in d_quotes\"";
 	char **cmds = ft_cmd_trim(cmd);
 	ft_print_strarr(cmds);
 	// printf("%s\n", cmd);
 	ft_free_str_arr(cmds);
-	// printf("%s\n", ft_strtrunc("$USER| bla ><|", "| <>"));
+	// // printf("%s\n", ft_strtrunc("$USER| bla ><|", "| <>"));
+	// printf("%s", ft_insstr("Insert", "Middle", 2, 3));
 }
 
 /*
     "hello      there""how"are'you 'doing? $USER |wc -l >outfile
-     1                 2   3   4    5      6     7   8  9
+    1                 2    3  4     5      6     7   8  9
 	"hiiiii"	hey   hi	"hello" abc  goodbye
 	1           2     3     4       5    6
 */

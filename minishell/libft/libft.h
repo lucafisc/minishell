@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lde-ross <lde-ross@student.42berlin.de     +#+  +:+       +#+        */
+/*   By: tfregni <tfregni@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/30 17:35:35 by lde-ross          #+#    #+#             */
-/*   Updated: 2023/03/30 15:52:22 by lde-ross         ###   ########.fr       */
+/*   Updated: 2023/04/02 18:00:51 by tfregni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,5 +77,6 @@ void		ft_free_str_arr(char **arr);
 int			ft_arrlen(char **argv);
 char		*ft_strnjoin(ssize_t n, ...);
 int			ft_strcmp(const char *s1, const char *s2);
+char		*ft_joinnfree(char *stash, char *buff);
 
 #endif
