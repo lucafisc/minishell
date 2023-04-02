@@ -6,7 +6,7 @@
 /*   By: tfregni <tfregni@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/30 15:46:57 by lde-ross          #+#    #+#             */
-/*   Updated: 2023/03/30 18:01:46 by tfregni          ###   ########.fr       */
+/*   Updated: 2023/04/02 08:34:26 by tfregni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,13 +40,16 @@ void	ft_echo(char **args)
 	}
 	while (args[i])
 	{
-		printf("%s", args[i]);
+		ft_putstr_fd(args[i], 1);
+		// printf("%s", args[i]);
 		if (args[i + 1])
-			printf(" ");
+			// printf(" ");
+			ft_putchar(" ", 1);
 		i++;
 	}
 	if (n)
-		printf("\n");
+		ft_putchar("\n", 1);
+		// printf("\n");
 }
 
 int	main(int ac, char **av)

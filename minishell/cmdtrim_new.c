@@ -6,7 +6,7 @@
 /*   By: tfregni <tfregni@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/01 12:54:23 by tfregni           #+#    #+#             */
-/*   Updated: 2023/04/01 16:24:51 by tfregni          ###   ########.fr       */
+/*   Updated: 2023/04/02 08:18:04 by tfregni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -156,7 +156,7 @@ int	main(void)
 {
 	// char cmd[] = "    \"hello      there\"\"how\"are\'you \'doing? $USER |wc -l >outfile";
 	// char cmd[] = "\"hiiiii\"	hey   hi	\"hello\" abc  goodbye      ";
-	char cmd[] = "these are 'single quotes' in double quotes and '\"double quotes\" in single'";
+	char cmd[] = "\"these are 'single quotes' in double quotes\" and '\"double quotes\" in single'\"followed by\" a command without'space'";
 
 	char **cmds = ft_cmd_trim(cmd);
 	ft_print_strarr(cmds);

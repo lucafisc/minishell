@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lde-ross <lde-ross@student.42berlin.de     +#+  +:+       +#+        */
+/*   By: tfregni <tfregni@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 16:02:25 by tfregni           #+#    #+#             */
-/*   Updated: 2023/03/31 18:58:58 by lde-ross         ###   ########.fr       */
+/*   Updated: 2023/04/02 08:28:24 by tfregni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ enum e_token {
 	D_QUOTE = '\"',
 };
 
-enum {
+enum e_state {
 	IN_NORMAL,
 	IN_S_QUOTE,
 	IN_D_QUOTE,
@@ -52,6 +52,6 @@ typedef struct s_shell
 }				t_shell;
 
 t_lexer	*lexer(char *fmt);
-void	init_signal();
+void	init_signal(void);
 
 #endif
