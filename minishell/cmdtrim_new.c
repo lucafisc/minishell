@@ -6,7 +6,7 @@
 /*   By: tfregni <tfregni@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/01 12:54:23 by tfregni           #+#    #+#             */
-/*   Updated: 2023/04/02 20:37:57 by tfregni          ###   ########.fr       */
+/*   Updated: 2023/04/03 12:24:50 by tfregni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -137,20 +137,24 @@ int	ft_cmd_split(char **arr, char *str, int *state)
 	return (cmd);
 }
 
-char	*ft_insstr(char *s1, char *s2, int len, int idx)
+/* It inserts s2 in s1 at the index idx substitung len chars of s1 */
+/* It doesn't free the arguments */
+char	*ft_strins(char *s1, char *s2, int len, int idx)
 {
 	int		len_s1;
 	char	*ret;
 	int		i;
 
-	if (!s1 || !s2)
+	if (!s1)
 		return (NULL);
 	len_s1 = ft_strlen(s1);
 	ret = malloc(sizeof(*ret) * (len_s1 + ft_strlen(s2) - len + 1));
+	if (!ret)
+		return (NULL);
 	i = -1;
 	while (++i < idx)
 		ret[i] = s1[i];
-	while (s2[i - idx])
+	while (s2 && s2[i - idx])
 	{
 		ret[i] = s2[i - idx];
 		i++;
@@ -162,14 +166,11 @@ char	*ft_insstr(char *s1, char *s2, int len, int idx)
 		len++;
 	}
 	ret[i] = '\0';
-	//free(s1);
-	//free(s2);
 	return (ret);
 }
 
-//"HELLO $USER WORLD"
-//
-
+/* It truncates s1 at the first occurrence of a char in set */
+/* What's returned is freeable */
 char	*ft_strtrunc(char *s1, char *set)
 {
 	int		i;
@@ -185,10 +186,8 @@ char	*ft_strtrunc(char *s1, char *set)
 		j = 0;
 		while (set[j])
 		{
-			// printf("%c vs %c\n", s1[i], set[j]);
 			if (s1[i] == set[j])
 			{
-				// printf("terminating at %c\n", s1[i]);
 				ret[i] = '\0';
 				return (ret);
 			}
@@ -196,30 +195,32 @@ char	*ft_strtrunc(char *s1, char *set)
 		}
 		i++;
 	}
-	return (s1);
+	return (ret);
 }
 
-
-char	*ft_expand_var(char **cur, char *cmds, int steps)
+char	*ft_expand_var(char **cur, char *cmds, int *steps)
 {
 	char	*trimmed;
 	int		len_trim;
-	int		len_expanded;
 	char	*new_cmd;
 
-	trimmed = ft_strtrunc(*cur, TRAIL_CHAR);
-	len_trim = ft_strlen(trimmed);
-	len_expanded = ft_strlen(getenv(trimmed));
-	write(1, "here\n", 5);
-	new_cmd = ft_strnjoin(3, cmds, getenv(trimmed), (*cur + len_trim));
-	*cur = new_cmd + steps + len_expanded;
-	printf("getenv:%s\n", getenv("bullshit"));
+	(*steps)--;
+	if (*(*cur - 1) == '~')
+		new_cmd = ft_strins(cmds, getenv("HOME"), 1, *steps);
+	else
+	{
+		trimmed = ft_strtrunc(*cur, TRAIL_CHAR);
+		len_trim = ft_strlen(trimmed);
+		new_cmd = ft_strins(cmds, getenv(trimmed), len_trim + 1, *steps);
+		free(trimmed);
+	}
+	*cur = &new_cmd[*steps];
 	free(cmds);
-	free(trimmed);
 	return (new_cmd);
 }
 
 /* At the moment the lookup is in the "real" environment */
+/* Try double=hi$USER;echo $double */
 char	*ft_expander(char *cmds)
 {
 	int		state;
@@ -235,24 +236,10 @@ char	*ft_expander(char *cmds)
 	{
 		ft_update_state(&cur, &state);
 		steps++;
-		if (*(cur - 1) == '~')
-		{
-			steps -= 1;
-			cmds = ft_insstr(cmds, "$HOME", 1, steps);
-			printf("cmds: %s\n", cmds);
-			cur = &cmds[steps + 1];
-			printf("new cur: %s\n", cur);
-		}
-		else if (*(cur - 1) == '$')
-		{
-			char *expanded = getenv(ft_strtrunc(cur, TRAIL_CHAR));
-			write(1, "bla", 3);
-			// *(cur - 1) = '\0';
-			// cmds = ft_expand_var(&cur, cmds, steps);
-			cmds = ft_insstr(cmds, expanded, 5, steps - 1);
-		}
+		if (*(cur - 1) == '~' || *(cur - 1) == '$')
+			cmds = ft_expand_var(&cur, cmds, &steps);
 	}
-	return (NULL);
+	return (cmds);
 }
 
 char	**ft_cmd_trim(char *str)
@@ -260,6 +247,7 @@ char	**ft_cmd_trim(char *str)
 	char	**arr;
 	int		n_cmds;
 	int		state;
+	int		i;
 
 	n_cmds = ft_count_cmds(str);
 	printf("n_cmds: %d\n", n_cmds);
@@ -272,11 +260,9 @@ char	**ft_cmd_trim(char *str)
 		ft_free_str_arr(arr);
 		arr = NULL;
 	}
-	while (*arr)
-	{
-		printf("%s\n", ft_expander(*arr));
-		arr++;
-	}
+	i = -1;
+	while (arr[++i])
+		arr[i] = ft_expander(arr[i]);
 	return (arr);
 }
 
@@ -288,13 +274,14 @@ int	main(int ac, char **av, char **env)
 	// // char cmd[] = "    \"hello      there\"\"how\"are\'you \'doing? $USER |wc -l >outfile";
 	// // char cmd[] = "\"hiiiii\"	hey   hi	\"hello\" abc  goodbye      ";
 	// char cmd[] = "\"these are 'single quotes' in double quotes\" and \"hi$USER | $PATH in d_quotes\" 'and$HOME in s_quotes'| '\"double quotes\" in single'\"followed by\" a command without'space'";
-	char cmd[] = "\"hi$USER| ~in d_quotes\"";
+	char cmd[] = "hi'$USER' $BS ~$USER $TERM";
+	// char cmd[] = "~in";
 	char **cmds = ft_cmd_trim(cmd);
 	ft_print_strarr(cmds);
 	// printf("%s\n", cmd);
 	ft_free_str_arr(cmds);
 	// // printf("%s\n", ft_strtrunc("$USER| bla ><|", "| <>"));
-	// printf("%s", ft_insstr("Insert", "Middle", 2, 3));
+	// printf("%s", ft_strins("Insert", "Middle", 2, 3));
 }
 
 /*

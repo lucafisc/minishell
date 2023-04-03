@@ -6,7 +6,7 @@
 /*   By: tfregni <tfregni@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 16:02:25 by tfregni           #+#    #+#             */
-/*   Updated: 2023/04/02 14:26:14 by tfregni          ###   ########.fr       */
+/*   Updated: 2023/04/03 10:42:05 by tfregni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@
 # include "./libft/libft.h"
 # include "lexer.h"
 # include "parser.h"
-# define TRAIL_CHAR " \n\t><|"
+# define TRAIL_CHAR " \n\t><|\"$"
 
 typedef enum s_bool
 {
