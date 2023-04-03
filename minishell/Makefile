@@ -1,4 +1,4 @@
-SRC = main.c lexer.c signal.c cmdtrim.c
+SRC = main.c lexer.c signal.c cmdtrim.c search_bin.c
 OBJ = $(addprefix obj/, $(SRC:.c=.o))
 CC = cc
 CFLAGS = -Wall -Wextra -Werror -g
