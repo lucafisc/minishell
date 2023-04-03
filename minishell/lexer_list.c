@@ -6,7 +6,7 @@
 /*   By: lde-ross <lde-ross@student.42berlin.de     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/03 15:53:30 by lde-ross          #+#    #+#             */
-/*   Updated: 2023/04/03 17:11:29 by lde-ross         ###   ########.fr       */
+/*   Updated: 2023/04/03 18:05:15 by lde-ross         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,13 +94,6 @@ t_lexer *lexer_list(char **cmds)
 	t_lexer *list;
 
 	i = 0;
-	while (cmds[i])
-	{
-		if (i == 0)
-			list = ft_dbllstnew(cmds[i], 1);
-		else
-			ft_dbllst_addback(&list, ft_dbllstnew(cmds[i], 1));
-		i++;
-	}
+
 	return (list);
 }
