@@ -6,7 +6,7 @@
 /*   By: tfregni <tfregni@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/28 14:12:19 by lde-ross          #+#    #+#             */
-/*   Updated: 2023/04/03 16:32:19 by tfregni          ###   ########.fr       */
+/*   Updated: 2023/04/03 17:23:02 by tfregni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,8 @@ t_lexer	*lexer(char *fmt)
 	int		i;
 
 	i = 0;
-	raw_tokens = ft_split(fmt, ' ');
+	// raw_tokens = ft_split(fmt, ' ');
+	raw_tokens = ft_cmd_trim(fmt);
 	first = ft_dbllstnew(raw_tokens[i], i);
 	while (raw_tokens[++i])
 	{

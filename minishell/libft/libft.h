@@ -6,7 +6,7 @@
 /*   By: tfregni <tfregni@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/30 17:35:35 by lde-ross          #+#    #+#             */
-/*   Updated: 2023/04/03 16:31:05 by tfregni          ###   ########.fr       */
+/*   Updated: 2023/04/03 16:51:36 by tfregni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,6 @@ void		ft_free_str_arr(char **arr);
 int			ft_arrlen(char **argv);
 char		*ft_strnjoin(ssize_t n, ...);
 int			ft_strcmp(const char *s1, const char *s2);
-char		*ft_joinnfree(char *existing, char new);
+char		*ft_strjoinnfree(char *existing, char new);
 
 #endif

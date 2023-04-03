@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   cmdtrim_new.c                                      :+:      :+:    :+:   */
+/*   cmdtrim.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lde-ross <lde-ross@student.42berlin.de     +#+  +:+       +#+        */
+/*   By: tfregni <tfregni@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/01 12:54:23 by tfregni           #+#    #+#             */
-/*   Updated: 2023/04/03 15:14:55 by lde-ross         ###   ########.fr       */
+/*   Updated: 2023/04/03 16:53:05 by tfregni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -264,6 +264,7 @@ char	**ft_cmd_trim(char *str)
 	return (arr);
 }
 
+/*
 int	main(int ac, char **av, char **env)
 {
 	(void) ac;
@@ -281,7 +282,7 @@ int	main(int ac, char **av, char **env)
 	// // printf("%s\n", ft_strtrunc("$USER| bla ><|", "| <>"));
 	// printf("%s", ft_strins("Insert", "Middle", 2, 3));
 }
-
+*/
 /*
     "hello      there""how"are'you 'doing? $USER |wc -l >outfile
     1                 2    3  4     5      6     7   8  9

@@ -10,8 +10,9 @@ MAKE = make
 
 all: $(NAME)
 
-$(NAME): $(OBJ) $(LIBFT)
-	$(CC) $(CFLAGS) $(OBJ) $(LIBFT) -lreadline -o $(NAME)
+$(NAME): $(OBJ)
+	make $(LIBFT)
+	$(CC) $(CFLAGS) $(OBJ) $(LIBFT) $(INCLUDES) -lreadline -o $(NAME)
 
 $(LIBFT):
 	$(MAKE) -C libft
@@ -22,7 +23,7 @@ obj/%.o: %.c
 
 clean:
 	rm -f $(OBJ)
-	rmdir obj
+	rm -rf obj
 	$(MAKE) -C libft clean
 
 fclean: clean

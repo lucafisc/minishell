@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_joinnfree.c                                     :+:      :+:    :+:   */
+/*   ft_strjoinnfree.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tfregni <tfregni@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/03 16:30:39 by tfregni           #+#    #+#             */
-/*   Updated: 2023/04/03 16:30:50 by tfregni          ###   ########.fr       */
+/*   Updated: 2023/04/03 16:50:05 by tfregni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-char	*ft_joinnfree(char *existing, char new)
+char	*ft_strjoinnfree(char *existing, char new)
 {
 	size_t	i;
 	size_t	j;
