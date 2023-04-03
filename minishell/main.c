@@ -6,7 +6,7 @@
 /*   By: tfregni <tfregni@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 15:41:38 by tfregni           #+#    #+#             */
-/*   Updated: 2023/04/02 09:45:11 by tfregni          ###   ########.fr       */
+/*   Updated: 2023/04/03 16:43:19 by tfregni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ int	throw_err(char *str, char *arg)
 	return (1);
 }
 
-char **matrix_dup(char **matrix, int extra)
+char	**matrix_dup(char **matrix, int extra)
 {
 	int		len;
 	char	**new;

@@ -6,7 +6,7 @@
 /*   By: tfregni <tfregni@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 16:02:25 by tfregni           #+#    #+#             */
-/*   Updated: 2023/04/03 10:42:05 by tfregni          ###   ########.fr       */
+/*   Updated: 2023/04/03 17:22:46 by tfregni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,4 +55,5 @@ typedef struct s_shell
 t_lexer	*lexer(char *fmt);
 void	init_signal(void);
 
+char	**ft_cmd_trim(char *str);
 #endif
