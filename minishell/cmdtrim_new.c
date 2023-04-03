@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cmdtrim_new.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tfregni <tfregni@student.42berlin.de>      +#+  +:+       +#+        */
+/*   By: lde-ross <lde-ross@student.42berlin.de     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/01 12:54:23 by tfregni           #+#    #+#             */
-/*   Updated: 2023/04/03 12:24:50 by tfregni          ###   ########.fr       */
+/*   Updated: 2023/04/03 15:14:55 by lde-ross         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -198,23 +198,21 @@ char	*ft_strtrunc(char *s1, char *set)
 	return (ret);
 }
 
-char	*ft_expand_var(char **cur, char *cmds, int *steps)
+char	*ft_expand_var(char *cur, char *cmds, int i)
 {
 	char	*trimmed;
 	int		len_trim;
 	char	*new_cmd;
 
-	(*steps)--;
-	if (*(*cur - 1) == '~')
-		new_cmd = ft_strins(cmds, getenv("HOME"), 1, *steps);
+	if (cur[i] == '~')
+		new_cmd = ft_strins(cmds, getenv("HOME"), 1, i);
 	else
 	{
-		trimmed = ft_strtrunc(*cur, TRAIL_CHAR);
+		trimmed = ft_strtrunc(&cur[i + 1], TRAIL_CHAR);
 		len_trim = ft_strlen(trimmed);
-		new_cmd = ft_strins(cmds, getenv(trimmed), len_trim + 1, *steps);
+		new_cmd = ft_strins(cmds, getenv(trimmed), len_trim + 1, i);
 		free(trimmed);
 	}
-	*cur = &new_cmd[*steps];
 	free(cmds);
 	return (new_cmd);
 }
@@ -223,21 +221,21 @@ char	*ft_expand_var(char **cur, char *cmds, int *steps)
 /* Try double=hi$USER;echo $double */
 char	*ft_expander(char *cmds)
 {
-	int		state;
 	char	*cur;
-	int		steps;
+	int		i;
 
 	if (!cmds || *cmds == '\'')
 		return (cmds);
-	state = IN_NORMAL;
 	cur = cmds;
-	steps = 0;
-	while (*cur)
+	i = 0;
+	while (cur[i])
 	{
-		ft_update_state(&cur, &state);
-		steps++;
-		if (*(cur - 1) == '~' || *(cur - 1) == '$')
-			cmds = ft_expand_var(&cur, cmds, &steps);
+		if (cur[i] == '~' || cur[i] == '$')
+		{
+			cmds = ft_expand_var(cur, cmds, i);
+			cur = cmds;
+		}
+		i++;
 	}
 	return (cmds);
 }
@@ -274,7 +272,7 @@ int	main(int ac, char **av, char **env)
 	// // char cmd[] = "    \"hello      there\"\"how\"are\'you \'doing? $USER |wc -l >outfile";
 	// // char cmd[] = "\"hiiiii\"	hey   hi	\"hello\" abc  goodbye      ";
 	// char cmd[] = "\"these are 'single quotes' in double quotes\" and \"hi$USER | $PATH in d_quotes\" 'and$HOME in s_quotes'| '\"double quotes\" in single'\"followed by\" a command without'space'";
-	char cmd[] = "hi'$USER' $BS ~$USER $TERM";
+	char cmd[] = "\"my~ $PATH user: $USER\"";
 	// char cmd[] = "~in";
 	char **cmds = ft_cmd_trim(cmd);
 	ft_print_strarr(cmds);
