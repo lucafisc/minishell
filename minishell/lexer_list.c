@@ -3,18 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   lexer_list.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lde-ross <lde-ross@student.42berlin.de>    +#+  +:+       +#+        */
+/*   By: tfregni <tfregni@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/03 15:53:30 by lde-ross          #+#    #+#             */
-/*   Updated: 2023/04/03 20:55:39 by lde-ross         ###   ########.fr       */
+/*   Updated: 2023/04/04 10:35:14 by tfregni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-char should_split(char *str)
+char	should_split(char *str)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	if (*str == '\'' || *str == '\"')
@@ -30,14 +30,15 @@ char should_split(char *str)
 
 void	split_list(t_lexer **list)
 {
-	t_lexer *cur;
-	char **matrix;
+	t_lexer	*cur;
+	char	**matrix;
 	char	c;
 	int		i;
 
 	cur = *list;
 	while (cur)
 	{
+		i = 0;
 		if ((c = should_split(cur->data)) && cur->data[1])
 		{
 			printf("this is the split char: %c\n",c);
@@ -46,18 +47,18 @@ void	split_list(t_lexer **list)
 			{
 				/* code */
 			}
-			
+
 			ft_print_strarr(matrix);
 		}
 		cur = cur->next;
 	}
-	
+
 }
 
-void print_list(t_lexer **list)
+void	print_list(t_lexer **list)
 {
-	t_lexer *cur;
-	int i;
+	t_lexer	*cur;
+	int	i;
 
 	i = 1;
 	cur = *list;
