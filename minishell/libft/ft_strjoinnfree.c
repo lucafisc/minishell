@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strjoinnfree.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tfregni <tfregni@student.42berlin.de>      +#+  +:+       +#+        */
+/*   By: lde-ross <lde-ross@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/03 16:30:39 by tfregni           #+#    #+#             */
-/*   Updated: 2023/04/03 16:50:05 by tfregni          ###   ########.fr       */
+/*   Updated: 2023/04/03 19:22:21 by lde-ross         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 char	*ft_strjoinnfree(char *existing, char new)
 {
 	size_t	i;
-	size_t	j;
 	char	*new_str;
 
 	if (!existing)
@@ -26,7 +25,6 @@ char	*ft_strjoinnfree(char *existing, char new)
 	if (new_str == NULL)
 		return (NULL);
 	i = -1;
-	j = 0;
 	while (existing[++i])
 		new_str[i] = existing[i];
 	new_str[i] = new;
