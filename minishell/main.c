@@ -6,7 +6,7 @@
 /*   By: tfregni <tfregni@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 15:41:38 by tfregni           #+#    #+#             */
-/*   Updated: 2023/04/04 17:38:33 by tfregni          ###   ########.fr       */
+/*   Updated: 2023/04/04 18:20:49 by tfregni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,11 +97,37 @@ char	**matrix_dup(char **matrix, int extra)
 	return (new);
 }
 
+char	*create_cwd(t_shell *s)
+{
+	char	*current;
+	char	*home;
+	char	*tmp;
+
+	(void) s;
+	home = getenv("HOME");
+	if (!home)
+		return (ft_strdup(""));
+	current = getcwd(NULL, 0);
+	ft_strdup(current);
+	if (ft_strnstr(getcwd(NULL, 0), home, ft_strlen(home)))
+	{
+		tmp = current;
+		current += ft_strlen(home);
+		current = ft_strjoin("~", current);
+		free(tmp);
+	}
+	printf("%s\n", current);
+	return (current);
+}
+
 char	*create_prompt(t_shell *s)
 {
+	char	*tmp;
 	char	*prompt;
 
-	prompt = ft_strnjoin(5, RED, s->user, YELLOW, "@minishell > ", DEFAULT);
+	tmp = create_cwd(s);
+	prompt = ft_strnjoin(7, RED, s->user, YELLOW, "@minishell ", DEFAULT, tmp, " > ");
+	free(tmp);
 	return (prompt);
 }
 
