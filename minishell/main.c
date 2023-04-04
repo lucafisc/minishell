@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lde-ross <lde-ross@student.42berlin.de>    +#+  +:+       +#+        */
+/*   By: tfregni <tfregni@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 15:41:38 by tfregni           #+#    #+#             */
-/*   Updated: 2023/04/03 19:20:47 by lde-ross         ###   ########.fr       */
+/*   Updated: 2023/04/04 14:03:30 by tfregni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@
 // 	}
 // }
 
-void	get_prompt(void)
+void	get_prompt(t_shell *s)
 {
 	char	*cmd;
 
@@ -41,7 +41,7 @@ void	get_prompt(void)
 		if (*cmd)
 		{
 			add_history(cmd);
-			lexer(cmd);
+			lexer(s, cmd);
 			free(cmd);
 		}
 	}
@@ -120,6 +120,6 @@ int	main(int ac, char *av[], char *env[])
 	if (!shell)
 		return (throw_err("init", NULL));
 	init_signal();
-	get_prompt();
+	get_prompt(shell);
 	free_shell(shell);
 }

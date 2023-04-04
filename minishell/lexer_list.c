@@ -6,7 +6,7 @@
 /*   By: tfregni <tfregni@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/03 15:53:30 by lde-ross          #+#    #+#             */
-/*   Updated: 2023/04/04 10:46:22 by tfregni          ###   ########.fr       */
+/*   Updated: 2023/04/04 13:44:08 by tfregni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,8 @@ void	split_list(t_lexer **list)
 	char	c;
 	int		i;
 
+	(void) temp;
+	(void) new;
 	cur = *list;
 	while (cur)
 	{
@@ -48,12 +50,12 @@ void	split_list(t_lexer **list)
 			i = 0;
 			while (matrix[i])
 			{
-				if (i == 0)
-					new = ft_dbllstnew(matrix[i], 1);
-				else
-					ft_dbllstnew(&new, ft_dbllstnew(matrix[i], 1));
+				// if (i == 0)
+				// 	new = ft_dbllstnew(matrix[i], 1);
+				// else
+				// 	ft_dbllstnew(&new, ft_dbllstnew(matrix[i], 1));
 			}
-			//ft_print_strarr(matrix);
+			ft_print_strarr(matrix);
 		}
 		cur = cur->next;
 	}
