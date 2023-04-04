@@ -6,7 +6,7 @@
 /*   By: tfregni <tfregni@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 16:02:25 by tfregni           #+#    #+#             */
-/*   Updated: 2023/04/04 14:08:07 by tfregni          ###   ########.fr       */
+/*   Updated: 2023/04/04 17:09:48 by tfregni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@
 # include "./libft/libft.h"
 # include "lexer.h"
 # include "parser.h"
+# include "colors.h"
 # define TRAIL_CHAR " \n\t><|\"$"
 # define SPLIT_CHAR "|<>"
 # define N_BUILTINS 5
