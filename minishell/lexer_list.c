@@ -6,7 +6,7 @@
 /*   By: lde-ross <lde-ross@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/03 15:53:30 by lde-ross          #+#    #+#             */
-/*   Updated: 2023/04/03 20:55:39 by lde-ross         ###   ########.fr       */
+/*   Updated: 2023/04/04 10:28:31 by lde-ross         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,9 @@ char should_split(char *str)
 
 void	split_list(t_lexer **list)
 {
-	t_lexer *cur;
+	t_lexer	*cur;
+	t_lexer	*new;
+	t_lexer	*temp;
 	char **matrix;
 	char	c;
 	int		i;
@@ -42,12 +44,15 @@ void	split_list(t_lexer **list)
 		{
 			printf("this is the split char: %c\n",c);
 			matrix = ft_split_keep(cur->data, c);
+			i = 0;
 			while (matrix[i])
 			{
-				/* code */
+				if (i == 0)
+					new = ft_dbllstnew(matrix[i], 1);
+				else
+					ft_dbllstnew(&new, ft_dbllstnew(matrix[i], 1));
 			}
-			
-			ft_print_strarr(matrix);
+			//ft_print_strarr(matrix);
 		}
 		cur = cur->next;
 	}
