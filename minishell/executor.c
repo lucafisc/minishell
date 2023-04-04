@@ -6,7 +6,7 @@
 /*   By: tfregni <tfregni@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/04 12:58:08 by tfregni           #+#    #+#             */
-/*   Updated: 2023/04/04 17:19:08 by tfregni          ###   ########.fr       */
+/*   Updated: 2023/04/04 17:24:25 by tfregni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ void	free_command(t_command *cmd)
 	i = -1;
 	while (cmd->cmd[++i])
 	{
-		printf("free %s\n", cmd->cmd[i]);
+		// printf("free %s\n", cmd->cmd[i]);
 		free(cmd->cmd[i]);
 	}
 	free(cmd);
@@ -75,7 +75,7 @@ void	execute(t_shell *s, t_lexer *lex)
 	pid = fork();
 	if (pid == 0)
 	{
-		printf("exec %s\n", parsed_cmd->cmd[0]);
+		// printf("exec %s\n", parsed_cmd->cmd[0]);
 		execve(parsed_cmd->cmd[0], parsed_cmd->cmd, s->env);
 		ft_putstr_fd("minishell: ", 2);
 		ft_putstr_fd(parsed_cmd->cmd[0], 2);

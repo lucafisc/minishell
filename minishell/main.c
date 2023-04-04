@@ -6,7 +6,7 @@
 /*   By: tfregni <tfregni@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 15:41:38 by tfregni           #+#    #+#             */
-/*   Updated: 2023/04/04 17:17:58 by tfregni          ###   ########.fr       */
+/*   Updated: 2023/04/04 17:38:33 by tfregni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,17 +35,28 @@ void	get_prompt(t_shell *s)
 
 	while (1)
 	{
-		cmd = readline("> ");
+		cmd = readline(s->prompt);
 		// rl_on_new_line();
 		// rl_redisplay();
 		if (*cmd)
 		{
 			add_history(cmd);
 			lexer(s, cmd);
-			write(1, "done\n", 5);
+			// write(1, "done\n", 5);
 			free(cmd);
 		}
 	}
+}
+
+char	*get_username(t_shell *s)
+{
+	char	*usr;
+
+	(void) s;
+	usr = getenv("USER");
+	if (!usr)
+		ft_strlcpy(usr, "guest", 6);
+	return (usr);
 }
 
 /* more elaborate version of throw error */
@@ -86,6 +97,14 @@ char	**matrix_dup(char **matrix, int extra)
 	return (new);
 }
 
+char	*create_prompt(t_shell *s)
+{
+	char	*prompt;
+
+	prompt = ft_strnjoin(5, RED, s->user, YELLOW, "@minishell > ", DEFAULT);
+	return (prompt);
+}
+
 /* Since getenv will not work anyway maybe we don't
 need the real env to point to our duplicated one */
 t_shell	*init(char ***env)
@@ -98,6 +117,8 @@ t_shell	*init(char ***env)
 	shell->env = matrix_dup(*env, 0);
 	*env = shell->env;
 	shell->path = ft_split(getenv("PATH"), ':');
+	shell->user = get_username(shell);
+	shell->prompt = create_prompt(shell);
 	//ft_print_strarr(shell->path);
 	return (shell);
 }
@@ -105,6 +126,7 @@ t_shell	*init(char ***env)
 void	free_shell(t_shell *shell)
 {
 	ft_free_str_arr(shell->path);
+	free(shell->prompt);
 	//rl_clear_history();
 	/* free(shell->lexer)*/
 	/* free(shell->parser)*/
