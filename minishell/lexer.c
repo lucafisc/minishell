@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tfregni <tfregni@student.42berlin.de>      +#+  +:+       +#+        */
+/*   By: lde-ross <lde-ross@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/28 14:12:19 by lde-ross          #+#    #+#             */
-/*   Updated: 2023/04/03 17:23:02 by tfregni          ###   ########.fr       */
+/*   Updated: 2023/04/03 19:20:02 by lde-ross         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,11 +55,13 @@ t_lexer	*lexer(char *fmt)
 	{
 		ft_dbllst_addback(&first, ft_dbllstnew(raw_tokens[i], i));
 	}
-	while (first)
-	{
-		printf("%d - %s\n", first->info, first->data);
-		first = first->next;
-	}
+	// while (first)
+	// {
+	// 	printf("%d - %s\n", first->info, first->data);
+	// 	first = first->next;
+	// }
+	print_list(&first);
+	split_list(&first);
 	return (first);
 }
 

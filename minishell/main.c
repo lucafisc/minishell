@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tfregni <tfregni@student.42berlin.de>      +#+  +:+       +#+        */
+/*   By: lde-ross <lde-ross@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 15:41:38 by tfregni           #+#    #+#             */
-/*   Updated: 2023/04/03 16:43:19 by tfregni          ###   ########.fr       */
+/*   Updated: 2023/04/03 19:20:47 by lde-ross         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,7 +104,7 @@ t_shell	*init(char ***env)
 void	free_shell(t_shell *shell)
 {
 	ft_free_str_arr(shell->path);
-	rl_clear_history();
+	//rl_clear_history();
 	/* free(shell->lexer)*/
 	/* free(shell->parser)*/
 	free(shell);

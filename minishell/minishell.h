@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tfregni <tfregni@student.42berlin.de>      +#+  +:+       +#+        */
+/*   By: lde-ross <lde-ross@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 16:02:25 by tfregni           #+#    #+#             */
-/*   Updated: 2023/04/03 17:22:46 by tfregni          ###   ########.fr       */
+/*   Updated: 2023/04/03 20:29:50 by lde-ross         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@
 # include "lexer.h"
 # include "parser.h"
 # define TRAIL_CHAR " \n\t><|\"$"
+# define SPLIT_CHAR "|<>"
 
 typedef enum s_bool
 {
@@ -54,6 +55,10 @@ typedef struct s_shell
 
 t_lexer	*lexer(char *fmt);
 void	init_signal(void);
-
 char	**ft_cmd_trim(char *str);
+void	print_list(t_lexer **list);
+void	split_list(t_lexer **list);
+int	count_words(char const *s, char c);
+char	**ft_split_keep(char const *s, char c);
+
 #endif

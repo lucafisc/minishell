@@ -3,70 +3,51 @@
 /*                                                        :::      ::::::::   */
 /*   lexer_list.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lde-ross <lde-ross@student.42berlin.de     +#+  +:+       +#+        */
+/*   By: lde-ross <lde-ross@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/03 15:53:30 by lde-ross          #+#    #+#             */
-/*   Updated: 2023/04/03 18:05:15 by lde-ross         ###   ########.fr       */
+/*   Updated: 2023/04/03 20:55:39 by lde-ross         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-t_lexer *ft_dbllstnew(char *data, int info)
-{
-	t_lexer *new;
-
-	new = malloc(sizeof(*new));
-	if (!new)
-		return (NULL);
-	new->data = ft_strdup(data);
-	new->info = info;
-	new->prev = NULL;
-	new->next = NULL;
-	return (new);
-}
-
-void ft_dbllst_addback(t_lexer **list, t_lexer *new)
-{
-	t_lexer *cur;
-
-	if (!new)
-		return;
-	cur = *list;
-	while (cur->next)
-		cur = cur->next;
-	cur->next = new;
-	new->prev = cur;
-	new->next = NULL;
-}
-
-t_bool *should_split(char *str)
+char should_split(char *str)
 {
 	int i;
-	char *c;
 
 	i = 0;
 	if (*str == '\'' || *str == '\"')
-		return (false);
+		return (0);
 	while (SPLIT_CHAR[i])
 	{
 		if (ft_strchr(str, SPLIT_CHAR[i]))
-			return (true);
+			return (SPLIT_CHAR[i]);
 		i++;
 	}
-	return (false);
+	return (0);
 }
 
 void	split_list(t_lexer **list)
 {
 	t_lexer *cur;
+	char **matrix;
+	char	c;
+	int		i;
 
 	cur = *list;
-	while (*cur)
+	while (cur)
 	{
-		if (should_split(cur->data))
+		if ((c = should_split(cur->data)) && cur->data[1])
 		{
+			printf("this is the split char: %c\n",c);
+			matrix = ft_split_keep(cur->data, c);
+			while (matrix[i])
+			{
+				/* code */
+			}
 			
+			ft_print_strarr(matrix);
 		}
 		cur = cur->next;
 	}
@@ -88,12 +69,10 @@ void print_list(t_lexer **list)
 	}
 }
 
-t_lexer *lexer_list(char **cmds)
-{
-	int i;
-	t_lexer *list;
+// t_lexer *lexer_list(char **cmds)
+// {
 
-	i = 0;
 
-	return (list);
-}
+
+// 	return (list);
+// }
