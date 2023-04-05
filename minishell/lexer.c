@@ -6,64 +6,21 @@
 /*   By: lde-ross <lde-ross@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/28 14:12:19 by lde-ross          #+#    #+#             */
-/*   Updated: 2023/04/05 14:16:15 by lde-ross         ###   ########.fr       */
+/*   Updated: 2023/04/05 16:37:12 by lde-ross         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-t_lexer	*ft_dbllstnew(char *data, int info, int index)
-{
-	t_lexer	*new;
-
-	new = malloc(sizeof(*new));
-	if (!new)
-		return (NULL);
-	new->data = ft_strdup(data);
-	new->info = info;
-	new->pipe = 0;
-	new->prev = NULL;
-	new->next = NULL;
-	new->index = index;
-	return (new);
-}
-
-void	ft_dbllst_addback(t_lexer **list, t_lexer *new)
-{
-	t_lexer	*cur;
-
-	if (!new)
-		return ;
-	cur = *list;
-	while (cur->next)
-		cur = cur->next;
-	cur->next = new;
-	new->prev = cur;
-	new->next = NULL;
-}
-
 t_lexer	*lexer(char *fmt)
 {
-	t_lexer	*first;
+	t_lexer	*list;
 	char	**raw_tokens;
-	int		i;
 
-	i = 0;
-	// raw_tokens = ft_split(fmt, ' ');
 	raw_tokens = ft_cmd_trim(fmt);
-	first = ft_dbllstnew(raw_tokens[i], i, i);
-	while (raw_tokens[++i])
-	{
-		ft_dbllst_addback(&first, ft_dbllstnew(raw_tokens[i], i , i));
-	}
-	// while (first)
-	// {
-	// 	printf("%d - %s\n", first->info, first->data);
-	// 	first = first->next;
-	// }
-	print_list(&first);
-	split_list(&first);
-	return (first);
+	list = new_lexer_list_from_matrix(raw_tokens);
+	split_list(&list);
+	return (list);
 }
 
 // t_lexer	*lexer(char *fmt)

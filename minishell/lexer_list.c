@@ -6,7 +6,7 @@
 /*   By: lde-ross <lde-ross@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/03 15:53:30 by lde-ross          #+#    #+#             */
-/*   Updated: 2023/04/05 14:43:13 by lde-ross         ###   ########.fr       */
+/*   Updated: 2023/04/05 16:58:08 by lde-ross         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ char should_split(char *str)
 	int i;
 
 	i = 0;
-	if (*str == '\'' || *str == '\"')
+	if (*str == '\'' || *str == '\"' || !str[1])
 		return (0);
 	while (SPLIT_CHAR[i])
 	{
@@ -28,49 +28,42 @@ char should_split(char *str)
 	return (0);
 }
 
-t_lexer *new_lexer_list_from_matrix(char **matrix)
+t_lexer	*replace_node_by_list(t_lexer **list, t_lexer *node, t_lexer **to_insert)
 {
+	t_lexer	*new_list;
+	t_lexer	*old;
 	t_lexer	*new;
 	int		i;
 
+	old = *list;
+	new = *to_insert;
 	i = 0;
-	while (matrix[i])
+	while (old)
 	{
-		if (i == 0)
-			new = ft_dbllstnew(matrix[i], 1, i);
+		if (old->index == node->index)
+		{
+			while (new)
+			{
+				if (i == 0)
+					new_list = ft_dbllstnew(new->data, new->info, i);
+				else
+					ft_dbllst_addback(&new_list, ft_dbllstnew(new->data, new->info, i));
+				new = new->next;
+				i++;
+			}
+		}
 		else
-			ft_dbllst_addback(&new, ft_dbllstnew(matrix[i], 1, i));
+		{
+			if (i == 0)
+				new_list = ft_dbllstnew(old->data, old->info, i);
+			else
+				ft_dbllst_addback(&new_list, ft_dbllstnew(old->data, old->info, i));
 			i++;
+		}
+		old = old->next;
 	}
-	return (new);
-}
-
-void	replace_node_by_list(t_lexer **list, t_lexer **node, t_lexer **new)
-{
-	t_lexer	*prev;
-	t_lexer	*cur;
-	t_lexer *nd;
-	t_lexer	*x;
-
-	cur = *new;
-	nd = *list;
-	x = *node;
-	while (nd->index != x->index)
-		nd = nd->next;
-	if (nd->prev)
-	{
-		prev = nd->prev;
-		prev->next = cur;	
-		cur->prev = prev;
-	}
-	while (cur->next)
-		cur = cur->next;
-	cur->next = nd->next;
-	//free node!
-	printf("replaced list\n");
-	//printf("index: %d\n", nd->index);
-	if (nd->index == 0 && !nd->next)
-		*list = cur;
+	free_lexer_list(list);
+	return (new_list);
 }
 
 void	split_list(t_lexer **list)
@@ -83,40 +76,16 @@ void	split_list(t_lexer **list)
 	cur = *list;
 	while (cur)
 	{
-		if ((c = should_split(cur->data)) && cur->data[1])
+		if ((c = should_split(cur->data)))
 		{
 			matrix = ft_split_keep(cur->data, c);
 			new = new_lexer_list_from_matrix(matrix);
 			ft_free_str_arr(matrix);
-			replace_node_by_list(list, &cur, &new);
-			// print_list(&new);
+			*list = replace_node_by_list(list, cur, &new);
 			cur = *list;
 		}
-		cur = cur->next;
+		else
+			cur = cur->next;
 	}
 	print_list(list);
-	//printf("index: %d\n", cur->index);
 }
-
-void print_list(t_lexer **list)
-{
-	t_lexer *cur;
-	int i;
-
-	i = 1;
-	cur = *list;
-	while (cur)
-	{
-		printf("node %d:%s\n", i, cur->data);
-		cur = cur->next;
-		i++;
-	}
-}
-
-// t_lexer *lexer_list(char **cmds)
-// {
-
-
-
-// 	return (list);
-// }
