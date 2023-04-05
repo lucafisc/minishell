@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer_list.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lde-ross <lde-ross@student.42berlin.de>    +#+  +:+       +#+        */
+/*   By: lde-ross <lde-ross@student.42berlin.de     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/03 15:53:30 by lde-ross          #+#    #+#             */
-/*   Updated: 2023/04/05 16:58:08 by lde-ross         ###   ########.fr       */
+/*   Updated: 2023/04/05 17:32:20 by lde-ross         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,7 @@ t_lexer	*replace_node_by_list(t_lexer **list, t_lexer *node, t_lexer **to_insert
 		old = old->next;
 	}
 	free_lexer_list(list);
+	free_lexer_list(to_insert);
 	return (new_list);
 }
 

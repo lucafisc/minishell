@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lde-ross <lde-ross@student.42berlin.de>    +#+  +:+       +#+        */
+/*   By: lde-ross <lde-ross@student.42berlin.de     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 15:41:38 by tfregni           #+#    #+#             */
-/*   Updated: 2023/04/03 19:20:47 by lde-ross         ###   ########.fr       */
+/*   Updated: 2023/04/05 17:35:24 by lde-ross         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,8 +32,10 @@
 void	get_prompt(void)
 {
 	char	*cmd;
+	int		i = 0;
+	t_lexer	*list;
 
-	while (1)
+	while (i == 0)
 	{
 		cmd = readline("> ");
 		// rl_on_new_line();
@@ -41,9 +43,11 @@ void	get_prompt(void)
 		if (*cmd)
 		{
 			add_history(cmd);
-			lexer(cmd);
+			list = lexer(cmd);
+			free_lexer_list(&list);
 			free(cmd);
 		}
+		i++;
 	}
 }
 
@@ -104,6 +108,7 @@ t_shell	*init(char ***env)
 void	free_shell(t_shell *shell)
 {
 	ft_free_str_arr(shell->path);
+	ft_free_str_arr(shell->env);
 	//rl_clear_history();
 	/* free(shell->lexer)*/
 	/* free(shell->parser)*/

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lde-ross <lde-ross@student.42berlin.de>    +#+  +:+       +#+        */
+/*   By: lde-ross <lde-ross@student.42berlin.de     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/28 14:12:19 by lde-ross          #+#    #+#             */
-/*   Updated: 2023/04/05 16:37:12 by lde-ross         ###   ########.fr       */
+/*   Updated: 2023/04/05 17:30:46 by lde-ross         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ t_lexer	*lexer(char *fmt)
 
 	raw_tokens = ft_cmd_trim(fmt);
 	list = new_lexer_list_from_matrix(raw_tokens);
+	ft_free_str_arr(raw_tokens);
 	split_list(&list);
 	return (list);
 }

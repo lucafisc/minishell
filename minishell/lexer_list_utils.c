@@ -42,7 +42,7 @@ t_lexer *new_lexer_list_from_matrix(char **matrix)
 			new = ft_dbllstnew(matrix[i], 1, i);
 		else
 			ft_dbllst_addback(&new, ft_dbllstnew(matrix[i], 1, i));
-			i++;
+		i++;
 	}
 	return (new);
 }
@@ -68,9 +68,8 @@ void	free_lexer_list(t_lexer **list)
 	while (cur)
 	{
 		temp = cur;
+		cur = cur->next;
 		free(temp->data);
 		free(temp);
-		cur = cur->next;
 	}
-	cur = NULL;
 }
