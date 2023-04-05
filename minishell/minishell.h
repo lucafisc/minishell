@@ -6,7 +6,7 @@
 /*   By: lde-ross <lde-ross@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 16:02:25 by tfregni           #+#    #+#             */
-/*   Updated: 2023/04/03 20:29:50 by lde-ross         ###   ########.fr       */
+/*   Updated: 2023/04/05 14:17:08 by lde-ross         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,8 @@ void	init_signal(void);
 char	**ft_cmd_trim(char *str);
 void	print_list(t_lexer **list);
 void	split_list(t_lexer **list);
-int	count_words(char const *s, char c);
+int		count_words(char const *s, char c);
 char	**ft_split_keep(char const *s, char c);
-
+t_lexer	*ft_dbllstnew(char *data, int info, int index);
+void	ft_dbllst_addback(t_lexer **list, t_lexer *new);
 #endif

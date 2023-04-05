@@ -57,7 +57,6 @@ char	**ft_split_keep(char const *s, char c)
 		{
 			arr[j] = calloc(2, sizeof(char));
 			arr[j][0] = c;
-			printf("this is string:%s\n", arr[j]);
 			i++;
 			j++;
 		}
@@ -65,7 +64,6 @@ char	**ft_split_keep(char const *s, char c)
 		{
 			len = str_siz_keep((s + i), c);
 			arr[j] = ft_substr(s, i, len);
-			printf("this is string:%s\n", arr[j]);
 			j++;
 			i += len;
 		}
