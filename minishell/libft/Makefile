@@ -18,9 +18,13 @@ bonus: ${B_OBJECTS}
 	${CC} -c ${CFLAGS} $< -o $@
 
 clean:
+ifneq ("$(wildcard $(OBJECTS))", "")
 	rm -f ${OBJECTS} ${B_OBJECTS}
+endif
 
 fclean: clean
+ifneq ("$(wildcard $(NAME))", "")
 	rm -f $(NAME)
+endif
 
 re: fclean all

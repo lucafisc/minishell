@@ -6,7 +6,7 @@
 #    By: tfregni <tfregni@student.42berlin.de>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/04/04 13:34:50 by tfregni           #+#    #+#              #
-#    Updated: 2023/04/04 13:34:52 by tfregni          ###   ########.fr        #
+#    Updated: 2023/04/05 09:22:11 by tfregni          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -35,13 +35,17 @@ obj/%.o: %.c
 	$(CC) -c $(CFLAGS) $(INCLUDES) $< -o $@
 
 clean:
+ifneq ("$(wildcard $(OBJ))", "")
 	rm -f $(OBJ)
 	rm -rf obj
-	$(MAKE) -C libft clean
+endif
+	@$(MAKE) -C libft clean
 
 fclean: clean
-	$(MAKE) -C libft fclean
+ifneq ("$(wildcard $(NAME))", "")
 	rm -f $(NAME)
+endif
+	@$(MAKE) -C libft fclean
 
 re: fclean
 	$(MAKE) all
