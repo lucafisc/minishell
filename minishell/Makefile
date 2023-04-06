@@ -6,7 +6,7 @@
 #    By: tfregni <tfregni@student.42berlin.de>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/04/04 13:34:50 by tfregni           #+#    #+#              #
-#    Updated: 2023/04/06 11:35:18 by tfregni          ###   ########.fr        #
+#    Updated: 2023/04/06 12:00:29 by tfregni          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -36,14 +36,20 @@ obj/%.o: %.c
 
 clean:
 ifneq ("$(wildcard $(OBJ))", "")
+ifneq ("$(wildcard $(OBJ))", "")
 	rm -f $(OBJ)
 	rm -rf obj
+endif
+	@$(MAKE) -C libft clean
 endif
 	@$(MAKE) -C libft clean
 
 fclean: clean
 ifneq ("$(wildcard $(NAME))", "")
+ifneq ("$(wildcard $(NAME))", "")
 	rm -f $(NAME)
+endif
+	@$(MAKE) -C libft fclean
 endif
 	@$(MAKE) -C libft fclean
 

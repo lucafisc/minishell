@@ -3,16 +3,49 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lde-ross <lde-ross@student.42berlin.de     +#+  +:+       +#+        */
+/*   By: tfregni <tfregni@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/03/28 14:12:19 by lde-ross          #+#    #+#             */
-/*   Updated: 2023/04/05 17:30:46 by lde-ross         ###   ########.fr       */
+/*   Created: Invalid date        by                   #+#    #+#             */
+/*   Updated: 2023/04/06 12:10:34 by tfregni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+/* ************************************************************************** */
+
+
+
 #include "minishell.h"
 
-t_lexer	*lexer(char *fmt)
+t_lexer	*ft_dbllstnew(char *data, int info)
+{
+	t_lexer	*new;
+
+	new = malloc(sizeof(*new));
+	if (!new)
+		return (NULL);
+	new->data = ft_strdup(data);
+	new->info = info;
+	new->pipe = 0;
+	new->prev = NULL;
+	new->next = NULL;
+	return (new);
+}
+
+void	ft_dbllst_addback(t_lexer **list, t_lexer *new)
+{
+	t_lexer	*cur;
+
+	if (!new)
+		return ;
+	cur = *list;
+	while (cur->next)
+		cur = cur->next;
+	cur->next = new;
+	new->prev = cur;
+	new->next = NULL;
+}
+
+t_lexer	*lexer(t_shell *s, char *fmt)
 {
 	t_lexer	*list;
 	char	**raw_tokens;

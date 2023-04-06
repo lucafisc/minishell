@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lde-ross <lde-ross@student.42berlin.de     +#+  +:+       +#+        */
+/*   By: tfregni <tfregni@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 15:41:38 by tfregni           #+#    #+#             */
-/*   Updated: 2023/04/05 17:35:24 by lde-ross         ###   ########.fr       */
+/*   Updated: 2023/04/06 12:13:48 by tfregni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@
 // 	}
 // }
 
-void	get_prompt(void)
+void	get_prompt(t_shell *s)
 {
 	char	*cmd;
 	int		i = 0;
@@ -37,18 +37,30 @@ void	get_prompt(void)
 
 	while (i == 0)
 	{
-		cmd = readline("> ");
+		cmd = readline(s->prompt);
 		// rl_on_new_line();
 		// rl_redisplay();
 		if (*cmd)
 		{
 			add_history(cmd);
-			list = lexer(cmd);
+			list = lexer(s, cmd);
+			// write(1, "done\n", 5);
 			free_lexer_list(&list);
 			free(cmd);
 		}
 		i++;
 	}
+}
+
+char	*get_username(t_shell *s)
+{
+	char	*usr;
+
+	(void) s;
+	usr = getenv("USER");
+	if (!usr)
+		ft_strlcpy(usr, "guest", 6);
+	return (usr);
 }
 
 /* more elaborate version of throw error */
@@ -89,6 +101,40 @@ char	**matrix_dup(char **matrix, int extra)
 	return (new);
 }
 
+char	*create_cwd(t_shell *s)
+{
+	char	*current;
+	char	*home;
+	char	*tmp;
+
+	(void) s;
+	home = getenv("HOME");
+	if (!home)
+		return (ft_strdup(""));
+	current = getcwd(NULL, 0);
+	ft_strdup(current);
+	if (ft_strnstr(getcwd(NULL, 0), home, ft_strlen(home)))
+	{
+		tmp = current;
+		current += ft_strlen(home);
+		current = ft_strjoin("~", current);
+		free(tmp);
+	}
+	printf("%s\n", current);
+	return (current);
+}
+
+char	*create_prompt(t_shell *s)
+{
+	char	*tmp;
+	char	*prompt;
+
+	tmp = create_cwd(s);
+	prompt = ft_strnjoin(7, RED, s->user, YELLOW, "@minishell ", DEFAULT, tmp, " > ");
+	free(tmp);
+	return (prompt);
+}
+
 /* Since getenv will not work anyway maybe we don't
 need the real env to point to our duplicated one */
 t_shell	*init(char ***env)
@@ -101,6 +147,8 @@ t_shell	*init(char ***env)
 	shell->env = matrix_dup(*env, 0);
 	*env = shell->env;
 	shell->path = ft_split(getenv("PATH"), ':');
+	shell->user = get_username(shell);
+	shell->prompt = create_prompt(shell);
 	//ft_print_strarr(shell->path);
 	return (shell);
 }
@@ -108,6 +156,7 @@ t_shell	*init(char ***env)
 void	free_shell(t_shell *shell)
 {
 	ft_free_str_arr(shell->path);
+	free(shell->prompt);
 	ft_free_str_arr(shell->env);
 	//rl_clear_history();
 	/* free(shell->lexer)*/
@@ -125,6 +174,6 @@ int	main(int ac, char *av[], char *env[])
 	if (!shell)
 		return (throw_err("init", NULL));
 	init_signal();
-	get_prompt();
+	get_prompt(shell);
 	free_shell(shell);
 }
