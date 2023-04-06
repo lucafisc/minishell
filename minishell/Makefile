@@ -6,7 +6,7 @@
 #    By: tfregni <tfregni@student.42berlin.de>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/04/04 13:34:50 by tfregni           #+#    #+#              #
-#    Updated: 2023/04/05 09:22:11 by tfregni          ###   ########.fr        #
+#    Updated: 2023/04/06 10:55:52 by tfregni          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -49,3 +49,5 @@ endif
 
 re: fclean
 	$(MAKE) all
+
+.PHONY: all clean fclean
