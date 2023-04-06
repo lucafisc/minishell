@@ -6,7 +6,7 @@
 /*   By: lde-ross <lde-ross@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/03 15:53:30 by lde-ross          #+#    #+#             */
-/*   Updated: 2023/04/06 09:33:23 by lde-ross         ###   ########.fr       */
+/*   Updated: 2023/04/06 09:44:26 by lde-ross         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,27 +28,31 @@ char should_split(char *str)
 	return (0);
 }
 
+void	fill_new_nodes_lexer(t_lexer **to_insert, t_lexer **new_list, int *i)
+{
+	t_lexer	*new;
+
+	new = *to_insert;
+	while (new)
+	{
+		fill_lexer_list(new_list, new->data, new->info, *i);
+		new = new->next;
+		*i += 1;
+	}
+}
+
 t_lexer	*replace_node_by_list(t_lexer **list, t_lexer *node, t_lexer **to_insert)
 {
 	t_lexer	*new_list;
 	t_lexer	*old;
-	t_lexer	*new;
 	int		i;
 
 	old = *list;
-	new = *to_insert;
 	i = 0;
 	while (old)
 	{
 		if (old->index == node->index)
-		{
-			while (new)
-			{
-				fill_lexer_list(&new_list, new->data, new->info, i);
-				new = new->next;
-				i++;
-			}
-		}
+			fill_new_nodes_lexer(to_insert, &new_list, &i);
 		else
 		{
 			fill_lexer_list(&new_list, old->data, old->info, i);
