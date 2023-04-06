@@ -30,6 +30,14 @@ void	ft_dbllst_addback(t_lexer **list, t_lexer *new)
 	new->next = NULL;
 }
 
+void	fill_lexer_list(t_lexer **node, char *data, int info, int i)
+{
+	if (i == 0)
+		*node = ft_dbllstnew(data, info, i);
+	else
+		ft_dbllst_addback(node, ft_dbllstnew(data, info, i));
+}
+
 t_lexer *new_lexer_list_from_matrix(char **matrix)
 {
 	t_lexer	*new;
@@ -38,10 +46,7 @@ t_lexer *new_lexer_list_from_matrix(char **matrix)
 	i = 0;
 	while (matrix[i])
 	{
-		if (i == 0)
-			new = ft_dbllstnew(matrix[i], 1, i);
-		else
-			ft_dbllst_addback(&new, ft_dbllstnew(matrix[i], 1, i));
+		fill_lexer_list(&new, matrix[i], 1, i);
 		i++;
 	}
 	return (new);

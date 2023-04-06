@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer_list.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lde-ross <lde-ross@student.42berlin.de     +#+  +:+       +#+        */
+/*   By: lde-ross <lde-ross@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/03 15:53:30 by lde-ross          #+#    #+#             */
-/*   Updated: 2023/04/05 17:32:20 by lde-ross         ###   ########.fr       */
+/*   Updated: 2023/04/06 09:33:23 by lde-ross         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,20 +44,14 @@ t_lexer	*replace_node_by_list(t_lexer **list, t_lexer *node, t_lexer **to_insert
 		{
 			while (new)
 			{
-				if (i == 0)
-					new_list = ft_dbllstnew(new->data, new->info, i);
-				else
-					ft_dbllst_addback(&new_list, ft_dbllstnew(new->data, new->info, i));
+				fill_lexer_list(&new_list, new->data, new->info, i);
 				new = new->next;
 				i++;
 			}
 		}
 		else
 		{
-			if (i == 0)
-				new_list = ft_dbllstnew(old->data, old->info, i);
-			else
-				ft_dbllst_addback(&new_list, ft_dbllstnew(old->data, old->info, i));
+			fill_lexer_list(&new_list, old->data, old->info, i);
 			i++;
 		}
 		old = old->next;

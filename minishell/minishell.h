@@ -6,7 +6,7 @@
 /*   By: lde-ross <lde-ross@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 16:02:25 by tfregni           #+#    #+#             */
-/*   Updated: 2023/04/05 16:57:28 by lde-ross         ###   ########.fr       */
+/*   Updated: 2023/04/06 09:32:17 by lde-ross         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,5 +64,7 @@ t_lexer	*ft_dbllstnew(char *data, int info, int index);
 void	ft_dbllst_addback(t_lexer **list, t_lexer *new);
 t_lexer	*new_lexer_list_from_matrix(char **matrix);
 void	free_lexer_list(t_lexer **list);
+void	fill_lexer_list(t_lexer **node, char *data, int info, int i);
+
 
 #endif
