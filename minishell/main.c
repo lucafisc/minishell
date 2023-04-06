@@ -6,7 +6,7 @@
 /*   By: tfregni <tfregni@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 15:41:38 by tfregni           #+#    #+#             */
-/*   Updated: 2023/04/06 12:13:48 by tfregni          ###   ########.fr       */
+/*   Updated: 2023/04/06 12:28:21 by tfregni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ void	get_prompt(t_shell *s)
 			free_lexer_list(&list);
 			free(cmd);
 		}
-		i++;
+		// i++;
 	}
 }
 
