@@ -6,7 +6,7 @@
 /*   By: tfregni <tfregni@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/03 15:53:30 by lde-ross          #+#    #+#             */
-/*   Updated: 2023/04/06 12:11:53 by tfregni          ###   ########.fr       */
+/*   Updated: 2023/04/06 12:16:01 by tfregni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,11 +69,9 @@ void	split_list(t_lexer **list)
 {
 	t_lexer	*cur;
 	t_lexer	*new;
-	char **matrix;
+	char	**matrix;
 	char	c;
 
-	(void) temp;
-	(void) new;
 	cur = *list;
 	while (cur)
 	{

@@ -6,7 +6,7 @@
 /*   By: tfregni <tfregni@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 16:02:25 by tfregni           #+#    #+#             */
-/*   Updated: 2023/04/06 11:56:46 by tfregni          ###   ########.fr       */
+/*   Updated: 2023/04/06 12:17:21 by tfregni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ void	execute(t_shell *s, t_lexer *lex);
 /* BUILTINS */
 void	ft_cd(char *path, char ***env);
 /* LIST UTILITIES */
-t_lexer	*ft_dbllstnew(char *data, int info);
+t_lexer	*ft_dbllstnew(char *data, int info, int index);
 void	ft_dbllst_addback(t_lexer **list, t_lexer *new);
 /* ERROR HANDLING*/
 int		throw_err(char *str, char *arg);
