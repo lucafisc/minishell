@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executor.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tfregni <tfregni@student.42berlin.de>      +#+  +:+       +#+        */
+/*   By: lde-ross <lde-ross@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/04 12:58:08 by tfregni           #+#    #+#             */
-/*   Updated: 2023/04/04 17:24:25 by tfregni          ###   ########.fr       */
+/*   Updated: 2023/04/06 18:03:09 by lde-ross         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ int	ft_lexersize(t_lexer *lst)
 	int	i;
 
 	i = 0;
-	while (lst)
+	while (lst && !ft_strncmp(lex->data, "|", 1) == 0)
 	{
 		lst = lst->next;
 		i++;
@@ -25,13 +25,49 @@ int	ft_lexersize(t_lexer *lst)
 	return (i);
 }
 
-t_command	*simple_parser(t_lexer *lex)
+int		count_cmds(t_lexer *lex)
+{
+	t_lexer	*lex;
+	int		n_cmds;
+
+	n_cmds = 1;
+	while (lex)
+	{
+		if (ft_strncmp(lex->data, "|", 1) == 0)
+			n_cmds++;
+		lex = lex->next;
+		
+	}
+	return (n_cmds);
+}
+
+void	fill_cmds_list(t_command **cmd, t_lexer *lex, int n_cmds)
+{
+	int	i;
+
+	i = 1;
+	while (i < n_cmds)
+	{
+		if (i == 1)
+		{
+			*cmds = 
+			new = malloc(sizeof(*new));
+		}
+	}
+	
+}
+
+t_command	**simple_parser(t_lexer *lex)
 {
 	t_command	*cmd;
 	int			i;
 	int			len;
+	int			n_cmds;
 
-	cmd = malloc(sizeof(*cmd));
+	n_cmds = count_cmds(lex);
+	fill_cmds_list(&cmd, lex, n_cmds);
+
+
 	if (!cmd)
 		return (NULL);
 	cmd->cmd = malloc(sizeof(char *) * (ft_lexersize(lex) + 1));
@@ -67,7 +103,7 @@ void	free_command(t_command *cmd)
 
 void	execute(t_shell *s, t_lexer *lex)
 {
-	t_command	*parsed_cmd;
+	t_command	**parsed_cmd;
 	pid_t		pid;
 
 	parsed_cmd = simple_parser(lex);

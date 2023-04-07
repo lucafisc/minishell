@@ -6,7 +6,7 @@
 /*   By: lde-ross <lde-ross@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/28 13:34:05 by lde-ross          #+#    #+#             */
-/*   Updated: 2023/04/03 19:21:33 by lde-ross         ###   ########.fr       */
+/*   Updated: 2023/04/06 16:37:41 by lde-ross         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void	handler(int signal)
 {
 	if (signal == SIGINT)
 	{
-		//ft_putstr_fd("Handle SIGINT\n", 1);
+		ft_putstr_fd("Handle SIGINT\n", 1);
 		//rl_replace_line("Hello", 0);
 	}
 	else if (signal == SIGQUIT)
