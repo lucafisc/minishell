@@ -7,7 +7,7 @@
 	{
 	"name":"Launch",
 	"type":"cppdbg",
-	"program":"${workspaceFolder}/minishell",
+	"program":"${workspaceFolder}/minishell/minishell",
 	"args":["file1", "cmd1", "cm2", "file2"],
 	"cwd":"${workspaceFolder}",
 	"request":"launch",

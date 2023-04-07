@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tfregni <tfregni@student.42berlin.de>      +#+  +:+       +#+        */
+/*   By: lde-ross <lde-ross@student.42berlin.de     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 16:02:25 by tfregni           #+#    #+#             */
-/*   Updated: 2023/04/06 12:17:21 by tfregni          ###   ########.fr       */
+/*   Updated: 2023/04/07 17:20:32 by lde-ross         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ typedef struct s_shell
 	t_builtins	*builtins;
 }				t_shell;
 
-t_lexer	*lexer(t_shell *s, char *fmt);
+t_lexer	*lexer(char *fmt);
 void	init_signal(void);
 char	**ft_cmd_trim(char *str);
 void	print_list(t_lexer **list);
@@ -84,5 +84,8 @@ t_lexer	*ft_dbllstnew(char *data, int info, int index);
 void	ft_dbllst_addback(t_lexer **list, t_lexer *new);
 /* ERROR HANDLING*/
 int		throw_err(char *str, char *arg);
+void	test_parser(t_lexer *lex);
+
+
 
 #endif

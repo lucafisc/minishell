@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tfregni <tfregni@student.42berlin.de>      +#+  +:+       +#+        */
+/*   By: lde-ross <lde-ross@student.42berlin.de     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2023/04/06 12:22:12 by tfregni          ###   ########.fr       */
+/*   Updated: 2023/04/07 16:38:58 by lde-ross         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@
 // 	new->next = NULL;
 // }
 
-t_lexer	*lexer(t_shell *s, char *fmt)
+t_lexer	*lexer(char *fmt)
 {
 	t_lexer	*list;
 	char	**raw_tokens;
@@ -54,7 +54,7 @@ t_lexer	*lexer(t_shell *s, char *fmt)
 	list = new_lexer_list_from_matrix(raw_tokens);
 	ft_free_str_arr(raw_tokens);
 	split_list(&list);
-	execute(s, list);
+	//execute(s, list);
 	return (list);
 }
 

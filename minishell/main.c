@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tfregni <tfregni@student.42berlin.de>      +#+  +:+       +#+        */
+/*   By: lde-ross <lde-ross@student.42berlin.de     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 15:41:38 by tfregni           #+#    #+#             */
-/*   Updated: 2023/04/06 12:28:21 by tfregni          ###   ########.fr       */
+/*   Updated: 2023/04/07 18:32:46 by lde-ross         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,17 +38,19 @@ void	get_prompt(t_shell *s)
 	while (i == 0)
 	{
 		cmd = readline(s->prompt);
-		// rl_on_new_line();
-		// rl_redisplay();
+		 if (cmd == NULL) {
+            printf("EOF encountered. Exiting...\n");
+			// has to free some stuff here (cwd)
+            exit(1);
+        }
 		if (*cmd)
 		{
 			add_history(cmd);
-			list = lexer(s, cmd);
-			// write(1, "done\n", 5);
+			list = lexer(cmd);
+			test_parser(list);
 			free_lexer_list(&list);
 			free(cmd);
 		}
-		// i++;
 	}
 }
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lde-ross <lde-ross@student.42berlin.de>    +#+  +:+       +#+        */
+/*   By: lde-ross <lde-ross@student.42berlin.de     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/28 16:31:54 by tfregni           #+#    #+#             */
-/*   Updated: 2023/04/05 14:13:25 by lde-ross         ###   ########.fr       */
+/*   Updated: 2023/04/07 16:23:40 by lde-ross         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,19 +29,6 @@ t_command	*ft_dbllstnew(int len)
 	return (new);
 }
 
-void	ft_dbllst_addback(t_command **list, t_command *new)
-{
-	t_command	*cur;
-
-	if (!new)
-		return ;
-	cur = *list;
-	while (cur->next)
-		cur = cur->next;
-	cur->next = new;
-	new->prev = cur;
-	new->next = NULL;
-}
 
 t_command	*parser(t_lexer *lexer)
 {
