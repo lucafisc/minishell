@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signal.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lde-ross <lde-ross@student.42berlin.de>    +#+  +:+       +#+        */
+/*   By: tfregni <tfregni@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/28 13:34:05 by lde-ross          #+#    #+#             */
-/*   Updated: 2023/04/03 19:21:33 by lde-ross         ###   ########.fr       */
+/*   Updated: 2023/04/07 11:56:26 by tfregni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ void	init_act(struct sigaction *act, void (*handler)(int))
 	(*act).sa_flags = 0;
 }
 
-void	init_signal()
+void	init_signal(void)
 {
 	struct sigaction	act;
 
