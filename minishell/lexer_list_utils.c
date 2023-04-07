@@ -38,7 +38,7 @@ void	fill_lexer_list(t_lexer **node, char *data, int info, int i)
 		ft_dbllst_addback(node, ft_dbllstnew(data, info, i));
 }
 
-t_lexer *new_lexer_list_from_matrix(char **matrix)
+t_lexer	*new_lexer_list_from_matrix(char **matrix)
 {
 	t_lexer	*new;
 	int		i;
@@ -52,9 +52,9 @@ t_lexer *new_lexer_list_from_matrix(char **matrix)
 	return (new);
 }
 
-void print_list(t_lexer **list)
+void	print_list(t_lexer **list)
 {
-	t_lexer *cur;
+	t_lexer	*cur;
 
 	cur = *list;
 	while (cur)

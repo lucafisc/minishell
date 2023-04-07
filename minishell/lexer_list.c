@@ -6,15 +6,15 @@
 /*   By: tfregni <tfregni@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/03 15:53:30 by lde-ross          #+#    #+#             */
-/*   Updated: 2023/04/06 12:16:01 by tfregni          ###   ########.fr       */
+/*   Updated: 2023/04/07 11:55:08 by tfregni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-char should_split(char *str)
+char	should_split(char *str)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	if (*str == '\'' || *str == '\"' || !str[1])
