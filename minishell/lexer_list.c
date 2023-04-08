@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer_list.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lde-ross <lde-ross@student.42berlin.de>    +#+  +:+       +#+        */
+/*   By: lde-ross <lde-ross@student.42berlin.de     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/03 15:53:30 by lde-ross          #+#    #+#             */
-/*   Updated: 2023/04/06 16:54:41 by lde-ross         ###   ########.fr       */
+/*   Updated: 2023/04/08 17:49:07 by lde-ross         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,11 @@ char should_split(char *str)
 	while (SPLIT_CHAR[i])
 	{
 		if (ft_strchr(str, SPLIT_CHAR[i]))
+		{
+			if (str[0] == SPLIT_CHAR[i] && str[1] == SPLIT_CHAR[i] && !str[2] && SPLIT_CHAR[i] != '|')
+				return (0);
 			return (SPLIT_CHAR[i]);
+		}
 		i++;
 	}
 	return (0);
@@ -73,6 +77,7 @@ void	split_list(t_lexer **list)
 	char	c;
 
 	cur = *list;
+	print_list(list);
 	while (cur)
 	{
 		if ((c = should_split(cur->data)))
