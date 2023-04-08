@@ -6,7 +6,7 @@
 /*   By: lde-ross <lde-ross@student.42berlin.de     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 16:02:25 by tfregni           #+#    #+#             */
-/*   Updated: 2023/04/08 15:58:42 by lde-ross         ###   ########.fr       */
+/*   Updated: 2023/04/08 19:31:43 by lde-ross         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@
 # define SPLIT_CHAR "|<>"
 # define N_BUILTINS 5
 
-typedef enum s_bool
+typedef enum e_bool
 {
 	false,
 	true
@@ -46,6 +46,13 @@ enum e_state {
 	IN_S_QUOTE,
 	IN_D_QUOTE,
 };
+
+typedef enum e_redir {
+	OUT_WRITE = 1,
+	OUT_APPEND,
+	IN_READ,
+	HEREDOC,
+}	t_redir;
 
 typedef struct s_builtins
 {
@@ -88,10 +95,6 @@ void	test_parser(t_lexer *lex);
 t_command	*new_cmd_node(t_lexer	*start, int len);
 void	add_to_back_cmd(t_command **list, t_command *new);
 void	free_command(t_command **cmd);
-
-
-
-
-
+t_redir	is_redir(char *str);
 
 #endif

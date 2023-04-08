@@ -6,7 +6,7 @@
 /*   By: lde-ross <lde-ross@student.42berlin.de     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/28 16:31:54 by tfregni           #+#    #+#             */
-/*   Updated: 2023/04/08 16:02:41 by lde-ross         ###   ########.fr       */
+/*   Updated: 2023/04/08 19:01:06 by lde-ross         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,8 +48,12 @@ t_command	*new_cmd_list_from_lex(t_lexer *lex, int n_cmds)
 		start = lex;
 		while (lex && !is_pipe(lex->data))
 		{
-			len++;
-			lex = lex->next;
+			if (!is_redir(lex->data))
+				len++;
+			else
+				lex = lex->next;
+			if (lex)
+				lex = lex->next;
 		}
 		if (i == 1)
 			new = new_cmd_node(start, len);
@@ -81,6 +85,7 @@ void	test_parser(t_lexer *lex)
 	while (cmds)
 	{
 		printf("new node ____________\n");
+		printf("outfile fd: %d\n", cmds->outfile);
 		ft_print_strarr(cmds->cmd);
 		temp = cmds;
 		cmds = cmds->next;
