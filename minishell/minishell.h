@@ -6,7 +6,7 @@
 /*   By: tfregni <tfregni@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 16:02:25 by tfregni           #+#    #+#             */
-/*   Updated: 2023/04/06 12:17:21 by tfregni          ###   ########.fr       */
+/*   Updated: 2023/04/08 17:23:19 by tfregni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,8 @@
 # include <signal.h>
 # include <string.h>
 # include <errno.h>
+# include <sys/types.h>
+# include <sys/wait.h>
 # include "./libft/libft.h"
 # include "lexer.h"
 # include "parser.h"
@@ -47,13 +49,15 @@ enum e_state {
 	IN_D_QUOTE,
 };
 
+typedef struct s_shell	t_shell;
+
 typedef struct s_builtins
 {
 	char	*name;
-	void	(*func)(char *arg, char ***env);
+	void	(*func)(t_shell *s, t_command *c);
 }				t_builtins;
 
-typedef struct s_shell
+struct s_shell
 {
 	char		**env;
 	char		**path;
@@ -62,7 +66,7 @@ typedef struct s_shell
 	t_lexer		*lexer;
 	t_command	*cmd;
 	t_builtins	*builtins;
-}				t_shell;
+};
 
 t_lexer	*lexer(t_shell *s, char *fmt);
 void	init_signal(void);
@@ -78,7 +82,7 @@ void	fill_lexer_list(t_lexer **node, char *data, int info, int i);
 
 void	execute(t_shell *s, t_lexer *lex);
 /* BUILTINS */
-void	ft_cd(char *path, char ***env);
+void	ft_cd(t_shell *s, t_command *c);
 /* LIST UTILITIES */
 t_lexer	*ft_dbllstnew(char *data, int info, int index);
 void	ft_dbllst_addback(t_lexer **list, t_lexer *new);
