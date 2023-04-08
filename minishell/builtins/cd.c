@@ -6,7 +6,7 @@
 /*   By: tfregni <tfregni@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/30 07:33:56 by tfregni           #+#    #+#             */
-/*   Updated: 2023/04/08 18:21:34 by tfregni          ###   ########.fr       */
+/*   Updated: 2023/04/08 18:34:40 by tfregni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,7 +116,6 @@ int	main(int ac, char **av, char **env)
 	t_shell *s = malloc(sizeof(t_shell));
 	t_command *c = malloc(sizeof(t_command));
 	c->cmd = malloc(sizeof(*c->cmd) * 3);
-	write(1, "here\n", 5);
 	for (int i = 0; i < 2; i++)
 		c->cmd[i] = malloc(sizeof(char) * 100);
 	ft_strlcpy(c->cmd[0], "cd", 3);
