@@ -6,44 +6,84 @@
 /*   By: lde-ross <lde-ross@student.42berlin.de     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/28 16:31:54 by tfregni           #+#    #+#             */
-/*   Updated: 2023/04/07 16:23:40 by lde-ross         ###   ########.fr       */
+/*   Updated: 2023/04/08 16:02:41 by lde-ross         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-/* returns a node, the cmd list is already allocated and 0-term */
-t_command	*ft_dbllstnew(int len)
+t_bool	is_pipe(char *str)
+{
+	if (ft_strncmp(str, "|", 1) == 0)
+		return (true);
+	return (false);
+}
+
+int		count_cmds(t_lexer *lex)
+{
+	int		n_cmds;
+
+	n_cmds = 1;
+	while (lex)
+	{
+		if (is_pipe(lex->data))
+			n_cmds++;
+		lex = lex->next;
+		
+	}
+	return (n_cmds);
+}
+
+t_command	*new_cmd_list_from_lex(t_lexer *lex, int n_cmds)
 {
 	t_command	*new;
+	t_lexer		*start;
+	int			len;
+	int			i;
 
-	new = malloc(sizeof(*new));
-	if (!new)
-		return (NULL);
-	new->cmd = malloc(sizeof(*new->cmd) * (len + 1));
-	if (!new->cmd)
-		return (NULL);
-	new->cmd[len] = NULL;
-	new->prev = NULL;
-	new->next = NULL;
+	i = 1;
+	while (lex && i <= n_cmds)
+	{
+		len = 0;
+		start = lex;
+		while (lex && !is_pipe(lex->data))
+		{
+			len++;
+			lex = lex->next;
+		}
+		if (i == 1)
+			new = new_cmd_node(start, len);
+		else
+			add_to_back_cmd(&new, new_cmd_node(start, len));
+		i++;
+		if (lex && lex->next)
+			lex = lex->next;
+	}
 	return (new);
 }
 
-
-t_command	*parser(t_lexer *lexer)
+t_command	*parser(t_lexer *lex)
 {
-	int	len;
+	t_command	*cmd;
+	int			n_cmds;
 
-	while (lexer)
+	n_cmds = count_cmds(lex);
+	cmd = new_cmd_list_from_lex(lex, n_cmds);
+	return (cmd);
+}
+
+void	test_parser(t_lexer *lex)
+{
+	t_command	*cmds;
+	t_command	*temp;
+
+	cmds = parser(lex);
+	while (cmds)
 	{
-		len = 0;
-		/* inner loop to check for the pipe */
-		while (!lexer->pipe && lexer)
-		{
-
-			len++;
-			lexer = lexer->next;
-		}
-		lexer = lexer->next;
+		printf("new node ____________\n");
+		ft_print_strarr(cmds->cmd);
+		temp = cmds;
+		cmds = cmds->next;
+		free_command(&temp);
 	}
 }

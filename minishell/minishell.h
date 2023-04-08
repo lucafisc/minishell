@@ -6,7 +6,7 @@
 /*   By: lde-ross <lde-ross@student.42berlin.de     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 16:02:25 by tfregni           #+#    #+#             */
-/*   Updated: 2023/04/07 17:20:32 by lde-ross         ###   ########.fr       */
+/*   Updated: 2023/04/08 15:58:42 by lde-ross         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,6 +85,12 @@ void	ft_dbllst_addback(t_lexer **list, t_lexer *new);
 /* ERROR HANDLING*/
 int		throw_err(char *str, char *arg);
 void	test_parser(t_lexer *lex);
+t_command	*new_cmd_node(t_lexer	*start, int len);
+void	add_to_back_cmd(t_command **list, t_command *new);
+void	free_command(t_command **cmd);
+
+
+
 
 
 
