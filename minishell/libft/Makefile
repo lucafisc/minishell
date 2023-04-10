@@ -6,13 +6,10 @@ CC = cc
 CFLAGS = -Wall -Wextra -Werror
 NAME = libft.a
 
-all: $(NAME) bonus
+all: $(NAME)
 
-$(NAME): ${OBJECTS}
-	ar rc ${NAME} ${OBJECTS}
-
-bonus: ${B_OBJECTS}
-	ar rc ${NAME} ${B_OBJECTS}
+$(NAME): ${OBJECTS} ${B_OBJECTS}
+	ar rc ${NAME} ${OBJECTS} ${B_OBJECTS}
 
 %.o: %.c
 	${CC} -c ${CFLAGS} $< -o $@
@@ -28,3 +25,5 @@ ifneq ("$(wildcard $(NAME))", "")
 endif
 
 re: fclean all
+
+.PHONY: all clean fclean
