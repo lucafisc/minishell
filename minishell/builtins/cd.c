@@ -6,7 +6,7 @@
 /*   By: tfregni <tfregni@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/30 07:33:56 by tfregni           #+#    #+#             */
-/*   Updated: 2023/04/08 18:34:40 by tfregni          ###   ########.fr       */
+/*   Updated: 2023/04/10 12:07:08 by tfregni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,81 +32,65 @@ int	throw_err(char *str, char *arg)
 	return (1);
 }
 
-void	update_pwd(char ***env, char *old_pwd, char *pwd)
+/* Given env and oldpwd it retrieves current dir, updates
+env with OLDPWD and PWD. It does not free oldpwd nor env */
+void	update_pwd(char **env, char *oldpwd)
 {
-	char	*update_env;
+	char	*tmp;
+	char	*cwd;
 
-	update_env = ft_strjoin("OLDPWD=", old_pwd);
-	// printf("%s\n", update_env);
-	ft_export(env, update_env);
-	free(update_env);
-	update_env = ft_strjoin("PWD=", pwd);
-	// printf("%s\n", update_env);
-	ft_export(env, update_env);
-	free(update_env);
+	cwd = getcwd(NULL, 0);
+	if (!cwd)
+	{
+		throw_err("cd", cwd);
+		free(cwd);
+		return ;
+	}
+	tmp = ft_strjoin("OLDPWD=", oldpwd);
+	ft_export(&env, tmp);
+	free(tmp);
+	tmp = ft_strjoin("PWD=", cwd);
+	ft_export(&env, tmp);
+	free(tmp);
+	free(cwd);
 }
 
-// void	ft_cd(char *path, char ***env)
-// {
-// 	char	old_dir[PATH_MAX];
-// 	char	*dir;
+void	free_cd(char *path, char *oldpwd)
+{
+	free(path);
+	free(oldpwd);
+}
 
-// 	/* PATH_MAX is the max depth of the path */
-// 	// Save the current dir to set is as OLDPWD when done
-// 	if (!getcwd(old_dir, sizeof(old_dir)))
-// 		throw_err("cd", NULL);
-// 	// case of ~ alone, empty parameter or no parameter -> HOME
-// 	if (!ft_strncmp(path, "~", 2) || !path || !path[0])
-// 		dir = ft_strdup(getenv("HOME"));
-// 	// case of - -> OLDPWD
-// 	else if (!ft_strncmp(path, "-", 2))
-// 		dir = ft_strdup(getenv("OLDPWD"));
-// 	// case of ~/something -> expand ~ to HOME
-// 	else if (path[0] == '~')
-// 		dir = ft_strnjoin(2, getenv("HOME"), (path + 1));
-// 	// case normal
-// 	else
-// 		dir = ft_strdup(path);
-// 	if (chdir(dir) == -1)
-// 		throw_err("cd", dir);
-// 	/* Update environment: OLDPWD=old_dir, PWD=dir */
-// 	update_pwd(env, old_dir, dir);
-// 	// getcwd(old_dir, sizeof(old_dir));
-// 	free(dir);
-// }
+/* It sets the value of path expanding - or "" */
+void	set_path(t_shell *s, t_command *c, char **path)
+{
+	if (!c->cmd[1] || !c->cmd[1][0])
+		*path = ft_strdup("~");
+	else if (!ft_strncmp(c->cmd[1], "-", 2))
+		*path = ft_strdup(ft_getenv(s->env, "OLDPWD"));
+	else
+		*path = ft_strdup(c->cmd[1]);
+}
 
 void	ft_cd(t_shell *s, t_command *c)
 {
-	char	old_dir[PATH_MAX];
-	char	*dir;
+	char	*oldpwd;
 	char	*path;
 
-	path = c->cmd[1];
-	/* PATH_MAX is the max depth of the path */
-	// Save the current dir to set is as OLDPWD when done
-	if (!getcwd(old_dir, sizeof(old_dir)))
-		throw_err("cd", NULL);
-	// case of ~ alone, empty parameter or no parameter -> HOME
-	if (!ft_strncmp(path, "~", 2) || !path || !path[0])
-		dir = ft_strdup(getenv("HOME"));
-	// case of - -> OLDPWD
-	else if (!ft_strncmp(path, "-", 2))
-		dir = ft_strdup(getenv("OLDPWD"));
-	// case of ~/something -> expand ~ to HOME
-	else if (path[0] == '~')
-		dir = ft_strnjoin(2, getenv("HOME"), (path + 1));
-	// case normal
-	else
-		dir = ft_strdup(path);
-	if (chdir(dir) == -1)
+	if (!s || !c || !c->cmd || !c->cmd[0])
+		return ;
+	set_path(s, c, &path);
+	oldpwd = getcwd(NULL, 0);
+	if (!oldpwd || chdir(path) < 0)
 	{
-		throw_err("cd", dir);
+		throw_err("cd", path);
+		free_cd(path, oldpwd);
 		return ;
 	}
-	/* Update environment: OLDPWD=old_dir, PWD=dir */
-	update_pwd(&(s->env), old_dir, dir);
-	// getcwd(old_dir, sizeof(old_dir));
-	free(dir);
+	if (!ft_strncmp(c->cmd[1], "-", 2))
+		ft_putendl_fd(path, 1);
+	update_pwd(s->env, oldpwd);
+	free_cd(path, oldpwd);
 }
 
 int	main(int ac, char **av, char **env)
