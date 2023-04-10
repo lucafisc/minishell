@@ -6,7 +6,7 @@
 /*   By: lde-ross <lde-ross@student.42berlin.de     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/08 15:56:16 by lde-ross          #+#    #+#             */
-/*   Updated: 2023/04/08 19:42:31 by lde-ross         ###   ########.fr       */
+/*   Updated: 2023/04/10 18:11:17 by lde-ross         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,68 +25,92 @@ t_redir is_redir(char *str)
 	return (0);
 }
 
+void open_out(int redir, t_lexer *start, t_command **cmd_node)
+{
+	int open_flag;
+	t_command *new;
+
+	new = *cmd_node;
+	if (redir == OUT_WRITE)
+		open_flag = O_WRONLY;
+	else if (redir == OUT_APPEND)
+		open_flag = (O_WRONLY | O_APPEND);
+	new->outfile = open(start->next->data, open_flag);
+	if (new->outfile == -1)
+		throw_err("open", start->next->data);
+}
+
+void open_in(int redir, t_lexer *start, t_command **cmd_node)
+{
+	int open_flag;
+	t_command *new;
+
+	new = *cmd_node;
+	if (redir == IN_READ)
+		open_flag = O_RDONLY;
+	else
+		open_flag = (O_RDWR | O_CREAT | O_APPEND);
+	new->infile = open(start->next->data, open_flag);
+	if (new->infile == -1)
+		throw_err("open", start->next->data);
+}
+
+void new_redir(int redir, t_lexer **lexer_node, t_command **cmd_node)
+{
+	t_lexer *start;
+
+	start = *lexer_node;
+	if (!start->next && (redir == OUT_WRITE || redir == OUT_APPEND || redir == IN_READ)) // same also for HEREDOC?
+	{
+		ft_putstr_fd("minishell: syntax error near unexpected token 'newline'\n", 2);
+		start = start->next;
+		return;
+	}
+	if (redir == OUT_WRITE || redir == OUT_APPEND)
+		open_out(redir, start, cmd_node);
+	else
+		open_in(redir, start, cmd_node);
+	start = start->next;
+}
+
+void fill_cmd(int *i, t_lexer *start, t_command **cmd_node)
+{
+	int str_len;
+	t_command *new;
+
+	new = *cmd_node;
+	str_len = ft_strlen(start->data);
+	new->cmd[*i] = malloc(sizeof(char) * (str_len + 1));
+	if (!new->cmd[*i])
+		return;
+	ft_strlcpy(new->cmd[*i], start->data, str_len + 1);
+	*i += 1;
+}
+
 t_command *new_cmd_node(t_lexer *start, int len)
 {
 	t_command *new;
-	int str_len;
 	int i;
 	int redir;
-	int open_flag;
 
 	new = malloc(sizeof(*new));
-	new->cmd = malloc(sizeof(*new->cmd) * (len + 1));
+	if (!new)
+		return (NULL);
+	new->cmd = ft_calloc((len + 1), sizeof(*new->cmd));
 	if (!new->cmd)
 		return (NULL);
-	new->cmd[len] = NULL;
 	new->infile = -1;
 	new->outfile = -1;
 	new->prev = NULL;
 	new->next = NULL;
 	i = 0;
-	printf("len of cmd is: %d\n", len);
 	while (start)
 	{
 		redir = is_redir(start->data);
 		if (redir)
-		{
-			if (redir == OUT_WRITE || redir == OUT_APPEND)
-			{
-				if (redir == OUT_WRITE)
-					open_flag = O_WRONLY;
-				else if (redir == OUT_APPEND)
-					open_flag = (O_WRONLY | O_APPEND);
-				if (!start->next)
-				{
-					ft_putstr_fd("minishell: syntax error near unexpected token 'newline'\n", 2);
-					start = start->next;
-					continue ;
-				}
-				new->outfile = open(start->next->data, open_flag);
-				if (new->outfile == -1)
-					throw_err("open", start->next->data);
-			}
-			else
-			{
-				if (redir == IN_READ)
-					open_flag = O_RDONLY;
-				else
-					open_flag = (O_RDWR | O_CREAT | O_APPEND);
-				new->infile = open(start->next->data, open_flag);
-				if (new->infile == -1)
-					throw_err("open", start->next->data);
-			}
-			start = start->next;
-
-		}
-		else
-		{
-			str_len = ft_strlen(start->data);
-			new->cmd[i] = malloc(sizeof(char) * (str_len + 1));
-			if (!new->cmd[i])
-				return (NULL);
-			ft_strlcpy(new->cmd[i], start->data, str_len + 1);
-			i++;
-		}
+			new_redir(redir, &start, &new);
+		else if (i < len)
+			fill_cmd(&i, start, &new);
 		start = start->next;
 	}
 	return (new);
@@ -118,6 +142,10 @@ void free_command(t_command **cmd)
 		free(c->cmd[i]);
 		i++;
 	}
+	if (c->infile != -1)
+		close(c->infile);
+	if (c->outfile != -1)
+		close(c->outfile);
 	free(c->cmd);
 	free(c);
 }

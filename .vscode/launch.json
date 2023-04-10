@@ -9,7 +9,7 @@
 	"type":"cppdbg",
 	"program":"${workspaceFolder}/minishell/minishell",
 	"args":["file1", "cmd1", "cm2", "file2"],
-	"cwd":"${workspaceFolder}",
+	"cwd":"${workspaceFolder}/minishell/",
 	"request":"launch",
 	"MIMode":"gdb"
 	}
