@@ -6,7 +6,7 @@
 /*   By: tfregni <tfregni@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/29 19:48:25 by lde-ross          #+#    #+#             */
-/*   Updated: 2023/03/30 07:33:23 by tfregni          ###   ########.fr       */
+/*   Updated: 2023/04/10 13:45:16 by tfregni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,22 +85,53 @@ int	arg_index(char **env, char *var)
 	return (-1);
 }
 
-void	ft_unset(char ***env, char *var)
+// void	ft_unset(char ***env, char *var)
+// {
+// 	int		var_index;
+
+// 	var_index = arg_index(*env, var);
+// 	if (var_index >= 0)
+// 		ft_unset_remove(env, var_index);
+// 	return ;
+// }
+
+void	ft_unset(t_shell *s, t_command *c)
 {
 	int		var_index;
+	char	*var;
 
-	var_index = arg_index(*env, var);
+	if (!s || !c || !c->cmd || !c->cmd[0])
+	{
+		write(1, "Error\n", 6);
+		return ;
+	}
+	if (!c->cmd[1])
+	{
+		ft_putendl_fd("unset: not enough arguments", 2);
+		return ;
+	}
+	var = c->cmd[1];
+	var_index = arg_index(s->env, var);
 	if (var_index >= 0)
-		ft_unset_remove(env, var_index);
+		ft_unset_remove(&(s->env), var_index);
 	return ;
 }
 
-int	main(int ac, char **av, char **environ)
+int	main(int ac, char **av, char **env)
 {
-	(void) ac;
-	(void) av;
-	environ = env_dup(environ);
-	ft_unset(&environ, "TERM_PROGRAM");
-	ft_print_strarr(environ);
-	ft_free_str_arr(environ);
+	t_shell *s = malloc(sizeof(t_shell));
+	t_command *c = malloc(sizeof(t_command));
+	c->cmd = malloc(sizeof(*c->cmd) * ac + 1);
+	for (int i = 0; i < ac; i++)
+		c->cmd[i] = malloc(sizeof(char) * 100);
+	for (int j = 0; j < ac; j++)
+		ft_strlcpy(c->cmd[j], av[j], ft_strlen(av[j]) + 1);
+	c->cmd[ac] = NULL;
+	s->env = env_dup(env);
+	ft_unset(s, c);
+	ft_print_strarr(s->env);
+	ft_free_str_arr(c->cmd);
+	ft_free_str_arr(s->env);
+	free(s);
+	free(c);
 }
