@@ -6,7 +6,7 @@
 /*   By: tfregni <tfregni@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 16:02:25 by tfregni           #+#    #+#             */
-/*   Updated: 2023/04/08 17:23:19 by tfregni          ###   ########.fr       */
+/*   Updated: 2023/04/10 17:04:15 by tfregni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@
 # include "colors.h"
 # define TRAIL_CHAR " \n\t><|\"$"
 # define SPLIT_CHAR "|<>"
-# define N_BUILTINS 5
+# define N_BUILTINS 6
 
 typedef enum s_bool
 {
@@ -79,13 +79,20 @@ char	**ft_split_keep(char const *s, char c);
 t_lexer	*new_lexer_list_from_matrix(char **matrix);
 void	free_lexer_list(t_lexer **list);
 void	fill_lexer_list(t_lexer **node, char *data, int info, int i);
-
 void	execute(t_shell *s, t_lexer *lex);
+
 /* BUILTINS */
 void	ft_cd(t_shell *s, t_command *c);
+void	ft_pwd(t_shell *s, t_command *c);
+void	ft_env(t_shell *s, t_command *c);
+void	ft_unset(t_shell *s, t_command *c);
+void	ft_export(t_shell *s, t_command *c);
+void	ft_echo(t_shell *s, t_command *c);
+
 /* LIST UTILITIES */
 t_lexer	*ft_dbllstnew(char *data, int info, int index);
 void	ft_dbllst_addback(t_lexer **list, t_lexer *new);
+
 /* ERROR HANDLING*/
 int		throw_err(char *str, char *arg);
 
