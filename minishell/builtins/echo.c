@@ -6,7 +6,7 @@
 /*   By: tfregni <tfregni@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/30 15:46:57 by lde-ross          #+#    #+#             */
-/*   Updated: 2023/04/02 08:34:26 by tfregni          ###   ########.fr       */
+/*   Updated: 2023/04/10 13:18:19 by tfregni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,16 +24,71 @@
 
 #include "../minishell.h"
 
-void	ft_echo(char **args)
+// void	ft_echo(char **args)
+// {
+// 	t_bool	n;
+// 	int		i;
+
+// 	if (!args)
+// 		return ;
+// 	n = true;
+// 	i = 0;
+// 	if (args[i] && !ft_strcmp(args[i], "-n"))
+// 	{
+// 		i++;
+// 		n = false;
+// 	}
+// 	while (args[i])
+// 	{
+// 		ft_putstr_fd(args[i], 1);
+// 		// printf("%s", args[i]);
+// 		if (args[i + 1])
+// 			// printf(" ");
+// 			ft_putchar(" ", 1);
+// 		i++;
+// 	}
+// 	if (n)
+// 		ft_putchar("\n", 1);
+// 		// printf("\n");
+// }
+
+/* returns an allocated 0-terminated copy of the env */
+char	**env_dup(char **env)
 {
+	int		len;
+	char	**new;
+	int		i;
+
+	len = ft_arrlen(env);
+	new = malloc(sizeof(char *) * (len + 1));
+	if (!new)
+		return (NULL);
+	i = 0;
+	new[len] = NULL;
+	while (env[i])
+	{
+		new[i] = ft_strdup(env[i]);
+		i++;
+	}
+	return (new);
+}
+
+/* The variable expansion works already even if it's not
+implemented in the function: it means it's running on every
+string passed to the shell before calling any cmd */
+void	ft_echo(t_shell *s, t_command *c)
+{
+	char	**args;
 	t_bool	n;
 	int		i;
 
-	if (!args)
+	(void) s;
+	if (!c || !c->cmd)
 		return ;
+	args = c->cmd;
 	n = true;
-	i = 0;
-	if (args[i] && !ft_strcmp(args[i], "-n"))
+	i = 1;
+	if (args[i] && !ft_strncmp(args[i], "-n", 2))
 	{
 		i++;
 		n = false;
@@ -41,20 +96,28 @@ void	ft_echo(char **args)
 	while (args[i])
 	{
 		ft_putstr_fd(args[i], 1);
-		// printf("%s", args[i]);
 		if (args[i + 1])
-			// printf(" ");
-			ft_putchar(" ", 1);
+			ft_putchar_fd(' ', 1);
 		i++;
 	}
 	if (n)
-		ft_putchar("\n", 1);
-		// printf("\n");
+		ft_putchar_fd('\n', 1);
 }
 
-int	main(int ac, char **av)
+int	main(int ac, char **av, char **env)
 {
-	char **my_args = ft_split("-n hello", ' ');
-	// ft_print_strarr(my_args);
-	ft_echo(my_args);
+	t_shell *s = malloc(sizeof(t_shell));
+	t_command *c = malloc(sizeof(t_command));
+	c->cmd = malloc(sizeof(*c->cmd) * ac + 1);
+	for (int i = 0; i < ac; i++)
+		c->cmd[i] = malloc(sizeof(char) * 100);
+	for (int j = 0; j < ac; j++)
+		ft_strlcpy(c->cmd[j], av[j], ft_strlen(av[j]) + 1);
+	c->cmd[ac] = NULL;
+	s->env = env_dup(env);
+	ft_echo(s, c);
+	ft_free_str_arr(c->cmd);
+	ft_free_str_arr(s->env);
+	free(s);
+	free(c);
 }
