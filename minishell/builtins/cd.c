@@ -6,7 +6,7 @@
 /*   By: tfregni <tfregni@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/30 07:33:56 by tfregni           #+#    #+#             */
-/*   Updated: 2023/04/10 12:07:08 by tfregni          ###   ########.fr       */
+/*   Updated: 2023/04/10 12:14:37 by tfregni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,9 +81,15 @@ void	ft_cd(t_shell *s, t_command *c)
 		return ;
 	set_path(s, c, &path);
 	oldpwd = getcwd(NULL, 0);
-	if (!oldpwd || chdir(path) < 0)
+	if (!oldpwd)
 	{
 		throw_err("cd", path);
+		free_cd(path, oldpwd);
+		return ;
+	}
+	if (chdir(path) < 0)
+	{
+		throw_err("chdir", path);
 		free_cd(path, oldpwd);
 		return ;
 	}
