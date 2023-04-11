@@ -6,7 +6,7 @@
 /*   By: lde-ross <lde-ross@student.42berlin.de     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 16:02:25 by tfregni           #+#    #+#             */
-/*   Updated: 2023/04/11 14:54:05 by lde-ross         ###   ########.fr       */
+/*   Updated: 2023/04/11 17:15:33 by lde-ross         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ void	print_list(t_lexer *list);
 void	split_list(t_lexer **list);
 int		count_words(char const *s, char c);
 void	find_cmd(t_shell *s, char *cmd);
-char	**ft_split_keep(char const *s, char c);
+char	**ft_split_keep(char *s, char c);
 t_lexer	*new_lexer_list_from_matrix(char **matrix);
 void	free_lexer_list(t_lexer **list);
 void	fill_lexer_list(t_lexer **node, char *data, int info, int i);
@@ -96,5 +96,6 @@ t_command	*new_cmd_node(t_lexer	*start, int len);
 void	add_to_back_cmd(t_command **list, t_command *new);
 void	free_command(t_command **cmd);
 t_redir	is_redir(char *str);
+t_bool	is_not_escaped(int i, char *s);
 
 #endif

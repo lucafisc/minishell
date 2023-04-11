@@ -1,6 +1,6 @@
 #include "minishell.h"
 
-int count_words_keep(char const *s, char c)
+int count_words_keep(char *s, char c)
 {
 	int i;
 	int count;
@@ -9,7 +9,7 @@ int count_words_keep(char const *s, char c)
 	count = 0;
 	while (s[i])
 	{
-		if (s[i] == c)
+		if (s[i] == c && is_not_escaped(i, s))
 		{
 			count++;
 			i++;
@@ -19,24 +19,24 @@ int count_words_keep(char const *s, char c)
 		else
 		{
 			count++;
-			while (s[i] && s[i] != c)
+			while (s[i] && (s[i] != c || !is_not_escaped(i , s)))
 				i++;
 		}
 	}
 	return (count);
 }
 
-size_t str_siz_keep(const char *s, char c)
+size_t str_siz_keep(char *s, char c)
 {
 	int i;
 
 	i = 0;
-	while (s[i] != c && s[i])
+	while (s[i] && (s[i] != c || !is_not_escaped(i , s)))
 		i++;
 	return (i);
 }
 
-char **ft_split_keep(char const *s, char c)
+char **ft_split_keep(char *s, char c)
 {
 	int words;
 	char **arr;
@@ -47,30 +47,21 @@ char **ft_split_keep(char const *s, char c)
 	if (!s)
 		return (NULL);
 	words = count_words_keep(s, c);
+	printf("ft split keep word count: %d\n", words);
 	arr = malloc(sizeof(char *) * (words + 1));
 	if (!arr)
 		return (0);
 	i = 0;
 	j = 0;
 	printf("\nsplit keep\n\n");
+	printf("c: %c\n", c);
 	while (s[i])
 	{
-		// printf("char: %c\n", s[i]);
-		//  if (s[i] == c && s[i + 1] == c && s[i + 1] != '|')
-		//  {
-		//  	arr[j] = calloc(3, sizeof(char));
-		//  	arr[j][0] = c;
-		//  	arr[j][1] = c;
-		//  	printf("hellooo\n");
-		//  	i++;
-		//  	i++;
-		//  	j++;
-		//  }
-		if (s[i] == c)
+		if (s[i] == c && is_not_escaped(i, s))
 		{
 			if (s[i + 1] == c && c != '|')
 			{
-				arr[j] = calloc(3, sizeof(char));
+				arr[j] = ft_calloc(3, sizeof(char));
 				arr[j][0] = c;
 				arr[j][1] = c;
 				i++;
@@ -79,7 +70,7 @@ char **ft_split_keep(char const *s, char c)
 			}
 			else
 			{
-				arr[j] = calloc(2, sizeof(char));
+				arr[j] = ft_calloc(2, sizeof(char));
 				arr[j][0] = c;
 				i++;
 				j++;
