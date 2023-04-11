@@ -6,7 +6,7 @@
 /*   By: tfregni <tfregni@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 16:02:25 by tfregni           #+#    #+#             */
-/*   Updated: 2023/04/10 17:04:15 by tfregni          ###   ########.fr       */
+/*   Updated: 2023/04/11 15:47:45 by tfregni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,6 +88,13 @@ void	ft_env(t_shell *s, t_command *c);
 void	ft_unset(t_shell *s, t_command *c);
 void	ft_export(t_shell *s, t_command *c);
 void	ft_echo(t_shell *s, t_command *c);
+
+/* BUILTINS UTILITIES */
+char	**env_dup(char **env);
+char	**env_append(char **env, char *var);
+int		search_array(char **env, char *var);
+int		arg_index(char **env, char *var);
+char	*ft_getenv(char **env, char *key);
 
 /* LIST UTILITIES */
 t_lexer	*ft_dbllstnew(char *data, int info, int index);

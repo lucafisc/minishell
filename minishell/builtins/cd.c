@@ -6,31 +6,31 @@
 /*   By: tfregni <tfregni@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/30 07:33:56 by tfregni           #+#    #+#             */
-/*   Updated: 2023/04/10 16:35:37 by tfregni          ###   ########.fr       */
+/*   Updated: 2023/04/11 15:39:25 by tfregni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
-#include "export.c"
-#include "pwd_env.c"
+// #include "export.c"
+// #include "pwd_env.c"
 
-/* more elaborate version of throw error */
-int	throw_err(char *str, char *arg)
-{
-	if (str && str[0])
-	{
-		ft_putstr_fd(str, 2);
-		ft_putstr_fd(": ", 2);
-	}
-	write(2, strerror(errno), ft_strlen(strerror(errno)));
-	if (arg && arg[0])
-	{
-		ft_putstr_fd(": ", 2);
-		ft_putstr_fd(arg, 2);
-	}
-	write(2, "\n", 1);
-	return (1);
-}
+// /* more elaborate version of throw error */
+// int	throw_err(char *str, char *arg)
+// {
+// 	if (str && str[0])
+// 	{
+// 		ft_putstr_fd(str, 2);
+// 		ft_putstr_fd(": ", 2);
+// 	}
+// 	write(2, strerror(errno), ft_strlen(strerror(errno)));
+// 	if (arg && arg[0])
+// 	{
+// 		ft_putstr_fd(": ", 2);
+// 		ft_putstr_fd(arg, 2);
+// 	}
+// 	write(2, "\n", 1);
+// 	return (1);
+// }
 
 /* Given t_shell to retrieve the env and oldpwd it retrieves
 current dir, updates env with OLDPWD and PWD. It does not free
