@@ -9,7 +9,7 @@ int count_words_keep(char *s, char c)
 	count = 0;
 	while (s[i])
 	{
-		if (s[i] == c && is_not_escaped(i, s))
+		if (s[i] == c && !is_escaped(i, s))
 		{
 			count++;
 			i++;
@@ -19,7 +19,7 @@ int count_words_keep(char *s, char c)
 		else
 		{
 			count++;
-			while (s[i] && (s[i] != c || !is_not_escaped(i , s)))
+			while (s[i] && (s[i] != c || is_escaped(i , s)))
 				i++;
 		}
 	}
@@ -31,7 +31,7 @@ size_t str_siz_keep(char *s, char c)
 	int i;
 
 	i = 0;
-	while (s[i] && (s[i] != c || !is_not_escaped(i , s)))
+	while (s[i] && (s[i] != c || is_escaped(i , s)))
 		i++;
 	return (i);
 }
@@ -57,7 +57,7 @@ char **ft_split_keep(char *s, char c)
 	printf("c: %c\n", c);
 	while (s[i])
 	{
-		if (s[i] == c && is_not_escaped(i, s))
+		if (s[i] == c && !is_escaped(i, s))
 		{
 			if (s[i + 1] == c && c != '|')
 			{

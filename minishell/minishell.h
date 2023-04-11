@@ -6,7 +6,7 @@
 /*   By: lde-ross <lde-ross@student.42berlin.de     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 16:02:25 by tfregni           #+#    #+#             */
-/*   Updated: 2023/04/11 17:15:33 by lde-ross         ###   ########.fr       */
+/*   Updated: 2023/04/11 18:05:59 by lde-ross         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,6 +96,6 @@ t_command	*new_cmd_node(t_lexer	*start, int len);
 void	add_to_back_cmd(t_command **list, t_command *new);
 void	free_command(t_command **cmd);
 t_redir	is_redir(char *str);
-t_bool	is_not_escaped(int i, char *s);
+t_bool	is_escaped(int i, char *s);
 
 #endif

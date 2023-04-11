@@ -1,11 +1,11 @@
 #include "minishell.h"
 
-t_bool	is_not_escaped(int i, char *s)
+t_bool	is_escaped(int i, char *s)
 {
 	if (i == 0 || s[i - 1] != '\\')
-		return (true);
-	else
 		return (false);
+	else
+		return (true);
 }
 
 t_lexer	*ft_dbllstnew(char *data, int info, int index)
