@@ -6,7 +6,7 @@
 /*   By: tfregni <tfregni@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 15:41:38 by tfregni           #+#    #+#             */
-/*   Updated: 2023/04/06 12:28:21 by tfregni          ###   ########.fr       */
+/*   Updated: 2023/04/11 16:24:17 by tfregni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -149,6 +149,7 @@ t_shell	*init(char ***env)
 	shell->path = ft_split(getenv("PATH"), ':');
 	shell->user = get_username(shell);
 	shell->prompt = create_prompt(shell);
+	init_builtins(shell);
 	//ft_print_strarr(shell->path);
 	return (shell);
 }
@@ -161,6 +162,7 @@ void	free_shell(t_shell *shell)
 	//rl_clear_history();
 	/* free(shell->lexer)*/
 	/* free(shell->parser)*/
+	free_builtins(shell->builtins);
 	free(shell);
 }
 
