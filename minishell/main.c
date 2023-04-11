@@ -6,7 +6,7 @@
 /*   By: lde-ross <lde-ross@student.42berlin.de     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 15:41:38 by tfregni           #+#    #+#             */
-/*   Updated: 2023/04/07 18:32:46 by lde-ross         ###   ########.fr       */
+/*   Updated: 2023/04/11 18:49:28 by lde-ross         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,7 @@ void	get_prompt(t_shell *s)
 			test_parser(list);
 			free_lexer_list(&list);
 			free(cmd);
+			i++;
 		}
 	}
 }
