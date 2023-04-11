@@ -6,7 +6,7 @@
 /*   By: lde-ross <lde-ross@student.42berlin.de     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/28 16:31:54 by tfregni           #+#    #+#             */
-/*   Updated: 2023/04/10 17:25:14 by lde-ross         ###   ########.fr       */
+/*   Updated: 2023/04/11 15:21:57 by lde-ross         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,9 +85,9 @@ void	test_parser(t_lexer *lex)
 	cmds = parser(lex);
 	while (cmds)
 	{
-		printf("new node ____________\n");
+		printf("\nnew node ____________\n");
 		printf("outfile fd: %d\n", cmds->outfile);
-		//ft_print_strarr(cmds->cmd);
+		ft_print_strarr(cmds->cmd);
 		temp = cmds;
 		cmds = cmds->next;
 		free_command(&temp);

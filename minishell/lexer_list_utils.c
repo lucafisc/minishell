@@ -52,15 +52,12 @@ t_lexer *new_lexer_list_from_matrix(char **matrix)
 	return (new);
 }
 
-void print_list(t_lexer **list)
+void print_list(t_lexer *list)
 {
-	t_lexer *cur;
-
-	cur = *list;
-	while (cur)
+	while (list)
 	{
-		printf("node %d:%s\n", cur->index, cur->data);
-		cur = cur->next;
+		printf("node %d:%s\n", list->index, list->data);
+		list = list->next;
 	}
 }
 

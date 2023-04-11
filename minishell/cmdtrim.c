@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cmdtrim.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lde-ross <lde-ross@student.42berlin.de>    +#+  +:+       +#+        */
+/*   By: lde-ross <lde-ross@student.42berlin.de     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/01 12:54:23 by tfregni           #+#    #+#             */
-/*   Updated: 2023/04/06 16:54:53 by lde-ross         ###   ########.fr       */
+/*   Updated: 2023/04/11 15:41:37 by lde-ross         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,28 +19,28 @@ is pointing to, moves on the pointer and returns a code */
 /* 0 - no change */
 /* 1 - close quotes */
 /* 2 - open quotes */
-int	ft_update_state(char **str, int *state)
+int	ft_update_state(char *str, int *i, int *state)
 {
 	int	res;
 
 	if (!str || !state)
 		return (-1);
 	res = 1;
-	if (*state == IN_D_QUOTE && **str == '"')
+	if (*state == IN_D_QUOTE && str[*i] == '"' && str[*i - 1] != '\\')
 		*state = IN_NORMAL;
-	else if (*state == IN_S_QUOTE && **str == '\'')
+	else if (*state == IN_S_QUOTE && str[*i] == '\'' && str[*i - 1] != '\\')
 		*state = IN_NORMAL;
-	else if (*state == IN_NORMAL && (**str == '"' || **str == '\''))
+	else if (*state == IN_NORMAL && (str[*i] == '"' || str[*i] == '\'') && (*i == 0 || str[*i - 1] != '\\'))
 	{
 		res = 2;
-		if (**str == '"')
+		if (str[*i] == '"')
 			*state = IN_D_QUOTE;
-		else if (**str == '\'')
+		else if (str[*i] == '\'')
 			*state = IN_S_QUOTE;
 	}
 	else
 		res = 0;
-	(*str)++;
+	*i += 1;
 	return (res);
 }
 
@@ -48,16 +48,16 @@ int	ft_update_state(char **str, int *state)
 /* 0 - no change */
 /* 1 - close quotes */
 /* 2 - open quotes */
-int	ft_check_state(char c, int state)
+int	ft_check_state(char *str, int i, int state)
 {
 	int	res;
 
-	if (!c)
+	if (!str || !str[i])
 		return (0);
-	if ((state == IN_D_QUOTE && c == '"') || \
-	(state == IN_S_QUOTE && c == '\''))
+	if ((state == IN_D_QUOTE && str[i] == '"' && str[i - 1] != '\\') || \
+	(state == IN_S_QUOTE && str[i] == '\'' && str[i - 1] != '\\'))
 		res = 1;
-	else if (state == IN_NORMAL && (c == '"' || c == '\''))
+	else if (state == IN_NORMAL && (str[i] == '"' || str[i] == '\'') && (i == 0 || str[i - 1] != '\\'))
 		res = 2;
 	else
 		res = 0;
@@ -85,23 +85,25 @@ int	ft_count_cmds(char *str)
 	int	count;
 	int	state;
 	int	new_cmd_flag;
+	int	i;
 
 	if (!str)
 		return (0);
 	count = 0;
 	state = IN_NORMAL;
 	new_cmd_flag = 0;
-	while (*str)
+	i = 0;
+	while (str[i])
 	{
-		if (!ft_is_cmd(*str, state))
-			new_cmd_flag = ft_update_state(&str, &state);
+		if (!ft_is_cmd(str[i], state))
+			new_cmd_flag = ft_update_state(str, &i, &state);
 		else
 		{
 			count++;
-			while (*str && ft_is_cmd(*str, state))
+			while (str[i] && ft_is_cmd(str[i], state))
 			{
-				new_cmd_flag = ft_update_state(&str, &state);
-				if (new_cmd_flag == 1 || ft_check_state(*str, state) == 2)
+				new_cmd_flag = ft_update_state(str, &i, &state);
+				if (new_cmd_flag == 1 || ft_check_state(str, i, state) == 2)
 					break ;
 			}
 		}
@@ -113,24 +115,26 @@ int	ft_cmd_split(char **arr, char *str, int *state)
 {
 	int		cmd;
 	int		new_cmd_flag;
-	char	*cur;
+	int		i;
+	int		j;
 
 	cmd = 0;
-	while (*str)
+	i = 0;
+	while (str[i])
 	{
-		if (!ft_is_cmd(*str, *state))
-			new_cmd_flag = ft_update_state(&str, state);
+		if (!ft_is_cmd(str[i], *state))
+			new_cmd_flag = ft_update_state(str, &i, state);
 		else
 		{
-			cur = str;
-			while (*cur && ft_is_cmd(*cur, *state))
+			j = i;
+			while (str[j] && ft_is_cmd(str[j], *state))
 			{
-				new_cmd_flag = ft_update_state(&cur, state);
-				if (new_cmd_flag == 1 || ft_check_state(*cur, *state) == 2)
+				new_cmd_flag = ft_update_state(str, &j, state);
+				if (new_cmd_flag == 1 || ft_check_state(str, j, *state) == 2)
 					break ;
 			}
-			arr[cmd++] = ft_substr(str, 0, cur - str);
-			str = cur;
+			arr[cmd++] = ft_substr(str + i, 0, j - i);
+			i = j;
 		}
 	}
 	arr[cmd] = NULL;
@@ -247,8 +251,9 @@ char	**ft_cmd_trim(char *str)
 	int		state;
 	int		i;
 
+	printf("\nraw string:\n%s\n", str);
 	n_cmds = ft_count_cmds(str);
-	// printf("n_cmds: %d\n", n_cmds);
+	printf("\nn_cmds: %d\n", n_cmds);
 	arr = malloc(sizeof(*arr) * (n_cmds + 1));
 	if (!arr)
 		return (NULL);
