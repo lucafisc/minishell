@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parser_utils.c                                     :+:      :+:    :+:   */
+/*   par_redir.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lde-ross <lde-ross@student.42berlin.de     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/04/08 15:56:16 by lde-ross          #+#    #+#             */
-/*   Updated: 2023/04/11 18:33:51 by lde-ross         ###   ########.fr       */
+/*   Created: 2023/04/12 16:55:28 by lde-ross          #+#    #+#             */
+/*   Updated: 2023/04/12 17:01:04 by lde-ross         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-t_redir is_redir(char *str)
+t_redir	is_redir(char *str)
 {
 	if (ft_strncmp(str, ">", 2) == 0)
 		return (OUT_WRITE);
@@ -73,7 +73,7 @@ void new_redir(int redir, t_lexer **lexer_node, t_command **cmd_node)
 	start = start->next;
 }
 
-void fill_cmd(int *i, t_lexer *start, t_command **cmd_node)
+void par_fill_cmd(int *i, t_lexer *start, t_command **cmd_node)
 {
 	int str_len;
 	t_command *new;
@@ -85,67 +85,4 @@ void fill_cmd(int *i, t_lexer *start, t_command **cmd_node)
 		return;
 	ft_strlcpy(new->cmd[*i], start->data, str_len + 1);
 	*i += 1;
-}
-
-t_command *new_cmd_node(t_lexer *start, int len)
-{
-	t_command *new;
-	int i;
-	int redir;
-
-	new = malloc(sizeof(*new));
-	if (!new)
-		return (NULL);
-	new->cmd = ft_calloc((len + 1), sizeof(*new->cmd));
-	if (!new->cmd)
-		return (NULL);
-	new->infile = -1;
-	new->outfile = -1;
-	new->prev = NULL;
-	new->next = NULL;
-	i = 0;
-	while (start)
-	{
-		redir = is_redir(start->data);
-		if (redir)
-			new_redir(redir, &start, &new);
-		else if (i < len)
-			fill_cmd(&i, start, &new);
-		start = start->next;
-	}
-	return (new);
-}
-
-void add_to_back_cmd(t_command **list, t_command *new)
-{
-	t_command *cur;
-
-	if (!new)
-		return;
-	cur = *list;
-	while (cur->next)
-		cur = cur->next;
-	cur->next = new;
-	new->prev = cur;
-	new->next = NULL;
-}
-
-void free_command(t_command **cmd)
-{
-	int i;
-	t_command *c;
-
-	c = *cmd;
-	i = 0;
-	while (c->cmd[i])
-	{
-		free(c->cmd[i]);
-		i++;
-	}
-	if (c->infile != -1)
-		close(c->infile);
-	if (c->outfile != -1)
-		close(c->outfile);
-	free(c->cmd);
-	free(c);
 }

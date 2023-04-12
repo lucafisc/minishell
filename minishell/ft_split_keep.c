@@ -47,14 +47,11 @@ char **ft_split_keep(char *s, char c)
 	if (!s)
 		return (NULL);
 	words = count_words_keep(s, c);
-	printf("ft split keep word count: %d\n", words);
 	arr = malloc(sizeof(char *) * (words + 1));
 	if (!arr)
 		return (0);
 	i = 0;
 	j = 0;
-	printf("\nsplit keep\n\n");
-	printf("c: %c\n", c);
 	while (s[i])
 	{
 		if (s[i] == c && !is_escaped(i, s))

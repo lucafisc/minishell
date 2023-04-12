@@ -1,28 +1,47 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   lexer.c                                            :+:      :+:    :+:   */
+/*   par_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lde-ross <lde-ross@student.42berlin.de     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2023/04/12 15:32:40 by lde-ross         ###   ########.fr       */
+/*   Created: 2023/04/08 15:56:16 by lde-ross          #+#    #+#             */
+/*   Updated: 2023/04/12 17:28:33 by lde-ross         ###   ########.fr       */
 /*                                                                            */
-/* ************************************************************************** */
-
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-t_lexer	*lexer(char *fmt)
+void for_each_par_node(t_command **cmd, void (*f)(t_command **cmd))
 {
-	t_lexer	*list;
-	char	**raw_tokens;
+	t_command	*cur;
+	t_command	*temp;
 
-	raw_tokens = lex_split_token(fmt);
-	list = lex_list_from_table(raw_tokens);
-	ft_free_str_arr(raw_tokens);
-	lex_split_list(&list);
-	// execute(s, list);
-	return (list);
+	cur = *cmd;
+	while (cur)
+	{
+		temp = cur->next;
+		f(&cur);
+		cur = temp;
+	}
+}
+
+void free_par(t_command **cmd)
+{
+	int i;
+	t_command *c;
+
+	c = *cmd;
+	i = 0;
+	while (c->cmd[i])
+	{
+		free(c->cmd[i]);
+		i++;
+	}
+	if (c->infile != -1)
+		close(c->infile);
+	if (c->outfile != -1)
+		close(c->outfile);
+	free(c->cmd);
+	free(c);
 }

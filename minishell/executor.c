@@ -6,7 +6,7 @@
 /*   By: lde-ross <lde-ross@student.42berlin.de     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/04 12:58:08 by tfregni           #+#    #+#             */
-/*   Updated: 2023/04/08 17:13:22 by lde-ross         ###   ########.fr       */
+/*   Updated: 2023/04/12 17:22:28 by lde-ross         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,30 +47,5 @@ t_command	*simple_parser(t_lexer *lex)
 		i++;
 	}
 	cmd->cmd[i] = NULL;
-	// printf("EXECUTOR\n*************\n");
-	// ft_print_strarr(cmd->cmd);
 	return (cmd);
 }
-
-// void	execute(t_shell *s, t_lexer *lex)
-// {
-// 	t_command	*parsed_cmd;
-// 	pid_t		pid;
-
-// 	parsed_cmd = simple_parser(lex);
-// 	find_cmd(s, parsed_cmd->cmd[0]);
-// 	pid = fork();
-// 	if (pid == 0)
-// 	{
-// 		// printf("exec %s\n", parsed_cmd->cmd[0]);
-// 		execve(parsed_cmd->cmd[0], parsed_cmd->cmd, s->env);
-// 		ft_putstr_fd("minishell: ", 2);
-// 		ft_putstr_fd(parsed_cmd->cmd[0], 2);
-// 		ft_putstr_fd(": command not found\n", 2);
-// 	}
-// 	wait(NULL);
-// 	free_command(parsed_cmd);
-// }
-
-
-// > 

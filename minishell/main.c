@@ -6,50 +6,33 @@
 /*   By: lde-ross <lde-ross@student.42berlin.de     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 15:41:38 by tfregni           #+#    #+#             */
-/*   Updated: 2023/04/11 18:49:28 by lde-ross         ###   ########.fr       */
+/*   Updated: 2023/04/12 17:40:15 by lde-ross         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-// void	lexer(char *str)
-// {
-// 	int	i;
-// 	int state;
-
-// 	state = IN_NORMAL;
-// 	i = 0;
-// 	while (str[i])
-// 	{
-// 		if (str[i] == S_QUOTE)
-// 			printf("found S_QUOTE\n");
-// 		else if (str[i] == D_QUOTE)
-// 			printf("found D_QUOTE\n");
-// 		i++;
-// 	}
-// }
-
 void	get_prompt(t_shell *s)
 {
-	char	*cmd;
+	char	*input;
 	int		i = 0;
-	t_lexer	*list;
+	t_lexer	*lex_list;
+	t_command *par_list;
 
 	while (i == 0)
 	{
-		cmd = readline(s->prompt);
-		 if (cmd == NULL) {
+		input = readline(s->prompt);
+		 if (input == NULL) {
             printf("EOF encountered. Exiting...\n");
 			// has to free some stuff here (cwd)
             exit(1);
         }
-		if (*cmd)
+		if (*input)
 		{
-			add_history(cmd);
-			list = lexer(cmd);
-			test_parser(list);
-			free_lexer_list(&list);
-			free(cmd);
+			add_history(input);
+			lex_list = lexer(input);
+			par_list = parser(lex_list);
+			free_prompt(input, &lex_list, &par_list);
 			i++;
 		}
 	}
@@ -115,15 +98,13 @@ char	*create_cwd(t_shell *s)
 	if (!home)
 		return (ft_strdup(""));
 	current = getcwd(NULL, 0);
-	ft_strdup(current);
-	if (ft_strnstr(getcwd(NULL, 0), home, ft_strlen(home)))
+	if (ft_strnstr(current, home, ft_strlen(home)))
 	{
 		tmp = current;
 		current += ft_strlen(home);
 		current = ft_strjoin("~", current);
 		free(tmp);
 	}
-	printf("%s\n", current);
 	return (current);
 }
 
@@ -161,6 +142,7 @@ void	free_shell(t_shell *shell)
 	ft_free_str_arr(shell->path);
 	free(shell->prompt);
 	ft_free_str_arr(shell->env);
+	printf("freeeeeeee\n");
 	//rl_clear_history();
 	/* free(shell->lexer)*/
 	/* free(shell->parser)*/

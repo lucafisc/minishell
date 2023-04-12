@@ -1,28 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   lexer.c                                            :+:      :+:    :+:   */
+/*   free.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lde-ross <lde-ross@student.42berlin.de     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2023/04/12 15:32:40 by lde-ross         ###   ########.fr       */
+/*   Created: 2023/04/12 17:09:57 by lde-ross          #+#    #+#             */
+/*   Updated: 2023/04/12 17:32:38 by lde-ross         ###   ########.fr       */
 /*                                                                            */
-/* ************************************************************************** */
-
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-t_lexer	*lexer(char *fmt)
+void	free_prompt(char *input, t_lexer **lex_list, t_command **par_list)
 {
-	t_lexer	*list;
-	char	**raw_tokens;
-
-	raw_tokens = lex_split_token(fmt);
-	list = lex_list_from_table(raw_tokens);
-	ft_free_str_arr(raw_tokens);
-	lex_split_list(&list);
-	// execute(s, list);
-	return (list);
+	free(input);
+	for_each_lex_node(lex_list, free_lex);
+	for_each_par_node(par_list, free_par);
 }

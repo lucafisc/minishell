@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   lexer_list.c                                       :+:      :+:    :+:   */
+/*   lex_split_list.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lde-ross <lde-ross@student.42berlin.de     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/03 15:53:30 by lde-ross          #+#    #+#             */
-/*   Updated: 2023/04/11 18:08:36 by lde-ross         ###   ########.fr       */
+/*   Updated: 2023/04/12 17:20:48 by lde-ross         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ void	fill_new_nodes_lexer(t_lexer **to_insert, t_lexer **new_list, int *i)
 	new = *to_insert;
 	while (new)
 	{
-		fill_lexer_list(new_list, new->data, new->info, *i);
+		fill_lex_list(new_list, new->data, new->info, *i);
 		new = new->next;
 		*i += 1;
 	}
@@ -75,17 +75,17 @@ t_lexer	*replace_node_by_list(t_lexer **list, t_lexer *node, t_lexer **to_insert
 			fill_new_nodes_lexer(to_insert, &new_list, &i);
 		else
 		{
-			fill_lexer_list(&new_list, old->data, old->info, i);
+			fill_lex_list(&new_list, old->data, old->info, i);
 			i++;
 		}
 		old = old->next;
 	}
-	free_lexer_list(list);
-	free_lexer_list(to_insert);
+	free_lex(list);
+	free_lex(to_insert);
 	return (new_list);
 }
 
-void	split_list(t_lexer **list)
+void	lex_split_list(t_lexer **list)
 {
 	t_lexer	*cur;
 	t_lexer	*new;
@@ -98,7 +98,7 @@ void	split_list(t_lexer **list)
 		if ((c = should_split(cur->data)))
 		{
 			matrix = ft_split_keep(cur->data, c);
-			new = new_lexer_list_from_matrix(matrix);
+			new = lex_list_from_table(matrix);
 			ft_free_str_arr(matrix);
 			*list = replace_node_by_list(list, cur, &new);
 			cur = *list;
