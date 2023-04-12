@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   cmdtrim.c                                          :+:      :+:    :+:   */
+/*   lex_split_tokens.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lde-ross <lde-ross@student.42berlin.de     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/01 12:54:23 by tfregni           #+#    #+#             */
-/*   Updated: 2023/04/11 15:41:37 by lde-ross         ###   ########.fr       */
+/*   Updated: 2023/04/12 14:55:13 by lde-ross         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -244,7 +244,7 @@ char	*ft_expander(char *cmds)
 	return (cmds);
 }
 
-char	**ft_cmd_trim(char *str)
+char	**lex_split_tokens(char *str)
 {
 	char	**arr;
 	int		n_cmds;
@@ -268,29 +268,3 @@ char	**ft_cmd_trim(char *str)
 		arr[i] = ft_expander(arr[i]);
 	return (arr);
 }
-
-/*
-int	main(int ac, char **av, char **env)
-{
-	(void) ac;
-	(void) av;
-	g_env = env;
-	// // char cmd[] = "    \"hello      there\"\"how\"are\'you \'doing? $USER |wc -l >outfile";
-	// // char cmd[] = "\"hiiiii\"	hey   hi	\"hello\" abc  goodbye      ";
-	// char cmd[] = "\"these are 'single quotes' in double quotes\" and \"hi$USER | $PATH in d_quotes\" 'and$HOME in s_quotes'| '\"double quotes\" in single'\"followed by\" a command without'space'";
-	char cmd[] = "\"my~ $PATH user: $USER\"";
-	// char cmd[] = "~in";
-	char **cmds = ft_cmd_trim(cmd);
-	ft_print_strarr(cmds);
-	// printf("%s\n", cmd);
-	ft_free_str_arr(cmds);
-	// // printf("%s\n", ft_strtrunc("$USER| bla ><|", "| <>"));
-	// printf("%s", ft_strins("Insert", "Middle", 2, 3));
-}
-*/
-/*
-    "hello      there""how"are'you 'doing? $USER |wc -l >outfile
-    1                 2    3  4     5      6     7   8  9
-	"hiiiii"	hey   hi	"hello" abc  goodbye
-	1           2     3     4       5    6
-*/

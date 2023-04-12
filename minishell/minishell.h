@@ -6,7 +6,7 @@
 /*   By: lde-ross <lde-ross@student.42berlin.de     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 16:02:25 by tfregni           #+#    #+#             */
-/*   Updated: 2023/04/11 18:05:59 by lde-ross         ###   ########.fr       */
+/*   Updated: 2023/04/12 14:54:50 by lde-ross         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ typedef struct s_shell
 
 t_lexer	*lexer(char *fmt);
 void	init_signal(void);
-char	**ft_cmd_trim(char *str);
+char	**lex_split_tokens(char *str);
 void	print_list(t_lexer *list);
 void	split_list(t_lexer **list);
 int		count_words(char const *s, char c);

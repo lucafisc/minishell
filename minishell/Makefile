@@ -6,11 +6,11 @@
 #    By: lde-ross <lde-ross@student.42berlin.de     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/04/04 13:34:50 by tfregni           #+#    #+#              #
-#    Updated: 2023/04/08 16:00:05 by lde-ross         ###   ########.fr        #
+#    Updated: 2023/04/12 14:55:17 by lde-ross         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-SRC = main.c lexer.c signal.c cmdtrim.c search_bin.c lexer_list.c ft_split_keep.c \
+SRC = main.c lexer.c signal.c lex_split_tokens.c search_bin.c lexer_list.c ft_split_keep.c \
 		lexer_list_utils.c executor.c parser.c parser_utils.c
 OBJ = $(addprefix obj/, $(SRC:.c=.o))
 CC = cc
