@@ -59,7 +59,7 @@ void	print_list(t_lexer **list)
 	cur = *list;
 	while (cur)
 	{
-		printf("node %d:%s\n", cur->index, cur->data);
+		// printf("node %d:%s\n", cur->index, cur->data);
 		cur = cur->next;
 	}
 }

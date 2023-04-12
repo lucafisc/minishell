@@ -6,12 +6,13 @@
 /*   By: tfregni <tfregni@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 15:41:38 by tfregni           #+#    #+#             */
-/*   Updated: 2023/04/11 16:24:17 by tfregni          ###   ########.fr       */
+/*   Updated: 2023/04/12 16:59:10 by tfregni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+t_shell	*g_shell;
 // void	lexer(char *str)
 // {
 // 	int	i;
@@ -148,8 +149,8 @@ t_shell	*init(char ***env)
 	*env = shell->env;
 	shell->path = ft_split(getenv("PATH"), ':');
 	shell->user = get_username(shell);
-	shell->prompt = create_prompt(shell);
 	init_builtins(shell);
+	shell->prompt = create_prompt(shell);
 	//ft_print_strarr(shell->path);
 	return (shell);
 }
@@ -175,6 +176,7 @@ int	main(int ac, char *av[], char *env[])
 	shell = init(&env);
 	if (!shell)
 		return (throw_err("init", NULL));
+	g_shell = shell;
 	init_signal();
 	get_prompt(shell);
 	free_shell(shell);

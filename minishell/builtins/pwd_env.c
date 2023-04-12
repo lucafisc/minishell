@@ -6,7 +6,7 @@
 /*   By: tfregni <tfregni@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/29 19:15:00 by lde-ross          #+#    #+#             */
-/*   Updated: 2023/04/10 16:54:31 by tfregni          ###   ########.fr       */
+/*   Updated: 2023/04/12 16:54:11 by tfregni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	ft_pwd(t_shell *s, t_command *c)
 	(void) s;
 	(void) c;
 	getcwd(pwd, sizeof(pwd));
-	ft_putstr_fd(pwd, 1);
+	ft_putendl_fd(pwd, 1);
 }
 
 void	ft_env(t_shell *s, t_command *c)

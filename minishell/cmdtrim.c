@@ -6,13 +6,13 @@
 /*   By: tfregni <tfregni@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/01 12:54:23 by tfregni           #+#    #+#             */
-/*   Updated: 2023/04/03 16:53:05 by tfregni          ###   ########.fr       */
+/*   Updated: 2023/04/12 16:52:13 by tfregni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-char	**g_env;
+extern t_shell	*g_shell;
 
 /* Updates the status for the character the given matrix
 is pointing to, moves on the pointer and returns a code */
@@ -205,7 +205,7 @@ char	*ft_expand_var(char *cur, char *cmds, int i)
 	char	*new_cmd;
 
 	if (cur[i] == '~')
-		new_cmd = ft_strins(cmds, getenv("HOME"), 1, i);
+		new_cmd = ft_strins(cmds, ft_getenv(g_shell->env, "HOME"), 1, i);
 	else
 	{
 		trimmed = ft_strtrunc(&cur[i + 1], TRAIL_CHAR);
@@ -248,7 +248,7 @@ char	**ft_cmd_trim(char *str)
 	int		i;
 
 	n_cmds = ft_count_cmds(str);
-	printf("n_cmds: %d\n", n_cmds);
+	// printf("n_cmds: %d\n", n_cmds);
 	arr = malloc(sizeof(*arr) * (n_cmds + 1));
 	if (!arr)
 		return (NULL);
