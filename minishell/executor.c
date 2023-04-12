@@ -6,7 +6,7 @@
 /*   By: tfregni <tfregni@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/04 12:58:08 by tfregni           #+#    #+#             */
-/*   Updated: 2023/04/12 16:32:48 by tfregni          ###   ########.fr       */
+/*   Updated: 2023/04/12 17:36:51 by tfregni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,16 +83,21 @@ int	find_builtin(t_shell *s, char *cmd)
 	return (-1);
 }
 
+// void	exec_builtin(t_shell *s, t_command *cmd, int builtin_idx)
+// {
+// 	pid_t	pid;
+
+// 	pid = fork();
+// 	if (pid == 0)
+// 	{
+// 		s->builtins[builtin_idx].func (s, cmd);
+// 		exit(0);
+// 	}
+// }
+
 void	exec_builtin(t_shell *s, t_command *cmd, int builtin_idx)
 {
-	pid_t	pid;
-
-	pid = fork();
-	if (pid == 0)
-	{
-		s->builtins[builtin_idx].func (s, cmd);
-		exit(0);
-	}
+	s->builtins[builtin_idx].func (s, cmd);
 }
 
 void	execute(t_shell *s, t_lexer *lex)
