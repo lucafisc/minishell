@@ -3,32 +3,29 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tfregni <tfregni@student.42berlin.de>      +#+  +:+       +#+        */
+/*   By: lde-ross <lde-ross@student.42berlin.de     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 15:41:38 by tfregni           #+#    #+#             */
-/*   Updated: 2023/04/13 15:05:58 by tfregni          ###   ########.fr       */
+/*   Updated: 2023/04/13 19:03:54 by lde-ross         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 t_shell	*g_shell;
-// void	lexer(char *str)
-// {
-// 	int	i;
-// 	int state;
 
-// 	state = IN_NORMAL;
-// 	i = 0;
-// 	while (str[i])
-// 	{
-// 		if (str[i] == S_QUOTE)
-// 			printf("found S_QUOTE\n");
-// 		else if (str[i] == D_QUOTE)
-// 			printf("found D_QUOTE\n");
-// 		i++;
-// 	}
-// }
+void	free_shell(t_shell *shell)
+{
+	ft_free_str_arr(shell->path);
+	free(shell->prompt);
+	ft_free_str_arr(shell->env);
+	printf("freeeeeeee\n");
+	//rl_clear_history();
+	/* free(shell->lexer)*/
+	/* free(shell->parser)*/
+	free_builtins(shell->builtins);
+	free(shell);
+}
 
 char	*get_username(t_shell *s)
 {
@@ -142,7 +139,8 @@ void	get_prompt(t_shell *s)
 		input = readline(s->prompt);
 		 if (input == NULL) {
             printf("EOF encountered. Exiting...\n");
-			// has to free some stuff here (cwd)
+			free(input);
+			free_shell(s);
             exit(1);
         }
 		if (*input)
@@ -151,23 +149,12 @@ void	get_prompt(t_shell *s)
 			lex_list = lexer(input);
 			par_list = parser(lex_list);
 			execute(s, par_list);
-			//free_prompt(input, &lex_list, &par_list);
+			free_prompt(input, &lex_list, &par_list);
+			free(s->prompt);
 		}
 	}
 }
 
-void	free_shell(t_shell *shell)
-{
-	ft_free_str_arr(shell->path);
-	free(shell->prompt);
-	ft_free_str_arr(shell->env);
-	printf("freeeeeeee\n");
-	//rl_clear_history();
-	/* free(shell->lexer)*/
-	/* free(shell->parser)*/
-	free_builtins(shell->builtins);
-	free(shell);
-}
 
 int	main(int ac, char *av[], char *env[])
 {
