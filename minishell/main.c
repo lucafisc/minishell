@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lde-ross <lde-ross@student.42berlin.de>    +#+  +:+       +#+        */
+/*   By: tfregni <tfregni@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 15:41:38 by tfregni           #+#    #+#             */
-/*   Updated: 2023/04/13 10:37:08 by lde-ross         ###   ########.fr       */
+/*   Updated: 2023/04/13 15:05:58 by tfregni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,32 +29,6 @@ t_shell	*g_shell;
 // 		i++;
 // 	}
 // }
-
-void	get_prompt(t_shell *s)
-{
-	char	*input;
-	int		i = 0;
-	t_lexer	*lex_list;
-	t_command *par_list;
-
-	while (i == 0)
-	{
-		input = readline(s->prompt);
-		 if (input == NULL) {
-            printf("EOF encountered. Exiting...\n");
-			// has to free some stuff here (cwd)
-            exit(1);
-        }
-		if (*input)
-		{
-			add_history(input);
-			lex_list = lexer(input);
-			par_list = parser(lex_list);
-			execute(s, par_list);
-			//free_prompt(input, &lex_list, &par_list);
-		}
-	}
-}
 
 char	*get_username(t_shell *s)
 {
@@ -151,9 +125,35 @@ t_shell	*init(char ***env)
 	shell->path = ft_split(getenv("PATH"), ':');
 	shell->user = get_username(shell);
 	init_builtins(shell);
-	shell->prompt = create_prompt(shell);
 	//ft_print_strarr(shell->path);
 	return (shell);
+}
+
+void	get_prompt(t_shell *s)
+{
+	char	*input;
+	int		i = 0;
+	t_lexer	*lex_list;
+	t_command *par_list;
+
+	while (i == 0)
+	{
+		s->prompt = create_prompt(s);
+		input = readline(s->prompt);
+		 if (input == NULL) {
+            printf("EOF encountered. Exiting...\n");
+			// has to free some stuff here (cwd)
+            exit(1);
+        }
+		if (*input)
+		{
+			add_history(input);
+			lex_list = lexer(input);
+			par_list = parser(lex_list);
+			execute(s, par_list);
+			//free_prompt(input, &lex_list, &par_list);
+		}
+	}
 }
 
 void	free_shell(t_shell *shell)
