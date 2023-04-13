@@ -6,14 +6,13 @@ OBJ = $(addprefix obj/, $(SRC:.c=.o))
 CC = cc
 CFLAGS = -Wall -Wextra -Werror -g
 NAME = minishell
-CLIENT = client
 LIBFT = ./libft/libft.a
 INCLUDES = -I libft
 MAKE = make
 
 all: $(NAME)
 
-$(NAME): make_obj_dir $(OBJ)
+$(NAME): $(OBJ)
 	make $(LIBFT)
 	$(CC) $(CFLAGS) $(OBJ) $(LIBFT) $(INCLUDES) -lreadline -o $(NAME)
 
@@ -25,6 +24,8 @@ make_obj_dir:
 	mkdir -p obj/builtins
 
 obj/%.o: %.c
+	mkdir -p obj
+	mkdir -p obj/builtins
 	$(CC) -c $(CFLAGS) $(INCLUDES) $< -o $@
 
 clean:
