@@ -6,7 +6,7 @@
 /*   By: lde-ross <lde-ross@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/03 15:53:30 by lde-ross          #+#    #+#             */
-/*   Updated: 2023/04/13 10:32:35 by lde-ross         ###   ########.fr       */
+/*   Updated: 2023/04/13 11:43:34 by lde-ross         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,11 +19,11 @@ char	*str_chr_escaped(char *s, int c)
 	i = 0;
 	while (s[i])
 	{
-		if (s[i] == (char)c && !is_escaped(i, s))
+		if (s[i] == (char)c && !ft_is_escaped(i, s))
 			return ((char *)&s[i]);
 		i++;
 	}
-	if (s[i] == (char)c && !is_escaped(i, s))
+	if (s[i] == (char)c && !ft_is_escaped(i, s))
 		return ((char *)&s[i]);
 	return (0);
 }

@@ -1,4 +1,4 @@
-SRC = main.c free.c signal.c search_bin.c ft_split_keep.c \
+SRC = main.c free.c signal.c search_bin.c \
 		lexer.c lex_split_token.c lex_state.c lex_expander.c lex_list.c lex_utils.c lex_split_list.c \
 		parser.c par_utils.c par_trim_expand.c par_list.c par_redir.c\
 		 executor.c builtins.c $(addprefix builtins/,cd.c echo.c export.c pwd_env.c unset.c builtins_util.c)

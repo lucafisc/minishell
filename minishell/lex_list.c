@@ -1,13 +1,5 @@
 #include "minishell.h"
 
-t_bool	is_escaped(int i, char *s)
-{
-	if (i == 0 || s[i - 1] != '\\')
-		return (false);
-	else
-		return (true);
-}
-
 t_lexer	*lex_list_new_node(char *data, int info, int index)
 {
 	t_lexer	*new;

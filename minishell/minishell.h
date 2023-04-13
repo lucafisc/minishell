@@ -6,7 +6,7 @@
 /*   By: lde-ross <lde-ross@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 16:02:25 by tfregni           #+#    #+#             */
-/*   Updated: 2023/04/13 10:36:04 by lde-ross         ###   ########.fr       */
+/*   Updated: 2023/04/13 11:43:38 by lde-ross         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,7 +98,6 @@ void		for_each_par_node(t_command **cmd, void (*f)(t_command **cmd));
 void		par_fill_cmd(int *i, t_lexer *start, t_command **cmd_node);
 t_redir		is_redir(char *str);
 void		new_redir(int redir, t_lexer **lexer_node, t_command **cmd_node);
-t_bool		is_escaped(int i, char *s);
 
 /* ETC? */
 void		init_signal(void);

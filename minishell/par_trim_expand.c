@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   par_trim_expand.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lde-ross <lde-ross@student.42berlin.de     +#+  +:+       +#+        */
+/*   By: lde-ross <lde-ross@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/12 16:41:40 by lde-ross          #+#    #+#             */
-/*   Updated: 2023/04/12 17:08:51 by lde-ross         ###   ########.fr       */
+/*   Updated: 2023/04/13 11:43:43 by lde-ross         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ int get_len_trim_expand(char *str)
 	len = 0;
 	while (str[i])
 	{
-	if (is_escapable(str[i]) && is_escaped(i, str))
+	if (is_escapable(str[i]) && ft_is_escaped(i, str))
 			len--;
 		len++;
 		i++;
