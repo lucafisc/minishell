@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cmdsubsplit.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lde-ross <lde-ross@student.42berlin.de     +#+  +:+       +#+        */
+/*   By: tfregni <tfregni@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/31 21:04:58 by lde-ross          #+#    #+#             */
-/*   Updated: 2023/03/31 21:28:02 by lde-ross         ###   ########.fr       */
+/*   Updated: 2023/04/07 11:57:29 by tfregni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,6 @@
 // 		}
 // 			i++;
 // 	}
-	
 // }
 
 char	**cmdsubsplit(char **cmds)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lde-ross <lde-ross@student.42berlin.de     +#+  +:+       +#+        */
+/*   By: lde-ross <lde-ross@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 16:02:25 by tfregni           #+#    #+#             */
-/*   Updated: 2023/04/12 17:44:44 by lde-ross         ###   ########.fr       */
+/*   Updated: 2023/04/13 10:36:04 by lde-ross         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,7 +104,7 @@ t_bool		is_escaped(int i, char *s);
 void		init_signal(void);
 void		find_cmd(t_shell *s, char *cmd);
 char		**ft_split_keep(char *s, char c);
-void		execute(t_shell *s, t_lexer *lex);
+void		execute(t_shell *s, t_command *parsed_cmd);
 
 /* FREE */
 void		free_builtins(t_builtins *b);

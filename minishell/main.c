@@ -3,14 +3,32 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lde-ross <lde-ross@student.42berlin.de     +#+  +:+       +#+        */
+/*   By: lde-ross <lde-ross@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 15:41:38 by tfregni           #+#    #+#             */
-/*   Updated: 2023/04/12 17:40:15 by lde-ross         ###   ########.fr       */
+/*   Updated: 2023/04/13 10:37:08 by lde-ross         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+t_shell	*g_shell;
+// void	lexer(char *str)
+// {
+// 	int	i;
+// 	int state;
+
+// 	state = IN_NORMAL;
+// 	i = 0;
+// 	while (str[i])
+// 	{
+// 		if (str[i] == S_QUOTE)
+// 			printf("found S_QUOTE\n");
+// 		else if (str[i] == D_QUOTE)
+// 			printf("found D_QUOTE\n");
+// 		i++;
+// 	}
+// }
 
 void	get_prompt(t_shell *s)
 {
@@ -32,8 +50,8 @@ void	get_prompt(t_shell *s)
 			add_history(input);
 			lex_list = lexer(input);
 			par_list = parser(lex_list);
-			free_prompt(input, &lex_list, &par_list);
-			i++;
+			execute(s, par_list);
+			//free_prompt(input, &lex_list, &par_list);
 		}
 	}
 }
@@ -132,6 +150,7 @@ t_shell	*init(char ***env)
 	*env = shell->env;
 	shell->path = ft_split(getenv("PATH"), ':');
 	shell->user = get_username(shell);
+	init_builtins(shell);
 	shell->prompt = create_prompt(shell);
 	//ft_print_strarr(shell->path);
 	return (shell);
@@ -146,6 +165,7 @@ void	free_shell(t_shell *shell)
 	//rl_clear_history();
 	/* free(shell->lexer)*/
 	/* free(shell->parser)*/
+	free_builtins(shell->builtins);
 	free(shell);
 }
 
@@ -158,6 +178,7 @@ int	main(int ac, char *av[], char *env[])
 	shell = init(&env);
 	if (!shell)
 		return (throw_err("init", NULL));
+	g_shell = shell;
 	init_signal();
 	get_prompt(shell);
 	free_shell(shell);
