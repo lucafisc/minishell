@@ -3,43 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   lex_expander.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lde-ross <lde-ross@student.42berlin.de     +#+  +:+       +#+        */
+/*   By: lde-ross <lde-ross@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/12 14:59:28 by lde-ross          #+#    #+#             */
-/*   Updated: 2023/04/12 15:03:34 by lde-ross         ###   ########.fr       */
+/*   Updated: 2023/04/13 10:50:04 by lde-ross         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-/* It truncates s1 at the first occurrence of a char in set */
-/* What's returned is freeable */
-char	*ft_strtrunc(char *s1, char *set)
-{
-	int		i;
-	int		j;
-	char	*ret;
-
-	if (!s1)
-		return (NULL);
-	ret = ft_strdup(s1);
-	i = 0;
-	while (set && s1[i])
-	{
-		j = 0;
-		while (set[j])
-		{
-			if (s1[i] == set[j])
-			{
-				ret[i] = '\0';
-				return (ret);
-			}
-			j++;
-		}
-		i++;
-	}
-	return (ret);
-}
 
 /* It inserts s2 in s1 at the index idx substitung len chars of s1 */
 /* It doesn't free the arguments */
