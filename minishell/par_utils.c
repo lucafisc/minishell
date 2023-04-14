@@ -6,7 +6,7 @@
 /*   By: lde-ross <lde-ross@student.42berlin.de     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/08 15:56:16 by lde-ross          #+#    #+#             */
-/*   Updated: 2023/04/13 17:34:19 by lde-ross         ###   ########.fr       */
+/*   Updated: 2023/04/14 16:31:58 by lde-ross         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,6 @@ void free_par(t_command **cmd)
 	while (c->cmd[i])
 	{
 		free(c->cmd[i]);
-		printf("%d\n", i);
 		i++;
 	}
 	if (c->infile != -1)
