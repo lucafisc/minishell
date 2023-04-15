@@ -6,7 +6,7 @@
 /*   By: tfregni <tfregni@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 15:41:38 by tfregni           #+#    #+#             */
-/*   Updated: 2023/04/13 15:05:58 by tfregni          ###   ########.fr       */
+/*   Updated: 2023/04/15 21:44:11 by tfregni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,7 +106,7 @@ char	*create_prompt(t_shell *s)
 	char	*prompt;
 
 	tmp = create_cwd(s);
-	prompt = ft_strnjoin(7, RED, s->user, YELLOW, "@minishell ", DEFAULT, tmp, " > ");
+	prompt = ft_strnjoin(7, RED, s->user, YELLOW, "@minishell ", DEFAULT, tmp, "> ");
 	free(tmp);
 	return (prompt);
 }
@@ -131,20 +131,21 @@ t_shell	*init(char ***env)
 
 void	get_prompt(t_shell *s)
 {
-	char	*input;
-	int		i = 0;
-	t_lexer	*lex_list;
-	t_command *par_list;
+	char		*input;
+	int			i = 0;
+	t_lexer		*lex_list;
+	t_command	*par_list;
 
 	while (i == 0)
 	{
 		s->prompt = create_prompt(s);
 		input = readline(s->prompt);
-		 if (input == NULL) {
-            printf("EOF encountered. Exiting...\n");
+		if (input == NULL)
+		{
+			printf("EOF encountered. Exiting...\n");
 			// has to free some stuff here (cwd)
-            exit(1);
-        }
+			exit(1);
+		}
 		if (*input)
 		{
 			add_history(input);

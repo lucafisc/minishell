@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executor.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lde-ross <lde-ross@student.42berlin.de>    +#+  +:+       +#+        */
+/*   By: tfregni <tfregni@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/04 12:58:08 by tfregni           #+#    #+#             */
-/*   Updated: 2023/04/13 10:36:25 by lde-ross         ###   ########.fr       */
+/*   Updated: 2023/04/15 21:42:12 by tfregni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,11 +110,13 @@ void	execute(t_shell *s, t_command *parsed_cmd)
 		exec_builtin(s, parsed_cmd, builtin_idx);
 	else
 	{
-		find_cmd(s, parsed_cmd->cmd[0]);
 		pid = fork();
 		if (pid == 0)
 		{
-			// printf("exec %s\n", parsed_cmd->cmd[0]);
+			// printf("I'm the child\n***************************\n");
+			// printf("cmd %p\n", parsed_cmd->cmd[0]);
+			parsed_cmd->cmd[0] = find_cmd(s, parsed_cmd->cmd[0]);
+			// printf("exec %s %p\n", parsed_cmd->cmd[0], parsed_cmd->cmd[0]);
 			execve(parsed_cmd->cmd[0], parsed_cmd->cmd, s->env);
 			ft_putstr_fd("minishell: ", 2);
 			ft_putstr_fd(parsed_cmd->cmd[0], 2);
@@ -122,6 +124,7 @@ void	execute(t_shell *s, t_command *parsed_cmd)
 			exit(1);
 		}
 	}
+	// printf("I'm the parent\n***************************\n");
 	wait(NULL);
 	free_command(parsed_cmd);
 }
