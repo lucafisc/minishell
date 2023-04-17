@@ -3,18 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   lex_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lde-ross <lde-ross@student.42berlin.de     +#+  +:+       +#+        */
+/*   By: tfregni <tfregni@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/12 15:48:10 by lde-ross          #+#    #+#             */
-/*   Updated: 2023/04/12 17:27:56 by lde-ross         ###   ########.fr       */
+/*   Updated: 2023/04/17 18:57:26 by tfregni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void for_each_lex_node(t_lexer **list, void (*f)(t_lexer **cmd))
+void	for_each_lex_node(t_lexer **list, void (*f)(t_lexer **cmd))
 {
-	t_lexer *cur;
+	t_lexer	*cur;
 	t_lexer	*temp;
 
 	cur = *list;
@@ -26,7 +26,7 @@ void for_each_lex_node(t_lexer **list, void (*f)(t_lexer **cmd))
 	}
 }
 
-void lex_print_list(t_lexer *list)
+void	lex_print_list(t_lexer *list)
 {
 	while (list)
 	{

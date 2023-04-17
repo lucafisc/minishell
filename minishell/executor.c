@@ -6,7 +6,7 @@
 /*   By: tfregni <tfregni@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/04 12:58:08 by tfregni           #+#    #+#             */
-/*   Updated: 2023/04/17 14:10:11 by tfregni          ###   ########.fr       */
+/*   Updated: 2023/04/17 21:06:33 by tfregni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,6 +100,26 @@ void	exec_builtin(t_shell *s, t_command *cmd, int builtin_idx)
 	s->builtins[builtin_idx].func (s, cmd);
 }
 
+void	create_redir(t_command *cmd)
+{
+	if (cmd->infile >= 0)
+	{
+		if (dup2(cmd->infile, 0) == -1)
+		{
+			throw_err("redirection", NULL);
+			exit(1);
+		}
+	}
+	if (cmd->outfile >= 0)
+	{
+		if (dup2(cmd->outfile, 1) == -1)
+		{
+			throw_err("redirection", NULL);
+			exit(1);
+		}
+	}
+}
+
 void	execute(t_shell *s, t_command *parsed_cmd)
 {
 	pid_t		pid;
@@ -113,6 +133,7 @@ void	execute(t_shell *s, t_command *parsed_cmd)
 		pid = fork();
 		if (pid == 0)
 		{
+			create_redir(parsed_cmd);
 			// printf("I'm the child\n***************************\n");
 			// printf("cmd %p\n", parsed_cmd->cmd[0]);
 			parsed_cmd->cmd[0] = find_cmd(s, parsed_cmd->cmd[0]);

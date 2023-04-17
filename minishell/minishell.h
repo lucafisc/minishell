@@ -6,7 +6,7 @@
 /*   By: tfregni <tfregni@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 16:02:25 by tfregni           #+#    #+#             */
-/*   Updated: 2023/04/17 11:29:21 by tfregni          ###   ########.fr       */
+/*   Updated: 2023/04/17 18:56:22 by tfregni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,13 +43,21 @@ enum e_token {
 	D_QUOTE = '\"',
 };
 
-enum e_state {
+enum e_lexer_info
+{
+	LEX_CMD = 1,
+	LEX_FILE,
+};
+
+enum e_state
+{
 	IN_NORMAL,
 	IN_S_QUOTE,
 	IN_D_QUOTE,
 };
 
-typedef enum e_redir {
+typedef enum e_redir
+{
 	OUT_WRITE = 1,
 	OUT_APPEND,
 	IN_READ,

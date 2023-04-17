@@ -6,7 +6,7 @@
 /*   By: tfregni <tfregni@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/28 16:31:54 by tfregni           #+#    #+#             */
-/*   Updated: 2023/04/17 14:19:11 by tfregni          ###   ########.fr       */
+/*   Updated: 2023/04/17 19:30:38 by tfregni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,12 +33,24 @@ t_command	*par_list_from_lex(t_lexer *lex, int n_cmds)
 		start = lex;
 		while (lex && !is_pipe(lex->data))
 		{
+			// printf("checking lex_data: %s ", lex->data);
 			if (is_redir(lex->data))
+			{
+				// printf("is_redir\n");
 				lex = lex->next;
+				if (lex)
+					lex->info = LEX_FILE;
+			}
 			else
+			{
 				len++;
+				// printf("command is longer: %d\n", len);
+			}
 			if (lex)
+			{
 				lex = lex->next;
+				// printf("moving to the next token: %s\n", lex ? lex->data:"empty");
+			}
 		}
 		if (i == 1)
 			new = par_list_new_node(start, len);
@@ -73,5 +85,6 @@ t_command	*parser(t_lexer *lex)
 	n_cmds = par_count_cmds(lex);
 	cmd = par_list_from_lex(lex, n_cmds);
 	for_each_par_node(&cmd, par_trim_expand);
+	// printf("n_cmd: %d\n", n_cmds);
 	return (cmd);
 }

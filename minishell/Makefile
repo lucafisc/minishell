@@ -6,7 +6,7 @@
 #    By: tfregni <tfregni@student.42berlin.de>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/04/17 13:03:17 by tfregni           #+#    #+#              #
-#    Updated: 2023/04/17 14:07:21 by tfregni          ###   ########.fr        #
+#    Updated: 2023/04/17 15:10:08 by tfregni          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -64,4 +64,3 @@ re: fclean
 	$(MAKE) all
 
 .PHONY: all clean fclean
-

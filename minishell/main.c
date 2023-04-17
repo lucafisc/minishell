@@ -6,7 +6,7 @@
 /*   By: tfregni <tfregni@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 15:41:38 by tfregni           #+#    #+#             */
-/*   Updated: 2023/04/17 14:24:34 by tfregni          ###   ########.fr       */
+/*   Updated: 2023/04/17 19:29:31 by tfregni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -149,11 +149,19 @@ void	get_prompt(t_shell *s)
 			add_history(input);
 			lex_list = lexer(input);
 			par_list = parser(lex_list);
+			// t_command *cur;
+			// cur = par_list;
+			// while (cur)
+			// {
+			// 	printf("in: %d out: %d\n", cur->infile, cur->outfile);
+			// 	ft_print_strarr(cur->cmd);
+			// 	cur = cur->next;
+			// }
 			execute(s, par_list);
-			free_prompt(input, &lex_list, &par_list);
+			// free_prompt(input, &lex_list, &par_list);
+			// write(1, "here\n", 5);
 			free(s->prompt);
 		}
-		free(s->prompt);
 	}
 }
 

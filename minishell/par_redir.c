@@ -6,7 +6,7 @@
 /*   By: tfregni <tfregni@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/12 16:55:28 by lde-ross          #+#    #+#             */
-/*   Updated: 2023/04/17 14:21:30 by tfregni          ###   ########.fr       */
+/*   Updated: 2023/04/17 17:53:56 by tfregni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,10 +32,10 @@ void	open_out(int redir, t_lexer *start, t_command **cmd_node)
 
 	new = *cmd_node;
 	if (redir == OUT_WRITE)
-		open_flag = O_WRONLY;
+		open_flag = (O_WRONLY | O_CREAT | O_TRUNC);
 	else
-		open_flag = (O_WRONLY | O_APPEND);
-	new->outfile = open(start->next->data, open_flag);
+		open_flag = (O_WRONLY | O_CREAT | O_APPEND);
+	new->outfile = open(start->next->data, open_flag, 0644);
 	if (new->outfile == -1)
 		throw_err("open", start->next->data);
 }

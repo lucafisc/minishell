@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   lex_list.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: tfregni <tfregni@student.42berlin.de>      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/04/17 18:56:58 by tfregni           #+#    #+#             */
+/*   Updated: 2023/04/17 19:02:07 by tfregni          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
 t_lexer	*lex_list_new_node(char *data, int info, int index)
@@ -38,7 +50,7 @@ void	fill_lex_list(t_lexer **node, char *data, int info, int i)
 		lex_list_add_back(node, lex_list_new_node(data, info, i));
 }
 
-t_lexer *lex_list_from_table(char **matrix)
+t_lexer	*lex_list_from_table(char **matrix)
 {
 	t_lexer	*new;
 	int		i;
@@ -46,7 +58,7 @@ t_lexer *lex_list_from_table(char **matrix)
 	i = 0;
 	while (matrix[i])
 	{
-		fill_lex_list(&new, matrix[i], 1, i);
+		fill_lex_list(&new, matrix[i], LEX_CMD, i);
 		i++;
 	}
 	return (new);
