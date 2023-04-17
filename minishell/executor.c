@@ -6,7 +6,7 @@
 /*   By: tfregni <tfregni@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/04 12:58:08 by tfregni           #+#    #+#             */
-/*   Updated: 2023/04/17 11:13:40 by tfregni          ###   ########.fr       */
+/*   Updated: 2023/04/17 14:10:11 by tfregni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,5 +126,5 @@ void	execute(t_shell *s, t_command *parsed_cmd)
 	}
 	// printf("I'm the parent\n***************************\n");
 	wait(NULL);
-	//free_command(parsed_cmd);
+	free_command(parsed_cmd);
 }

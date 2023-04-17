@@ -3,20 +3,20 @@
 /*                                                        :::      ::::::::   */
 /*   par_list.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lde-ross <lde-ross@student.42berlin.de     +#+  +:+       +#+        */
+/*   By: tfregni <tfregni@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/12 16:54:04 by lde-ross          #+#    #+#             */
-/*   Updated: 2023/04/12 17:00:58 by lde-ross         ###   ########.fr       */
+/*   Updated: 2023/04/17 14:22:13 by tfregni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-t_command *par_list_new_node(t_lexer *start, int len)
+t_command	*par_list_new_node(t_lexer *start, int len)
 {
-	t_command *new;
-	int i;
-	int redir;
+	t_command	*new;
+	int			i;
+	int			redir;
 
 	new = malloc(sizeof(*new));
 	if (!new)
@@ -41,12 +41,12 @@ t_command *par_list_new_node(t_lexer *start, int len)
 	return (new);
 }
 
-void par_list_add_back(t_command **list, t_command *new)
+void	par_list_add_back(t_command **list, t_command *new)
 {
-	t_command *cur;
+	t_command	*cur;
 
 	if (!new)
-		return;
+		return ;
 	cur = *list;
 	while (cur->next)
 		cur = cur->next;

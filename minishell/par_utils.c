@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   par_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lde-ross <lde-ross@student.42berlin.de     +#+  +:+       +#+        */
+/*   By: tfregni <tfregni@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/08 15:56:16 by lde-ross          #+#    #+#             */
-/*   Updated: 2023/04/14 16:31:58 by lde-ross         ###   ########.fr       */
+/*   Updated: 2023/04/17 14:17:08 by tfregni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void for_each_par_node(t_command **cmd, void (*f)(t_command **cmd))
+void	for_each_par_node(t_command **cmd, void (*f)(t_command **cmd))
 {
 	t_command	*cur;
 	t_command	*temp;
@@ -26,10 +26,10 @@ void for_each_par_node(t_command **cmd, void (*f)(t_command **cmd))
 	}
 }
 
-void free_par(t_command **cmd)
+void	free_par(t_command **cmd)
 {
-	int i;
-	t_command *c;
+	int			i;
+	t_command	*c;
 
 	c = *cmd;
 	i = 0;

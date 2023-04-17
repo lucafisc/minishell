@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   par_trim_expand.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lde-ross <lde-ross@student.42berlin.de>    +#+  +:+       +#+        */
+/*   By: tfregni <tfregni@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/12 16:41:40 by lde-ross          #+#    #+#             */
-/*   Updated: 2023/04/13 11:43:43 by lde-ross         ###   ########.fr       */
+/*   Updated: 2023/04/17 14:15:53 by tfregni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-t_bool is_escapable(char c)
+t_bool	is_escapable(char c)
 {
 	if (!c)
 		return (false);
@@ -21,16 +21,16 @@ t_bool is_escapable(char c)
 	return (false);
 }
 
-int get_len_trim_expand(char *str)
+int	get_len_trim_expand(char *str)
 {
-	int i;
-	int len;
+	int	i;
+	int	len;
 
 	i = 0;
 	len = 0;
 	while (str[i])
 	{
-	if (is_escapable(str[i]) && ft_is_escaped(i, str))
+		if (is_escapable(str[i]) && ft_is_escaped(i, str))
 			len--;
 		len++;
 		i++;
@@ -38,12 +38,12 @@ int get_len_trim_expand(char *str)
 	return (len);
 }
 
-char *expand_escaped(char *str)
+char	*expand_escaped(char *str)
 {
-	char *new;
-	int len;
-	int i;
-	int j;
+	char	*new;
+	int		len;
+	int		i;
+	int		j;
 
 	len = get_len_trim_expand(str);
 	new = ft_calloc(len + 1, sizeof(char));
@@ -56,7 +56,7 @@ char *expand_escaped(char *str)
 		if (str[i] == '\\' && is_escapable(str[i + 1]))
 			i++;
 		if (!str[i])
-			break;
+			break ;
 		new[j] = str[i];
 		i++;
 		j++;
@@ -64,9 +64,9 @@ char *expand_escaped(char *str)
 	return (new);
 }
 
-t_bool has_escaped(char *str)
+t_bool	has_escaped(char *str)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (str[i])
@@ -78,9 +78,9 @@ t_bool has_escaped(char *str)
 	return (false);
 }
 
-t_bool is_in_quote(char *str)
+t_bool	is_in_quote(char *str)
 {
-	int len;
+	int	len;
 
 	len = ft_strlen(str);
 	if ((str[0] == '\'' || str[0] == '\"') && str[len - 1] == str[0])
@@ -88,12 +88,12 @@ t_bool is_in_quote(char *str)
 	return (false);
 }
 
-void par_trim_expand(t_command **cmd)
+void	par_trim_expand(t_command **cmd)
 {
-	t_command *cur;
-	char *temp;
-	int i;
-	int len;
+	t_command	*cur;
+	char		*temp;
+	int			i;
+	int			len;
 
 	cur = *cmd;
 	i = 0;
