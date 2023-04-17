@@ -6,7 +6,7 @@
 #    By: tfregni <tfregni@student.42berlin.de>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/04/17 13:03:17 by tfregni           #+#    #+#              #
-#    Updated: 2023/04/17 13:20:53 by tfregni          ###   ########.fr        #
+#    Updated: 2023/04/17 13:55:42 by tfregni          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,22 +21,25 @@ CFLAGS = -Wall -Wextra -Werror -g
 NAME = minishell
 CLIENT = client
 LIBFT = ./libft/libft.a
-INCLUDES = -I libft
+# Check the includes and libs on Linux or ARM64
+INCLUDES = -I /usr/local/Cellar/readline/8.2.1/include
+LIBS = -L /usr/local/Cellar/readline/8.2.1/lib -lreadline
 MAKE = make
 
 all: $(NAME)
 
 $(NAME): $(OBJ)
 	make $(LIBFT)
-	$(CC) $(CFLAGS) $(OBJ) $(LIBFT) $(INCLUDES) -o $(NAME) -lreadline
+	$(CC) $(CFLAGS) $(OBJ) $(LIBFT) $(INCLUDES) -o $(NAME) $(LIBS)
 
 $(LIBFT):
-	$(MAKE) -C libft
+	@$(MAKE) -C libft
 
 # https://www.gnu.org/software/make/manual/html_node/Prerequisite-Types.html
+# The | char in makefile makes what follows a prerequisite but it won't recompile
+# if its timestamp changed
 $(OBJ): | $(OBJDIR)
 
-# the if uses the test function with -d option
 $(OBJDIR):
 	mkdir -p $(OBJDIR)
 	mkdir -p $(OBJDIR)/builtins
