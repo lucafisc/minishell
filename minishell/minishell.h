@@ -6,7 +6,7 @@
 /*   By: tfregni <tfregni@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 16:02:25 by tfregni           #+#    #+#             */
-/*   Updated: 2023/04/17 18:56:22 by tfregni          ###   ########.fr       */
+/*   Updated: 2023/04/17 21:33:42 by tfregni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@
 # include "colors.h"
 # define TRAIL_CHAR " \n\t><|\"$"
 # define SPLIT_CHAR "|<>"
-# define N_BUILTINS 6
+# define N_BUILTINS 7
 
 typedef enum s_bool
 {
@@ -76,8 +76,10 @@ struct s_shell
 {
 	char		**env;
 	char		**path;
+	char		**vars;
 	char		*user;
 	char		*prompt;
+	t_bool		exit;
 	t_lexer		*lexer;
 	t_command	*cmd;
 	t_builtins	*builtins;
@@ -126,6 +128,7 @@ void		ft_env(t_shell *s, t_command *c);
 void		ft_unset(t_shell *s, t_command *c);
 void		ft_export(t_shell *s, t_command *c);
 void		ft_echo(t_shell *s, t_command *c);
+void		ft_exit(t_shell *s, t_command *c);
 
 /* BUILTINS UTILITIES */
 char		**env_dup(char **env);

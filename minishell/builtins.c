@@ -6,7 +6,7 @@
 /*   By: tfregni <tfregni@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/29 15:19:22 by tfregni           #+#    #+#             */
-/*   Updated: 2023/04/11 16:24:04 by tfregni          ###   ########.fr       */
+/*   Updated: 2023/04/17 21:34:36 by tfregni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ void	init_builtins(t_shell *s)
 	b[3] = (t_builtins){"pwd", ft_pwd};
 	b[4] = (t_builtins){"unset", ft_unset};
 	b[5] = (t_builtins){"env", ft_env};
+	b[6] = (t_builtins){"exit", ft_exit};
 	s->builtins = b;
 }
 

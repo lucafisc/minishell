@@ -6,7 +6,7 @@
 /*   By: tfregni <tfregni@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/04 12:58:08 by tfregni           #+#    #+#             */
-/*   Updated: 2023/04/17 21:06:33 by tfregni          ###   ########.fr       */
+/*   Updated: 2023/04/17 21:29:24 by tfregni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,6 +120,20 @@ void	create_redir(t_command *cmd)
 	}
 }
 
+void	close_fd(t_command *cmd)
+{
+	if (cmd->infile > 1)
+	{
+		printf("Closing file descriptor %d\n", cmd->infile);
+		close(cmd->infile);
+	}
+	if (cmd->outfile > 1)
+	{
+		printf("Closing file descriptor %d\n", cmd->outfile);
+		close(cmd->outfile);
+	}
+}
+
 void	execute(t_shell *s, t_command *parsed_cmd)
 {
 	pid_t		pid;
@@ -147,5 +161,6 @@ void	execute(t_shell *s, t_command *parsed_cmd)
 	}
 	// printf("I'm the parent\n***************************\n");
 	wait(NULL);
+	close_fd(parsed_cmd);
 	free_command(parsed_cmd);
 }
