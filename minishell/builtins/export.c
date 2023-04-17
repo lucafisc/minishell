@@ -6,7 +6,7 @@
 /*   By: tfregni <tfregni@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/29 15:19:22 by tfregni           #+#    #+#             */
-/*   Updated: 2023/04/11 15:47:21 by tfregni          ###   ########.fr       */
+/*   Updated: 2023/04/17 11:30:55 by tfregni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,7 +102,7 @@ void	ft_export(t_shell *s, t_command *c)
 // 	s->env = env_dup(env);
 // 	ft_export(s, c);
 // 	char *key =  ft_strtrunc(c->cmd[1], "=");
-// 	printf("%s: %s\n", c->cmd[1], ft_getenv(s->env, key));
+// 	printf("%s: %s\n", c->cmd[1], ft_getenv(key));
 // 	free(key);
 // 	ft_free_str_arr(c->cmd);
 // 	ft_free_str_arr(s->env);

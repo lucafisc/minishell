@@ -6,7 +6,7 @@
 /*   By: tfregni <tfregni@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/30 07:33:56 by tfregni           #+#    #+#             */
-/*   Updated: 2023/04/11 15:39:25 by tfregni          ###   ########.fr       */
+/*   Updated: 2023/04/17 11:32:42 by tfregni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,12 +63,12 @@ void	free_cd(char *path, char *oldpwd)
 }
 
 /* It sets the value of path expanding - or "" */
-void	set_path(t_shell *s, t_command *c, char **path)
+void	set_path(t_command *c, char **path)
 {
 	if (!c->cmd[1] || !c->cmd[1][0])
 		*path = ft_strdup("~");
 	else if (!ft_strncmp(c->cmd[1], "-", 2))
-		*path = ft_strdup(ft_getenv(s->env, "OLDPWD"));
+		*path = ft_strdup(ft_getenv("OLDPWD"));
 	else
 		*path = ft_strdup(c->cmd[1]);
 }
@@ -80,7 +80,7 @@ void	ft_cd(t_shell *s, t_command *c)
 
 	if (!s || !c || !c->cmd || !c->cmd[0])
 		return ;
-	set_path(s, c, &path);
+	set_path(c, &path);
 	oldpwd = getcwd(NULL, 0);
 	if (!oldpwd)
 	{
@@ -117,7 +117,7 @@ void	ft_cd(t_shell *s, t_command *c)
 // 	c->cmd[2] = NULL;
 // 	s->env = env_dup(env);
 // 	ft_cd(s, c);
-// 	printf("PWD: %s\nOLDPWD: %s\n", ft_getenv(s->env, "PWD"), ft_getenv(s->env, "OLDPWD"));
+// 	printf("PWD: %s\nOLDPWD: %s\n", ft_getenv("PWD"), ft_getenv("OLDPWD"));
 // 	ft_pwd();
 // 	ft_free_str_arr(c->cmd);
 // 	ft_free_str_arr(s->env);

@@ -6,7 +6,7 @@
 /*   By: tfregni <tfregni@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/12 14:59:28 by lde-ross          #+#    #+#             */
-/*   Updated: 2023/04/17 11:24:07 by tfregni          ###   ########.fr       */
+/*   Updated: 2023/04/17 11:28:53 by tfregni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,20 +21,18 @@ char	*expand_var(char *cur, char *cmds, int i)
 	char	*new_cmd;
 
 	if (cur[i] == '~')
-		new_cmd = ft_strins(cmds, ft_getenv(g_shell->env, "HOME"), 1, i);
+		new_cmd = ft_strins(cmds, ft_getenv("HOME"), 1, i);
 	else
 	{
 		trimmed = ft_strtrunc(&cur[i + 1], TRAIL_CHAR);
 		len_trim = ft_strlen(trimmed);
-		new_cmd = ft_strins(cmds, ft_getenv(g_shell->env, trimmed), len_trim + 1, i);
+		new_cmd = ft_strins(cmds, ft_getenv(trimmed), len_trim + 1, i);
 		free(trimmed);
 	}
 	free(cmds);
 	return (new_cmd);
 }
 
-/* At the moment the lookup is in the "real" environment */
-/* Try double=hi$USER;echo $double */
 char	*lex_expander(char *cmds)
 {
 	char	*cur;

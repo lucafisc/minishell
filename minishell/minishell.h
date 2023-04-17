@@ -6,7 +6,7 @@
 /*   By: tfregni <tfregni@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 16:02:25 by tfregni           #+#    #+#             */
-/*   Updated: 2023/04/15 21:35:29 by tfregni          ###   ########.fr       */
+/*   Updated: 2023/04/17 11:29:21 by tfregni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,7 +124,7 @@ char		**env_dup(char **env);
 char		**env_append(char **env, char *var);
 int			search_array(char **env, char *var);
 int			arg_index(char **env, char *var);
-char		*ft_getenv(char **env, char *key);
+char		*ft_getenv(char *key);
 
 /* ERROR HANDLING*/
 int			throw_err(char *str, char *arg);

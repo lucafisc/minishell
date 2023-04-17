@@ -6,11 +6,13 @@
 /*   By: tfregni <tfregni@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/11 15:38:34 by tfregni           #+#    #+#             */
-/*   Updated: 2023/04/11 15:48:06 by tfregni          ###   ########.fr       */
+/*   Updated: 2023/04/17 11:28:35 by tfregni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
+
+extern t_shell	*g_shell;
 
 /* returns an allocated 0-terminated copy of the env */
 char	**env_dup(char **env)
@@ -97,11 +99,13 @@ int	arg_index(char **env, char *var)
 }
 
 /* Didn't think about many edge cases... */
-char	*ft_getenv(char **env, char *key)
+char	*ft_getenv(char *key)
 {
-	int	len;
-	int	i;
+	int		len;
+	int		i;
+	char	**env;
 
+	env = g_shell->env;
 	if (!env)
 		return (NULL);
 	len = ft_strlen(key);
