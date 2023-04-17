@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lde-ross <lde-ross@student.42berlin.de>    +#+  +:+       +#+        */
+/*   By: tfregni <tfregni@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 16:02:25 by tfregni           #+#    #+#             */
-/*   Updated: 2023/04/13 11:43:38 by lde-ross         ###   ########.fr       */
+/*   Updated: 2023/04/15 21:35:29 by tfregni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,7 +101,7 @@ void		new_redir(int redir, t_lexer **lexer_node, t_command **cmd_node);
 
 /* ETC? */
 void		init_signal(void);
-void		find_cmd(t_shell *s, char *cmd);
+char		*find_cmd(t_shell *s, char *cmd);
 char		**ft_split_keep(char *s, char c);
 void		execute(t_shell *s, t_command *parsed_cmd);
 
@@ -128,5 +128,8 @@ char		*ft_getenv(char **env, char *key);
 
 /* ERROR HANDLING*/
 int			throw_err(char *str, char *arg);
+
+/* TEMP */
+t_command	*simple_parser(t_lexer *lex);
 
 #endif
