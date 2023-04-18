@@ -6,7 +6,7 @@
 /*   By: tfregni <tfregni@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/12 16:54:04 by lde-ross          #+#    #+#             */
-/*   Updated: 2023/04/17 19:26:48 by tfregni          ###   ########.fr       */
+/*   Updated: 2023/04/18 13:40:53 by tfregni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,8 @@ t_command	*par_list_new_node(t_lexer *start, int len)
 		return (NULL);
 	new->infile = -1;
 	new->outfile = -1;
+	new->fd_pipe[0] = 0;
+	new->fd_pipe[1] = 1;
 	new->prev = NULL;
 	new->next = NULL;
 	i = 0;
@@ -36,7 +38,7 @@ t_command	*par_list_new_node(t_lexer *start, int len)
 		redir = is_redir(start->data);
 		if (redir)
 			new_redir(redir, &start, &new);
-		else if (i < len && start->info != LEX_FILE)
+		else if (i < len && start->info == LEX_CMD)
 			par_fill_cmd(&i, start, &new);
 		start = start->next;
 	}

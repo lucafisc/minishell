@@ -6,7 +6,7 @@
 /*   By: tfregni <tfregni@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 16:02:25 by tfregni           #+#    #+#             */
-/*   Updated: 2023/04/17 21:33:42 by tfregni          ###   ########.fr       */
+/*   Updated: 2023/04/18 13:14:02 by tfregni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@
 # define TRAIL_CHAR " \n\t><|\"$"
 # define SPLIT_CHAR "|<>"
 # define N_BUILTINS 7
+# define HEREDOC_NAME "_heredoc_temp"
 
 typedef enum s_bool
 {
@@ -47,6 +48,7 @@ enum e_lexer_info
 {
 	LEX_CMD = 1,
 	LEX_FILE,
+	LEX_TERM
 };
 
 enum e_state

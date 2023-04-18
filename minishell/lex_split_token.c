@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lex_split_token.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lde-ross <lde-ross@student.42berlin.de     +#+  +:+       +#+        */
+/*   By: tfregni <tfregni@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/01 12:54:23 by tfregni           #+#    #+#             */
-/*   Updated: 2023/04/12 15:07:44 by lde-ross         ###   ########.fr       */
+/*   Updated: 2023/04/17 21:54:36 by tfregni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,8 @@ t_bool	is_token(char c, int state)
 	return (false);
 }
 
-/* NOTE that the increment in the loops is in the ft_lex_update_status function */
+/* NOTE that the increment in the loops is in the */
+/* ft_lex_update_status function */
 /* Meaning of the new_cmd_flag values: */
 /* 0 - no change */
 /* 1 - close quotes */

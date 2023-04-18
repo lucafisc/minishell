@@ -6,7 +6,7 @@
 /*   By: tfregni <tfregni@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/28 16:31:54 by tfregni           #+#    #+#             */
-/*   Updated: 2023/04/17 19:30:38 by tfregni          ###   ########.fr       */
+/*   Updated: 2023/04/18 00:24:55 by tfregni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,19 +14,45 @@
 
 t_bool	is_pipe(char *str)
 {
-	if (ft_strncmp(str, "|", 1) == 0)
+	if (str && *str && ft_strncmp(str, "|", 1) == 0)
 		return (true);
 	return (false);
 }
 
+void	setup_pipe(t_command *cmd, t_pipe_status *status)
+{
+	t_command	*last;
+	static int i = 0;
+	last = cmd;
+	while (last->next)
+		last = last->next;
+	// printf("Current cmd: %s Status %d\n", last->cmd[0], *status);
+	if (*status == PIPE_WRITE)
+	{
+		// printf("copying pipe_read from previous\n");
+		last->infile = last->prev->fd_pipe[0];
+		last->fd_pipe[0] = last->prev->fd_pipe[0];
+		last->fd_pipe[1] = last->prev->fd_pipe[1];
+	}
+	*status = (*status + 1) % 2;
+	printf("status updated to %s\n", *status == 0 ? "READ" : "WRITE");
+	if (pipe(last->fd_pipe) == -1)
+		throw_err("pipe", last->cmd[0]);
+	printf("Created pipe %d: write %d - read %d\n", i++, last->fd_pipe[1], last->fd_pipe[0]);
+	last->outfile = last->fd_pipe[1];
+	printf("cmd: %s in %d out %d\n", last->cmd[0], last->infile, last->outfile);
+}
+
 t_command	*par_list_from_lex(t_lexer *lex, int n_cmds)
 {
-	t_command	*new;
-	t_lexer		*start;
-	int			len;
-	int			i;
+	t_command		*new;
+	t_lexer			*start;
+	int				len;
+	int				i;
+	t_pipe_status	pipe_status;
 
 	i = 1;
+	pipe_status = PIPE_NO;
 	while (lex && i <= n_cmds)
 	{
 		len = 0;
@@ -57,6 +83,8 @@ t_command	*par_list_from_lex(t_lexer *lex, int n_cmds)
 		else
 			par_list_add_back(&new, par_list_new_node(start, len));
 		i++;
+		if (lex)
+			setup_pipe(new, &pipe_status);
 		if (lex && lex->next)
 			lex = lex->next;
 	}

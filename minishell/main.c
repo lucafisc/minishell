@@ -6,7 +6,7 @@
 /*   By: tfregni <tfregni@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 15:41:38 by tfregni           #+#    #+#             */
-/*   Updated: 2023/04/17 21:35:50 by tfregni          ###   ########.fr       */
+/*   Updated: 2023/04/17 21:48:41 by tfregni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -138,7 +138,7 @@ void	get_prompt(t_shell *s)
 	{
 		s->prompt = create_prompt(s);
 		input = readline(s->prompt);
-		if (input == NULL || s->exit)
+		if (input == NULL)
 		{
 			printf("EOF encountered. Exiting...\n");
 			free(input);

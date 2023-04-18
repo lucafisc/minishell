@@ -6,7 +6,7 @@
 /*   By: tfregni <tfregni@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/12 16:55:28 by lde-ross          #+#    #+#             */
-/*   Updated: 2023/04/17 17:53:56 by tfregni          ###   ########.fr       */
+/*   Updated: 2023/04/18 13:47:52 by tfregni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,39 @@ void	open_out(int redir, t_lexer *start, t_command **cmd_node)
 		throw_err("open", start->next->data);
 }
 
+static void	read_stdin(t_lexer *lex, int heredoc_fd, char *line)
+{
+	int	len;
+
+	while (1)
+	{
+		line = readline("minishell heredoc> ");
+		if (!line)
+			break ;
+		len = ft_strlen(line);
+		if (len > 1 && !ft_strncmp(line, lex->data, len))
+			break ;
+		ft_putendl_fd(line, heredoc_fd);
+		free(line);
+	}
+	free(line);
+}
+
+void	handle_heredoc(t_lexer *lex, int *open_flag)
+{
+	char	*line;
+	int		heredoc_fd;
+
+	line = NULL;
+	heredoc_fd = open(HEREDOC_NAME, *open_flag, 0644);
+	if (heredoc_fd < 0)
+		throw_err("heredoc", NULL);
+	read_stdin(lex, heredoc_fd, line);
+	close(heredoc_fd);
+	*open_flag = O_RDONLY;
+}
+
+/* If start->next == NULL we got a problem (should go to stdin or stdout) */
 void	open_in(int redir, t_lexer *start, t_command **cmd_node)
 {
 	int			open_flag;
@@ -49,8 +82,19 @@ void	open_in(int redir, t_lexer *start, t_command **cmd_node)
 	if (redir == IN_READ)
 		open_flag = O_RDONLY;
 	else
-		open_flag = (O_RDWR | O_CREAT | O_APPEND);
-	new->infile = open(start->next->data, open_flag);
+	{
+		open_flag = (O_RDWR | O_CREAT | O_TRUNC | O_APPEND);
+		start->next->info = LEX_TERM;
+		handle_heredoc(start->next, &open_flag);
+	}
+	if (start->next->info == LEX_TERM)
+	{
+		new->infile = open(HEREDOC_NAME, open_flag, 0644);
+		if (new->infile < 0)
+			unlink(HEREDOC_NAME);
+	}
+	else
+		new->infile = open(start->next->data, open_flag);
 	if (new->infile == -1)
 		throw_err("open", start->next->data);
 }

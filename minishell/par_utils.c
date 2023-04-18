@@ -6,7 +6,7 @@
 /*   By: tfregni <tfregni@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/08 15:56:16 by lde-ross          #+#    #+#             */
-/*   Updated: 2023/04/17 15:09:14 by tfregni          ###   ########.fr       */
+/*   Updated: 2023/04/17 22:07:01 by tfregni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,6 @@ void	for_each_par_node(t_command **cmd, void (*f)(t_command **cmd))
 
 void	free_par(t_command **cmd)
 {
-	// (void) cmd;
 	int			i;
 	t_command	*c;
 

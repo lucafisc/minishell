@@ -6,7 +6,7 @@
 /*   By: tfregni <tfregni@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/03 15:53:30 by lde-ross          #+#    #+#             */
-/*   Updated: 2023/04/17 18:42:20 by tfregni          ###   ########.fr       */
+/*   Updated: 2023/04/17 22:05:00 by tfregni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ char	*str_chr_escaped(char *s, int c)
 	return (0);
 }
 
-char should_split(char *str)
+char	should_split(char *str)
 {
 	int	i;
 
@@ -95,7 +95,8 @@ void	lex_split_list(t_lexer **list)
 	cur = *list;
 	while (cur)
 	{
-		if ((c = should_split(cur->data)))
+		c = should_split(cur->data);
+		if (c)
 		{
 			matrix = ft_split_keep(cur->data, c);
 			new = lex_list_from_table(matrix);
