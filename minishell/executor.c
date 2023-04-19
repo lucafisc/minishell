@@ -6,7 +6,7 @@
 /*   By: tfregni <tfregni@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/04 12:58:08 by tfregni           #+#    #+#             */
-/*   Updated: 2023/04/19 23:30:47 by tfregni          ###   ########.fr       */
+/*   Updated: 2023/04/20 00:26:50 by tfregni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,11 +95,6 @@ int	find_builtin(t_shell *s, char *cmd)
 // 	}
 // }
 
-void	exec_builtin(t_shell *s, t_command *cmd, int builtin_idx)
-{
-	s->builtins[builtin_idx].func (s, cmd);
-}
-
 void	create_redir(t_command *cmd)
 {
 	if (cmd->infile >= 0)
@@ -120,20 +115,27 @@ void	create_redir(t_command *cmd)
 	}
 }
 
+void	exec_builtin(t_shell *s, t_command *cmd, int builtin_idx)
+{
+	s->builtins[builtin_idx].func (s, cmd);
+}
+
 void	close_fd(t_command *cmd)
 {
 	if (cmd->infile > 1)
 	{
-		printf("Closing file descriptor %d\n", cmd->infile);
+		// printf("Closing file descriptor %d\n", cmd->infile);
 		close(cmd->infile);
 	}
 	if (cmd->outfile > 1)
 	{
-		printf("Closing file descriptor %d\n", cmd->outfile);
+		// printf("Closing file descriptor %d\n", cmd->outfile);
 		close(cmd->outfile);
 	}
 }
 
+/* redirections don't work on builtins: env > infile prints on the stdout */
+/* adding create_redir I don't see the prompt anymore because I didn't fork */
 void	execute(t_shell *s, t_command *parsed_cmd)
 {
 	pid_t		pid;
@@ -148,10 +150,7 @@ void	execute(t_shell *s, t_command *parsed_cmd)
 		if (pid == 0)
 		{
 			create_redir(parsed_cmd);
-			// printf("I'm the child\n***************************\n");
-			// printf("cmd %p\n", parsed_cmd->cmd[0]);
 			parsed_cmd->cmd[0] = find_cmd(s, parsed_cmd->cmd[0]);
-			// printf("exec %s %p\n", parsed_cmd->cmd[0], parsed_cmd->cmd[0]);
 			execve(parsed_cmd->cmd[0], parsed_cmd->cmd, s->env);
 			ft_putstr_fd("minishell: ", 2);
 			ft_putstr_fd(parsed_cmd->cmd[0], 2);
@@ -159,7 +158,6 @@ void	execute(t_shell *s, t_command *parsed_cmd)
 			exit(1);
 		}
 	}
-	// printf("I'm the parent\n***************************\n");
 	wait(NULL);
 	close_fd(parsed_cmd);
 	free_command(parsed_cmd);

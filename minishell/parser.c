@@ -6,7 +6,7 @@
 /*   By: tfregni <tfregni@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/28 16:31:54 by tfregni           #+#    #+#             */
-/*   Updated: 2023/04/20 00:05:11 by tfregni          ###   ########.fr       */
+/*   Updated: 2023/04/20 00:15:07 by tfregni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ void	setup_pipe(t_command *cmd, int n_cmds)
 	i = -1;
 	while (++i < n_cmds - 1)
 	{
-		printf("n_cmds: %d cmd: %s\n", n_cmds, cmd->cmd[0]);
+		// printf("PIPE #%d n_cmds: %d cmd: %s\n", i, n_cmds, cmd->cmd[0]);
 		if (pipe(fd_p) == -1)
 			throw_err("minishell", "pipe");
 		cmd->outfile = fd_p[1];
@@ -69,7 +69,7 @@ t_command	*par_list_from_lex(t_lexer *lex, int n_cmds)
 		if (lex)
 		{
 			g_shell->pipe = true;
-			printf("Ceci est une pipe\n");
+			lex = lex->next;
 		}
 	}
 	return (new);

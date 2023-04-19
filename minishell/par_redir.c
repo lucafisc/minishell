@@ -6,7 +6,7 @@
 /*   By: tfregni <tfregni@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/12 16:55:28 by lde-ross          #+#    #+#             */
-/*   Updated: 2023/04/19 23:49:11 by tfregni          ###   ########.fr       */
+/*   Updated: 2023/04/20 00:15:20 by tfregni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,6 +128,6 @@ void	par_fill_cmd(int *i, t_lexer *start, t_command **cmd_node)
 	if (!new->cmd[*i])
 		return ;
 	ft_strlcpy(new->cmd[*i], start->data, str_len + 1);
-	printf("new cmd: %s\n", new->cmd[*i]);
+	// printf("new cmd: %s\n", new->cmd[*i]);
 	*i += 1;
 }
