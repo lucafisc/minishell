@@ -6,7 +6,7 @@
 /*   By: tfregni <tfregni@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 16:02:25 by tfregni           #+#    #+#             */
-/*   Updated: 2023/04/18 13:14:02 by tfregni          ###   ########.fr       */
+/*   Updated: 2023/04/19 23:34:40 by tfregni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,10 +82,13 @@ struct s_shell
 	char		*user;
 	char		*prompt;
 	t_bool		exit;
+	t_bool		pipe;
 	t_lexer		*lexer;
 	t_command	*cmd;
 	t_builtins	*builtins;
 };
+
+t_shell	*g_shell;
 
 /* LEXER */
 t_lexer		*lexer(char *fmt);
@@ -110,6 +113,7 @@ void		for_each_par_node(t_command **cmd, void (*f)(t_command **cmd));
 void		par_fill_cmd(int *i, t_lexer *start, t_command **cmd_node);
 t_redir		is_redir(char *str);
 void		new_redir(int redir, t_lexer **lexer_node, t_command **cmd_node);
+void		setup_pipe(t_command *cmd, int n_cmds);
 
 /* ETC? */
 void		init_signal(void);

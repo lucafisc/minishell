@@ -6,7 +6,7 @@
 /*   By: tfregni <tfregni@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 15:41:38 by tfregni           #+#    #+#             */
-/*   Updated: 2023/04/17 21:48:41 by tfregni          ###   ########.fr       */
+/*   Updated: 2023/04/19 23:35:38 by tfregni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,6 +122,7 @@ t_shell	*init(char ***env)
 	shell->path = ft_split(getenv("PATH"), ':');
 	shell->user = get_username(shell);
 	shell->exit = false;
+	shell->pipe = false;
 	init_builtins(shell);
 	//ft_print_strarr(shell->path);
 	return (shell);
@@ -131,8 +132,8 @@ void	get_prompt(t_shell *s)
 {
 	char		*input;
 	int			i = 0;
-	t_lexer		*lex_list;
-	t_command	*par_list;
+	// t_lexer		*lex_list;
+	// t_command	*par_list;
 
 	while (i == 0)
 	{
@@ -148,8 +149,8 @@ void	get_prompt(t_shell *s)
 		if (*input)
 		{
 			add_history(input);
-			lex_list = lexer(input);
-			par_list = parser(lex_list);
+			s->lexer = lexer(input);
+			s->cmd = parser(s->lexer);
 			// t_command *cur;
 			// cur = par_list;
 			// while (cur)
@@ -157,8 +158,8 @@ void	get_prompt(t_shell *s)
 			// 	printf("in: %d out: %d\n", cur->infile, cur->outfile);
 			// 	ft_print_strarr(cur->cmd);
 			// 	cur = cur->next;
-			// }
-			execute(s, par_list);
+			// })
+			execute(s, s->cmd);
 			// free_prompt(input, &lex_list, &par_list);
 			// write(1, "here\n", 5);
 			free(s->prompt);
