@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tfregni <tfregni@student.42berlin.de>      +#+  +:+       +#+        */
+/*   By: lde-ross <lde-ross@student.42berlin.de     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/30 15:46:57 by lde-ross          #+#    #+#             */
-/*   Updated: 2023/04/11 15:39:54 by tfregni          ###   ########.fr       */
+/*   Updated: 2023/04/20 16:03:23 by lde-ross         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,10 +60,14 @@ void	ft_echo(t_shell *s, t_command *c)
 	char	**args;
 	t_bool	n;
 	int		i;
+	int		fd;
 
 	(void) s;
 	if (!c || !c->cmd)
 		return ;
+	fd = 1;
+	if (c->outfile >= 0)
+		fd = c->outfile;
 	args = c->cmd;
 	n = true;
 	i = 1;
@@ -74,13 +78,13 @@ void	ft_echo(t_shell *s, t_command *c)
 	}
 	while (args[i])
 	{
-		ft_putstr_fd(args[i], 1);
+		ft_putstr_fd(args[i], fd);
 		if (args[i + 1])
-			ft_putchar_fd(' ', 1);
+			ft_putchar_fd(' ', fd);
 		i++;
 	}
 	if (n)
-		ft_putchar_fd('\n', 1);
+		ft_putchar_fd('\n', fd);
 }
 
 // int	main(int ac, char **av, char **env)
