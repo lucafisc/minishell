@@ -6,7 +6,7 @@
 /*   By: lde-ross <lde-ross@student.42berlin.de     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 15:41:38 by tfregni           #+#    #+#             */
-/*   Updated: 2023/04/20 16:06:46 by lde-ross         ###   ########.fr       */
+/*   Updated: 2023/04/20 17:31:41 by lde-ross         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,6 @@ void	free_shell(t_shell *shell)
 	ft_free_str_arr(shell->path);
 	free(shell->prompt);
 	ft_free_str_arr(shell->env);
-	printf("freeeeeeee\n");
 	//rl_clear_history();
 	/* free(shell->lexer)*/
 	/* free(shell->parser)*/
