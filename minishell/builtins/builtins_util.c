@@ -6,13 +6,11 @@
 /*   By: tfregni <tfregni@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/11 15:38:34 by tfregni           #+#    #+#             */
-/*   Updated: 2023/04/17 11:28:35 by tfregni          ###   ########.fr       */
+/*   Updated: 2023/04/21 18:18:41 by tfregni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
-
-extern t_shell	*g_shell;
 
 /* returns an allocated 0-terminated copy of the env */
 char	**env_dup(char **env)
@@ -34,7 +32,6 @@ char	**env_dup(char **env)
 	}
 	return (new);
 }
-
 
 /* given env matrix and a string, it appends the
 string a returns the new matrix */

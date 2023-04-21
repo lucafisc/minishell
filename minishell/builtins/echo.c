@@ -6,7 +6,7 @@
 /*   By: tfregni <tfregni@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/30 15:46:57 by lde-ross          #+#    #+#             */
-/*   Updated: 2023/04/11 15:39:54 by tfregni          ###   ########.fr       */
+/*   Updated: 2023/04/21 18:22:37 by tfregni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,13 +74,13 @@ void	ft_echo(t_shell *s, t_command *c)
 	}
 	while (args[i])
 	{
-		ft_putstr_fd(args[i], 1);
+		ft_putstr_fd(args[i], c->outfile);
 		if (args[i + 1])
-			ft_putchar_fd(' ', 1);
+			ft_putchar_fd(' ', c->outfile);
 		i++;
 	}
 	if (n)
-		ft_putchar_fd('\n', 1);
+		ft_putchar_fd('\n', c->outfile);
 }
 
 // int	main(int ac, char **av, char **env)
