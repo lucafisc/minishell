@@ -6,7 +6,7 @@
 /*   By: tfregni <tfregni@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/04 12:58:08 by tfregni           #+#    #+#             */
-/*   Updated: 2023/04/20 00:26:50 by tfregni          ###   ########.fr       */
+/*   Updated: 2023/04/21 18:15:15 by tfregni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,7 +97,7 @@ int	find_builtin(t_shell *s, char *cmd)
 
 void	create_redir(t_command *cmd)
 {
-	if (cmd->infile >= 0)
+	if (cmd->infile != 0)
 	{
 		if (dup2(cmd->infile, 0) == -1)
 		{
@@ -105,7 +105,7 @@ void	create_redir(t_command *cmd)
 			exit(1);
 		}
 	}
-	if (cmd->outfile >= 0)
+	if (cmd->outfile != 1)
 	{
 		if (dup2(cmd->outfile, 1) == -1)
 		{
