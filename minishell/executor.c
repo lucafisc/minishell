@@ -6,7 +6,7 @@
 /*   By: tfregni <tfregni@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/04 12:58:08 by tfregni           #+#    #+#             */
-/*   Updated: 2023/04/21 18:15:15 by tfregni          ###   ########.fr       */
+/*   Updated: 2023/04/21 18:41:23 by tfregni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,43 +122,45 @@ void	exec_builtin(t_shell *s, t_command *cmd, int builtin_idx)
 
 void	close_fd(t_command *cmd)
 {
-	if (cmd->infile > 1)
+	if (cmd->infile != 0)
 	{
 		// printf("Closing file descriptor %d\n", cmd->infile);
 		close(cmd->infile);
 	}
-	if (cmd->outfile > 1)
+	if (cmd->outfile != 1)
 	{
 		// printf("Closing file descriptor %d\n", cmd->outfile);
 		close(cmd->outfile);
 	}
 }
 
-/* redirections don't work on builtins: env > infile prints on the stdout */
-/* adding create_redir I don't see the prompt anymore because I didn't fork */
 void	execute(t_shell *s, t_command *parsed_cmd)
 {
 	pid_t		pid;
 	int			builtin_idx;
 
-	builtin_idx = find_builtin(s, parsed_cmd->cmd[0]);
-	if (builtin_idx >= 0)
-		exec_builtin(s, parsed_cmd, builtin_idx);
-	else
+	while (parsed_cmd)
 	{
-		pid = fork();
-		if (pid == 0)
+		builtin_idx = find_builtin(s, parsed_cmd->cmd[0]);
+		if (builtin_idx >= 0)
+			exec_builtin(s, parsed_cmd, builtin_idx);
+		else
 		{
-			create_redir(parsed_cmd);
-			parsed_cmd->cmd[0] = find_cmd(s, parsed_cmd->cmd[0]);
-			execve(parsed_cmd->cmd[0], parsed_cmd->cmd, s->env);
-			ft_putstr_fd("minishell: ", 2);
-			ft_putstr_fd(parsed_cmd->cmd[0], 2);
-			ft_putstr_fd(": command not found\n", 2);
-			exit(1);
+			pid = fork();
+			if (pid == 0)
+			{
+				create_redir(parsed_cmd);
+				parsed_cmd->cmd[0] = find_cmd(s, parsed_cmd->cmd[0]);
+				execve(parsed_cmd->cmd[0], parsed_cmd->cmd, s->env);
+				ft_putstr_fd("minishell: ", 2);
+				ft_putstr_fd(parsed_cmd->cmd[0], 2);
+				ft_putstr_fd(": command not found\n", 2);
+				exit(1);
+			}
 		}
+		wait(NULL);
+		close_fd(parsed_cmd);
+		free_command(parsed_cmd);
+		parsed_cmd = parsed_cmd->next;
 	}
-	wait(NULL);
-	close_fd(parsed_cmd);
-	free_command(parsed_cmd);
 }
