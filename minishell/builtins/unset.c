@@ -6,7 +6,7 @@
 /*   By: tfregni <tfregni@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/29 19:48:25 by lde-ross          #+#    #+#             */
-/*   Updated: 2023/04/11 15:49:06 by tfregni          ###   ########.fr       */
+/*   Updated: 2023/04/21 20:13:10 by tfregni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ void	ft_unset(t_shell *s, t_command *c)
 
 	if (!s || !c || !c->cmd || !c->cmd[0])
 	{
-		write(1, "Error\n", 6);
+		write(2, "Error\n", 6);
 		return ;
 	}
 	if (!c->cmd[1])

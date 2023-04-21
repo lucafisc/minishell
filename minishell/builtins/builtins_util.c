@@ -6,7 +6,7 @@
 /*   By: tfregni <tfregni@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/11 15:38:34 by tfregni           #+#    #+#             */
-/*   Updated: 2023/04/21 18:18:41 by tfregni          ###   ########.fr       */
+/*   Updated: 2023/04/21 20:11:06 by tfregni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,8 @@ char	**env_dup(char **env)
 }
 
 /* given env matrix and a string, it appends the
-string a returns the new matrix */
+string a returns the new matrix after freeing the
+given matrix */
 char	**env_append(char **env, char *var)
 {
 	int		len;

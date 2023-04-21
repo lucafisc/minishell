@@ -6,7 +6,7 @@
 /*   By: tfregni <tfregni@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 16:02:25 by tfregni           #+#    #+#             */
-/*   Updated: 2023/04/19 23:34:40 by tfregni          ###   ########.fr       */
+/*   Updated: 2023/04/21 18:57:57 by tfregni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@
 # include "colors.h"
 # define TRAIL_CHAR " \n\t><|\"$"
 # define SPLIT_CHAR "|<>"
+# define SP_PARAM "@*#?-!0"
 # define N_BUILTINS 7
 # define HEREDOC_NAME "_heredoc_temp"
 
@@ -78,7 +79,7 @@ struct s_shell
 {
 	char		**env;
 	char		**path;
-	char		**vars;
+	char		**params;
 	char		*user;
 	char		*prompt;
 	t_bool		exit;
