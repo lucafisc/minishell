@@ -6,7 +6,7 @@
 /*   By: tfregni <tfregni@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 16:02:25 by tfregni           #+#    #+#             */
-/*   Updated: 2023/04/21 18:57:57 by tfregni          ###   ########.fr       */
+/*   Updated: 2023/04/22 00:23:19 by tfregni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@
 # include "colors.h"
 # define TRAIL_CHAR " \n\t><|\"$"
 # define SPLIT_CHAR "|<>"
-# define SP_PARAM "@*#?-!0"
+# define SP_PARAM "@*#?-!"
 # define N_BUILTINS 7
 # define HEREDOC_NAME "_heredoc_temp"
 
@@ -123,6 +123,7 @@ char		**ft_split_keep(char *s, char c);
 void		execute(t_shell *s, t_command *parsed_cmd);
 
 /* FREE */
+void		free_shell(t_shell *shell);
 void		free_builtins(t_builtins *b);
 void		free_lex(t_lexer **list);
 void		free_prompt(char *input, t_lexer **lex_list, t_command **par_list);

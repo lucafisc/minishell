@@ -6,7 +6,7 @@
 /*   By: tfregni <tfregni@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 15:41:38 by tfregni           #+#    #+#             */
-/*   Updated: 2023/04/21 20:10:59 by tfregni          ###   ########.fr       */
+/*   Updated: 2023/04/22 00:47:26 by tfregni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,16 +104,15 @@ char	*create_prompt(t_shell *s)
 	char	*prompt;
 
 	tmp = create_cwd(s);
-	prompt = ft_strnjoin(7, GREEN, s->user, YELLOW, "@minishell ", \
+	prompt = ft_strnjoin(7, BLUE, s->user, YELLOW, "@minishell ", \
 						DEFAULT, tmp, "> ");
 	free(tmp);
 	return (prompt);
 }
 
-/* Init the shell parameters callocing the matrix and
-it's first element */
 int	init_params(t_shell *s)
 {
+	s->params = malloc(sizeof(char *));
 	if (s->params)
 	{
 		s->params[0] = NULL;
@@ -127,19 +126,20 @@ int	init_params(t_shell *s)
 /xcu_chap02.html#tag_02_05_02 */
 /* A param should have =, not start with a digit and not have
 any of the special chars macroed in SP_PARAM */
-int	is_param(char *input)
+/* Compare to t_bool is_export_valid(char *var) in export.c */
+t_bool	is_param(char *input)
 {
 	int	i;
 
 	i = -1;
 	if (!ft_strchr(input, '=') || ft_isdigit(*input))
-		return (0);
+		return (false);
 	while (input[++i])
 	{
 		if (ft_strchr(SP_PARAM, input[i]) || ft_is_space(input[i]))
-			return (0);
+			return (false);
 	}
-	return (1);
+	return (true);
 }
 
 /* Since getenv will not work anyway maybe we don't
@@ -149,7 +149,8 @@ t_shell	*init(char ***env)
 	t_shell	*shell;
 
 	shell = malloc(sizeof(t_shell));
-	if (!shell || !init_params(shell))
+	//if (!shell || !init_params(shell))
+	if (!shell)
 		return (NULL);
 	shell->env = matrix_dup(*env, 0);
 	*env = shell->env;
@@ -158,6 +159,7 @@ t_shell	*init(char ***env)
 	shell->exit = false;
 	shell->pipe = false;
 	init_builtins(shell);
+	shell->params = NULL;
 	//ft_print_strarr(shell->path);
 	return (shell);
 }
@@ -188,9 +190,7 @@ void	get_prompt(t_shell *s)
 				execute(s, s->cmd);
 			}
 			else
-			{
 				s->params = env_append(s->params, input);
-			}
 			free(s->prompt);
 		}
 	}

@@ -6,7 +6,7 @@
 /*   By: tfregni <tfregni@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/11 15:38:34 by tfregni           #+#    #+#             */
-/*   Updated: 2023/04/21 20:11:06 by tfregni          ###   ########.fr       */
+/*   Updated: 2023/04/22 00:49:07 by tfregni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ char	**env_append(char **env, char *var)
 	if (!new)
 		return (NULL);
 	i = 0;
-	while (env[i])
+	while (env && env[i])
 	{
 		new[i] = ft_strdup(env[i]);
 		i++;
@@ -86,6 +86,8 @@ int	arg_index(char **env, char *var)
 	int	len;
 
 	i = 0;
+	if (!env || !var)
+		return (-1);
 	len = ft_strlen(var);
 	while (env[i])
 	{
