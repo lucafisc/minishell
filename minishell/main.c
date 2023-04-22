@@ -6,7 +6,7 @@
 /*   By: tfregni <tfregni@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 15:41:38 by tfregni           #+#    #+#             */
-/*   Updated: 2023/04/22 00:47:26 by tfregni          ###   ########.fr       */
+/*   Updated: 2023/04/22 16:48:07 by tfregni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -176,7 +176,6 @@ void	get_prompt(t_shell *s)
 		if (input == NULL)
 		{
 			printf("EOF encountered. Exiting...\n");
-			free(input);
 			free_shell(s);
 			exit(1);
 		}
@@ -192,6 +191,7 @@ void	get_prompt(t_shell *s)
 			else
 				s->params = env_append(s->params, input);
 			free(s->prompt);
+			free(input);
 		}
 	}
 }
