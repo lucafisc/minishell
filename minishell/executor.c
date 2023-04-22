@@ -6,7 +6,7 @@
 /*   By: tfregni <tfregni@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/04 12:58:08 by tfregni           #+#    #+#             */
-/*   Updated: 2023/04/21 18:41:23 by tfregni          ###   ########.fr       */
+/*   Updated: 2023/04/22 15:48:11 by tfregni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -138,6 +138,7 @@ void	execute(t_shell *s, t_command *parsed_cmd)
 {
 	pid_t		pid;
 	int			builtin_idx;
+	t_command	*tmp;
 
 	while (parsed_cmd)
 	{
@@ -159,8 +160,9 @@ void	execute(t_shell *s, t_command *parsed_cmd)
 			}
 		}
 		wait(NULL);
+		tmp = parsed_cmd->next;
 		close_fd(parsed_cmd);
 		free_command(parsed_cmd);
-		parsed_cmd = parsed_cmd->next;
+		parsed_cmd = tmp;
 	}
 }
