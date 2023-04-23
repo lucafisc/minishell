@@ -6,7 +6,7 @@
 /*   By: lde-ross <lde-ross@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/28 13:34:05 by lde-ross          #+#    #+#             */
-/*   Updated: 2023/04/23 14:51:29 by lde-ross         ###   ########.fr       */
+/*   Updated: 2023/04/23 20:04:03 by lde-ross         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,9 @@ void	handler(int signal)
 	if (signal == SIGINT)
 	{
 		g_shell->status = 130;
-		//rl_replace_line("", 0); // clearing the current input line in the terminal.
-		//rl_on_new_line();
-		//printf("\n");
+		rl_replace_line("", 0); // clearing the current input line in the terminal.
+		rl_on_new_line();
+		printf("\n");
 	}
 	else if (signal == SIGQUIT)
 		ft_putstr_fd("Handle SIQUIT\n", 1);
