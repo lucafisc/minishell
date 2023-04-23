@@ -1,4 +1,1 @@
-line 1 saying hi
-line 2 hi
-hi again
-bye
+bash: cd: doesntexist: No such file or directory

@@ -6,31 +6,22 @@
 /*   By: tfregni <tfregni@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/30 07:33:56 by tfregni           #+#    #+#             */
-/*   Updated: 2023/04/17 11:32:42 by tfregni          ###   ########.fr       */
+/*   Updated: 2023/04/23 16:10:12 by tfregni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
-// #include "export.c"
-// #include "pwd_env.c"
 
-// /* more elaborate version of throw error */
-// int	throw_err(char *str, char *arg)
-// {
-// 	if (str && str[0])
-// 	{
-// 		ft_putstr_fd(str, 2);
-// 		ft_putstr_fd(": ", 2);
-// 	}
-// 	write(2, strerror(errno), ft_strlen(strerror(errno)));
-// 	if (arg && arg[0])
-// 	{
-// 		ft_putstr_fd(": ", 2);
-// 		ft_putstr_fd(arg, 2);
-// 	}
-// 	write(2, "\n", 1);
-// 	return (1);
-// }
+static void	internal_export(t_shell *s, char *var)
+{
+	int	var_index;
+
+	var_index = search_array(s->env, var);
+	if (var_index >= 0)
+		ft_export_replace(s->env, var, var_index);
+	else
+		ft_export_append(&s->env, var);
+}
 
 /* Given t_shell to retrieve the env and oldpwd it retrieves
 current dir, updates env with OLDPWD and PWD. It does not free
@@ -40,7 +31,9 @@ void	update_pwd(t_shell *s, t_command *c, char *oldpwd)
 	char	*tmp;
 	char	*cwd;
 
+	(void) c;
 	cwd = getcwd(NULL, 0);
+	// printf("pwd: %s oldpwd: %s\n", cwd, oldpwd);
 	if (!cwd)
 	{
 		throw_err("cd", cwd);
@@ -48,10 +41,12 @@ void	update_pwd(t_shell *s, t_command *c, char *oldpwd)
 		return ;
 	}
 	tmp = ft_strjoin("OLDPWD=", oldpwd);
-	ft_export(s, c);
+	// printf("%s\n", tmp);
+	internal_export(s, tmp);
 	free(tmp);
 	tmp = ft_strjoin("PWD=", cwd);
-	ft_export(s, c);
+	// printf("%s\n", tmp);
+	internal_export(s, tmp);
 	free(tmp);
 	free(cwd);
 }
@@ -65,8 +60,13 @@ void	free_cd(char *path, char *oldpwd)
 /* It sets the value of path expanding - or "" */
 void	set_path(t_command *c, char **path)
 {
-	if (!c->cmd[1] || !c->cmd[1][0])
-		*path = ft_strdup("~");
+	if (!c->cmd[1])
+	{
+		*path = ft_strdup(ft_getenv("HOME"));
+		c->cmd = env_append(c->cmd, *path);
+	}
+	else if (!c->cmd[1][0])
+		*path = ft_strdup(".");
 	else if (!ft_strncmp(c->cmd[1], "-", 2))
 		*path = ft_strdup(ft_getenv("OLDPWD"));
 	else

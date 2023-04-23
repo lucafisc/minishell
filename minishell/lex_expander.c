@@ -6,7 +6,7 @@
 /*   By: tfregni <tfregni@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/12 14:59:28 by lde-ross          #+#    #+#             */
-/*   Updated: 2023/04/22 00:18:56 by tfregni          ###   ########.fr       */
+/*   Updated: 2023/04/23 16:04:01 by tfregni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,14 +19,15 @@ char	*retrieve_param(char *key)
 	char	**params;
 
 	params = g_shell->params;
-	if (!params)
-		return (NULL);
-	len = ft_strlen(key);
-	i = ft_arrlen(params);
-	while (--i >= 0 && params[i])
+	if (params)
 	{
-		if (!ft_strncmp(params[i], key, len) && params[i][len] == '=')
-			return (params[i] + len + 1);
+		len = ft_strlen(key);
+		i = ft_arrlen(params);
+		while (--i >= 0 && params[i])
+		{
+			if (!ft_strncmp(params[i], key, len) && params[i][len] == '=')
+				return (params[i] + len + 1);
+		}
 	}
 	return (ft_getenv(key));
 }
@@ -61,6 +62,7 @@ char	*lex_expander(char *cmds)
 	i = 0;
 	while (cur[i])
 	{
+		// printf("lex_expander: %c\n", cur[i]);
 		if (cur[i] == '~' || cur[i] == '$')
 		{
 			cmds = expand_var(cur, cmds, i);

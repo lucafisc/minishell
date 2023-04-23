@@ -6,7 +6,7 @@
 /*   By: tfregni <tfregni@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/12 15:48:10 by lde-ross          #+#    #+#             */
-/*   Updated: 2023/04/22 16:38:54 by tfregni          ###   ########.fr       */
+/*   Updated: 2023/04/23 12:25:13 by tfregni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ void	lex_print_list(t_lexer *list)
 {
 	while (list)
 	{
-		printf("node %d:%s\n", list->index, list->data);
+		printf("node: %s\n", list->data);
 		list = list->next;
 	}
 }

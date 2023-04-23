@@ -6,7 +6,7 @@
 /*   By: tfregni <tfregni@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 16:02:25 by tfregni           #+#    #+#             */
-/*   Updated: 2023/04/22 00:23:19 by tfregni          ###   ########.fr       */
+/*   Updated: 2023/04/23 16:10:03 by tfregni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@
 # include "lexer.h"
 # include "parser.h"
 # include "colors.h"
-# define TRAIL_CHAR " \n\t><|\"$"
+# define TRAIL_CHAR " \n\t><|\"$/"
 # define SPLIT_CHAR "|<>"
 # define SP_PARAM "@*#?-!"
 # define N_BUILTINS 7
@@ -144,6 +144,8 @@ char		**env_append(char **env, char *var);
 int			search_array(char **env, char *var);
 int			arg_index(char **env, char *var);
 char		*ft_getenv(char *key);
+void		ft_export_append(char ***env, char *var);
+void		ft_export_replace(char **env, char *var, int index);
 
 /* ERROR HANDLING*/
 int			throw_err(char *str, char *arg);

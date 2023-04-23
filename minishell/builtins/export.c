@@ -6,7 +6,7 @@
 /*   By: tfregni <tfregni@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/29 15:19:22 by tfregni           #+#    #+#             */
-/*   Updated: 2023/04/21 22:04:18 by tfregni          ###   ########.fr       */
+/*   Updated: 2023/04/23 16:11:21 by tfregni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,19 +52,18 @@ t_bool	is_export_valid(char *var)
 	return (true);
 }
 
-static void	ft_export_replace(char **env, char *var, int index)
+void	ft_export_replace(char **env, char *var, int index)
 {
 	free(env[index]);
 	env[index] = ft_strdup(var);
 }
 
-static void	ft_export_append(char ***env, char *var)
+void	ft_export_append(char ***env, char *var)
 {
 	char	**new_env;
 
 	new_env = env_append(*env, var);
 	*env = new_env;
-	//ft_print_strarr(new_env);
 }
 
 /* Export will set the variable also in the shell->params so that

@@ -6,13 +6,13 @@
 /*   By: tfregni <tfregni@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 18:56:58 by tfregni           #+#    #+#             */
-/*   Updated: 2023/04/17 19:02:07 by tfregni          ###   ########.fr       */
+/*   Updated: 2023/04/23 16:02:47 by tfregni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-t_lexer	*lex_list_new_node(char *data, int info, int index)
+t_lexer	*lex_list_new_node(char *data, int info)
 {
 	t_lexer	*new;
 
@@ -24,7 +24,6 @@ t_lexer	*lex_list_new_node(char *data, int info, int index)
 	new->pipe = 0;
 	new->prev = NULL;
 	new->next = NULL;
-	new->index = index;
 	return (new);
 }
 
@@ -45,9 +44,9 @@ void	lex_list_add_back(t_lexer **list, t_lexer *new)
 void	fill_lex_list(t_lexer **node, char *data, int info, int i)
 {
 	if (i == 0)
-		*node = lex_list_new_node(data, info, i);
+		*node = lex_list_new_node(data, info);
 	else
-		lex_list_add_back(node, lex_list_new_node(data, info, i));
+		lex_list_add_back(node, lex_list_new_node(data, info));
 }
 
 t_lexer	*lex_list_from_table(char **matrix)
