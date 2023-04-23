@@ -6,7 +6,7 @@
 /*   By: tfregni <tfregni@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 16:02:25 by tfregni           #+#    #+#             */
-/*   Updated: 2023/04/23 16:24:12 by tfregni          ###   ########.fr       */
+/*   Updated: 2023/04/23 16:39:47 by tfregni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,8 @@ typedef enum e_redir
 
 typedef struct s_shell	t_shell;
 
+t_shell	*g_shell;
+
 typedef struct s_builtins
 {
 	char	*name;
@@ -87,6 +89,7 @@ struct s_shell
 	t_lexer		*lexer;
 	t_command	*cmd;
 	t_builtins	*builtins;
+	int			status;
 };
 
 /* LEXER */

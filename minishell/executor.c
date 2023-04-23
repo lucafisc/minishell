@@ -6,11 +6,13 @@
 /*   By: tfregni <tfregni@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/04 12:58:08 by tfregni           #+#    #+#             */
-/*   Updated: 2023/04/23 14:36:52 by tfregni          ###   ########.fr       */
+/*   Updated: 2023/04/23 16:33:25 by tfregni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+extern t_shell	*g_shell;
 
 int	ft_lexersize(t_lexer *lst)
 {
@@ -131,6 +133,7 @@ void	execute(t_shell *s, t_command *parsed_cmd)
 {
 	pid_t		pid;
 	int			builtin_idx;
+	int			status;
 	t_command	*tmp;
 
 	while (parsed_cmd)
@@ -152,9 +155,16 @@ void	execute(t_shell *s, t_command *parsed_cmd)
 				exit(1);
 			}
 		}
-		wait(NULL);
+		while (g_shell->status != 130 && waitpid(pid, &status, WNOHANG) == 0)
+		{
+			if (g_shell->status == 130)
+			{
+				printf("killing child\n");
+				kill(pid, SIGINT);
+			}
+		}
+		g_shell->status = 0;
 		tmp = parsed_cmd->next;
-		// printf("free %s %p\n", parsed_cmd->cmd[0], parsed_cmd);
 		close_fd(parsed_cmd);
 		free_command(parsed_cmd);
 		parsed_cmd = tmp;
