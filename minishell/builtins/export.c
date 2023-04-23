@@ -6,7 +6,7 @@
 /*   By: tfregni <tfregni@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/29 15:19:22 by tfregni           #+#    #+#             */
-/*   Updated: 2023/04/23 17:34:15 by tfregni          ###   ########.fr       */
+/*   Updated: 2023/04/23 17:46:23 by tfregni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,27 @@ void	ft_export_append(char ***env, char *var)
 	*env = new_env;
 }
 
+/* Checks if input is a parameter */
+/* https://pubs.opengroup.org/onlinepubs/009695399/utilities
+/xcu_chap02.html#tag_02_05_02 */
+/* A param should have =, not start with a digit and not have
+any of the special chars macroed in SP_PARAM */
+/* Compare to t_bool is_export_valid(char *var) in export.c */
+static t_bool	is_param(char *input)
+{
+	int	i;
+
+	i = -1;
+	if (!ft_strchr(input, '=') || ft_isdigit(*input))
+		return (false);
+	while (input[++i])
+	{
+		if (ft_strchr(SP_PARAM, input[i]) || ft_is_space(input[i]))
+			return (false);
+	}
+	return (true);
+}
+
 /* Export will set the variable also in the shell->params so that
 the expander can always get the latest occurrence */
 /* export AR_=bla doesn't throw an error but doesn't set the var */
@@ -78,8 +99,12 @@ void	ft_export(t_shell *s, t_command *c)
 	if (!c || !s || !c->cmd || !c->cmd[0] || !c->cmd[1])
 		return ;
 	var = c->cmd[1];
-	if (!is_export_valid(var))
+	if (!is_param(var))
+	{
+		ft_putstr_fd("minishell: export: not a valid identifier: ", 2);
+		ft_putendl_fd(var, 2);
 		return ;
+	}
 	s->params = env_append(s->params, var);
 	var_index = search_array(s->env, var);
 	if (var_index >= 0)
