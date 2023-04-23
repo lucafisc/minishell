@@ -6,51 +6,25 @@
 /*   By: tfregni <tfregni@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/29 15:19:22 by tfregni           #+#    #+#             */
-/*   Updated: 2023/04/23 17:46:23 by tfregni          ###   ########.fr       */
+/*   Updated: 2023/04/23 21:46:57 by tfregni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-// /* test function to modify the environment */
-// void ft_changeenv(char **env)
+// /* First versiom of the parameter validating function */
+// t_bool	is_export_valid(char *var)
 // {
-// 	while (*env)
+// 	while (*var && *var != '=')
 // 	{
-// 		if (!ft_strncmp(*env, "arg", 3))
-// 		{
-// 			char new_arg[] = "arg=changed";
-// 			*env = new_arg;
-// 		}
-// 		env++;
+// 		if (ft_isdigit(var[0]) || ft_is_space(*var) || !ft_isalnum(*var))
+// 			return (false);
+// 		var++;
 // 	}
+// 	if (!*var)
+// 		return (false);
+// 	return (true);
 // }
-
-// /* test function to make the original env matrix
-// pointing to a newly allocated one */
-// void	ft_mispoint(char ***env)
-// {
-// 	char	**new;
-
-// 	new = malloc(sizeof(*new) * 3);
-// 	new[0] = ft_strdup("hello");
-// 	new[1] = ft_strdup("world");
-// 	new[2] = NULL;
-// 	*env = new;
-// }
-
-t_bool	is_export_valid(char *var)
-{
-	while (*var && *var != '=')
-	{
-		if (ft_isdigit(var[0]) || ft_is_space(*var) || !ft_isalnum(*var))
-			return (false);
-		var++;
-	}
-	if (!*var)
-		return (false);
-	return (true);
-}
 
 void	ft_export_replace(char **env, char *var, int index)
 {
@@ -72,7 +46,7 @@ void	ft_export_append(char ***env, char *var)
 /* A param should have =, not start with a digit and not have
 any of the special chars macroed in SP_PARAM */
 /* Compare to t_bool is_export_valid(char *var) in export.c */
-static t_bool	is_param(char *input)
+t_bool	is_param(char *input)
 {
 	int	i;
 

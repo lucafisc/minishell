@@ -6,13 +6,11 @@
 /*   By: tfregni <tfregni@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/04 12:58:08 by tfregni           #+#    #+#             */
-/*   Updated: 2023/04/23 16:33:25 by tfregni          ###   ########.fr       */
+/*   Updated: 2023/04/23 19:57:50 by tfregni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-extern t_shell	*g_shell;
 
 int	ft_lexersize(t_lexer *lst)
 {
@@ -143,11 +141,11 @@ void	execute(t_shell *s, t_command *parsed_cmd)
 			exec_builtin(s, parsed_cmd, builtin_idx);
 		else
 		{
+			parsed_cmd->cmd[0] = find_cmd(s, parsed_cmd->cmd[0]);
 			pid = fork();
 			if (pid == 0)
 			{
 				create_redir(parsed_cmd);
-				parsed_cmd->cmd[0] = find_cmd(s, parsed_cmd->cmd[0]);
 				execve(parsed_cmd->cmd[0], parsed_cmd->cmd, s->env);
 				ft_putstr_fd("minishell: ", 2);
 				ft_putstr_fd(parsed_cmd->cmd[0], 2);

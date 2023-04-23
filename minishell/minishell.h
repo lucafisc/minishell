@@ -6,7 +6,7 @@
 /*   By: tfregni <tfregni@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 16:02:25 by tfregni           #+#    #+#             */
-/*   Updated: 2023/04/23 17:50:36 by tfregni          ###   ########.fr       */
+/*   Updated: 2023/04/23 21:46:34 by tfregni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -147,6 +147,7 @@ int			arg_index(char **env, char *var);
 char		*ft_getenv(char *key);
 void		ft_export_append(char ***env, char *var);
 void		ft_export_replace(char **env, char *var, int index);
+t_bool		is_param(char *input);
 
 /* ERROR HANDLING*/
 int			throw_err(char *str, char *arg);
