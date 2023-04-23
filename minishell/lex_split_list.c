@@ -6,7 +6,7 @@
 /*   By: tfregni <tfregni@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/03 15:53:30 by lde-ross          #+#    #+#             */
-/*   Updated: 2023/04/17 22:05:00 by tfregni          ###   ########.fr       */
+/*   Updated: 2023/04/23 11:51:39 by tfregni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,30 +61,51 @@ void	fill_new_nodes_lexer(t_lexer **to_insert, t_lexer **new_list, int *i)
 	}
 }
 
-t_lexer	*replace_node_by_list(t_lexer **list, t_lexer *node, t_lexer **to_insert)
-{
-	t_lexer	*new_list;
-	t_lexer	*old;
-	int		i;
+// t_lexer	*replace_node_by_list(t_lexer **list, t_lexer *node, t_lexer **to_insert)
+// {
+// 	t_lexer	*new_list;
+// 	t_lexer	*old;
+// 	int		i;
 
-	old = *list;
-	i = 0;
-	while (old)
-	{
-		if (old->index == node->index)
-			fill_new_nodes_lexer(to_insert, &new_list, &i);
-		else
-		{
-			fill_lex_list(&new_list, old->data, old->info, i);
-			i++;
-		}
-		old = old->next;
-	}
-	free_lex(list);
-	free_lex(to_insert);
-	return (new_list);
+// 	old = *list;
+// 	i = 0;
+// 	while (old)
+// 	{
+// 		if (old->index == node->index)
+// 			fill_new_nodes_lexer(to_insert, &new_list, &i);
+// 		else
+// 		{
+// 			fill_lex_list(&new_list, old->data, old->info, i);
+// 			i++;
+// 		}
+// 		old = old->next;
+// 	}
+// 	free_lex(list);
+// 	free_lex(to_insert);
+// 	return (new_list);
+// }
+
+t_lexer	*replace_node(t_lexer *cur, t_lexer *new, t_lexer **start)
+{
+	t_lexer	*end;
+
+	new->prev = cur->prev;
+	if (new->prev)
+		new->prev->next = new;
+	else
+		*start = new;
+	end = new;
+	while (end->next)
+		end = end->next;
+	end->next = cur->next;
+	if (end->next)
+		end->next->prev = end;
+	free(cur->data);
+	free(cur);
+	return (*start);
 }
 
+/**/
 void	lex_split_list(t_lexer **list)
 {
 	t_lexer	*cur;
@@ -101,8 +122,9 @@ void	lex_split_list(t_lexer **list)
 			matrix = ft_split_keep(cur->data, c);
 			new = lex_list_from_table(matrix);
 			ft_free_str_arr(matrix);
-			*list = replace_node_by_list(list, cur, &new);
-			cur = *list;
+			// *list = replace_node_by_list(list, cur, &new);
+			// cur = *list;
+			cur = replace_node(cur, new, list); // I'm returning the beginning of the list but maybe it can on form there
 		}
 		else
 			cur = cur->next;
