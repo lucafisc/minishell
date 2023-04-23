@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executor.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tfregni <tfregni@student.42berlin.de>      +#+  +:+       +#+        */
+/*   By: lde-ross <lde-ross@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/04 12:58:08 by tfregni           #+#    #+#             */
-/*   Updated: 2023/04/23 16:33:25 by tfregni          ###   ########.fr       */
+/*   Updated: 2023/04/23 19:59:30 by lde-ross         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,11 +129,24 @@ void	close_fd(t_command *cmd)
 	}
 }
 
+void	add_status(int status)
+{
+	char	*stat;
+	char	*value;
+
+	if (status >= 255)
+		status = 1;
+	stat = ft_itoa(status);
+	value = ft_strjoin("?=", stat);
+	free(stat);
+	g_shell->params = env_append(g_shell->params, value);
+	free(value);
+}
+
 void	execute(t_shell *s, t_command *parsed_cmd)
 {
 	pid_t		pid;
 	int			builtin_idx;
-	int			status;
 	t_command	*tmp;
 
 	while (parsed_cmd)
@@ -143,11 +156,11 @@ void	execute(t_shell *s, t_command *parsed_cmd)
 			exec_builtin(s, parsed_cmd, builtin_idx);
 		else
 		{
+			parsed_cmd->cmd[0] = find_cmd(s, parsed_cmd->cmd[0]);
 			pid = fork();
 			if (pid == 0)
 			{
 				create_redir(parsed_cmd);
-				parsed_cmd->cmd[0] = find_cmd(s, parsed_cmd->cmd[0]);
 				execve(parsed_cmd->cmd[0], parsed_cmd->cmd, s->env);
 				ft_putstr_fd("minishell: ", 2);
 				ft_putstr_fd(parsed_cmd->cmd[0], 2);
@@ -155,14 +168,12 @@ void	execute(t_shell *s, t_command *parsed_cmd)
 				exit(1);
 			}
 		}
-		while (g_shell->status != 130 && waitpid(pid, &status, WNOHANG) == 0)
+		while (g_shell->status != 130 && waitpid(pid, NULL, WNOHANG) == 0)
 		{
 			if (g_shell->status == 130)
-			{
-				printf("killing child\n");
 				kill(pid, SIGINT);
-			}
 		}
+		add_status(g_shell->status);
 		g_shell->status = 0;
 		tmp = parsed_cmd->next;
 		close_fd(parsed_cmd);

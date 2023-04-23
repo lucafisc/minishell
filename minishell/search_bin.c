@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   search_bin.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tfregni <tfregni@student.42berlin.de>      +#+  +:+       +#+        */
+/*   By: lde-ross <lde-ross@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/03 16:04:31 by tfregni           #+#    #+#             */
-/*   Updated: 2023/04/17 11:15:00 by tfregni          ###   ########.fr       */
+/*   Updated: 2023/04/23 19:50:07 by lde-ross         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,21 +19,24 @@ char	*find_cmd(t_shell *s, char *cmd)
 	int		i;
 	char	*tmp_prog;
 
-	// printf("Find command %s %p\n", cmd, cmd);
 	i = 0;
 	while (s->path[i])
 	{
 		tmp_prog = ft_strnjoin(3, s->path[i], "/", cmd);
-		// printf("Trying command %s... ", tmp_prog);
 		if (access(tmp_prog, X_OK) != -1)
 		{
 			free(cmd);
 			cmd = ft_strdup(tmp_prog);
 			free(tmp_prog);
-			// printf("success: passing %s %p\n", cmd, cmd);
+			g_shell->status = 0;
 			return (cmd);
 		}
-		// printf("failed\n");
+		else if (access(tmp_prog, F_OK) == -1)
+			g_shell->status = 127;
+		else if (access(tmp_prog, X_OK) == -1)
+			g_shell->status = 126;
+		else
+			g_shell->status = 1;
 		free(tmp_prog);
 		i++;
 	}
