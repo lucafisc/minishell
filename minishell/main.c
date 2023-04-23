@@ -6,13 +6,13 @@
 /*   By: lde-ross <lde-ross@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 15:41:38 by tfregni           #+#    #+#             */
-/*   Updated: 2023/04/23 14:27:13 by lde-ross         ###   ########.fr       */
+/*   Updated: 2023/04/23 15:29:35 by lde-ross         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-// t_shell	*g_shell;
+t_shell	*g_shell;
 
 void	free_shell(t_shell *shell)
 {
@@ -160,6 +160,7 @@ t_shell	*init(char ***env)
 	shell->pipe = false;
 	init_builtins(shell);
 	shell->params = NULL;
+	shell->status = 0;
 	//ft_print_strarr(shell->path);
 	return (shell);
 }

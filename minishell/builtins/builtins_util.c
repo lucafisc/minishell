@@ -6,11 +6,13 @@
 /*   By: lde-ross <lde-ross@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/11 15:38:34 by tfregni           #+#    #+#             */
-/*   Updated: 2023/04/23 14:27:35 by lde-ross         ###   ########.fr       */
+/*   Updated: 2023/04/23 14:49:58 by lde-ross         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
+
+extern t_shell	*g_shell;
 
 /* returns an allocated 0-terminated copy of the env */
 char	**env_dup(char **env)

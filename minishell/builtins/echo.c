@@ -6,7 +6,7 @@
 /*   By: lde-ross <lde-ross@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/30 15:46:57 by lde-ross          #+#    #+#             */
-/*   Updated: 2023/04/23 14:27:44 by lde-ross         ###   ########.fr       */
+/*   Updated: 2023/04/23 14:49:41 by lde-ross         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,14 +60,10 @@ void	ft_echo(t_shell *s, t_command *c)
 	char	**args;
 	t_bool	n;
 	int		i;
-	int		fd;
 
 	(void) s;
 	if (!c || !c->cmd)
 		return ;
-	fd = 1;
-	if (c->outfile >= 0)
-		fd = c->outfile;
 	args = c->cmd;
 	n = true;
 	i = 1;

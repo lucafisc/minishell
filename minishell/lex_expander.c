@@ -3,14 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   lex_expander.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tfregni <tfregni@student.42berlin.de>      +#+  +:+       +#+        */
+/*   By: lde-ross <lde-ross@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/12 14:59:28 by lde-ross          #+#    #+#             */
-/*   Updated: 2023/04/22 00:18:56 by tfregni          ###   ########.fr       */
+/*   Updated: 2023/04/23 14:49:01 by lde-ross         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+extern t_shell	*g_shell;
 
 char	*retrieve_param(char *key)
 {
