@@ -3,16 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   builtins_util.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lde-ross <lde-ross@student.42berlin.de     +#+  +:+       +#+        */
+/*   By: lde-ross <lde-ross@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/11 15:38:34 by tfregni           #+#    #+#             */
-/*   Updated: 2023/04/20 16:04:20 by lde-ross         ###   ########.fr       */
+/*   Updated: 2023/04/23 14:27:35 by lde-ross         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
-
-extern t_shell	*g_shell;
 
 /* returns an allocated 0-terminated copy of the env */
 char	**env_dup(char **env)
@@ -35,9 +33,9 @@ char	**env_dup(char **env)
 	return (new);
 }
 
-
 /* given env matrix and a string, it appends the
-string a returns the new matrix */
+string a returns the new matrix after freeing the
+given matrix */
 char	**env_append(char **env, char *var)
 {
 	int		len;
@@ -49,7 +47,7 @@ char	**env_append(char **env, char *var)
 	if (!new)
 		return (NULL);
 	i = 0;
-	while (env[i])
+	while (env && env[i])
 	{
 		new[i] = ft_strdup(env[i]);
 		i++;
@@ -88,6 +86,8 @@ int	arg_index(char **env, char *var)
 	int	len;
 
 	i = 0;
+	if (!env || !var)
+		return (-1);
 	len = ft_strlen(var);
 	while (env[i])
 	{

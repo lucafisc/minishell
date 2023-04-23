@@ -3,22 +3,24 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lde-ross <lde-ross@student.42berlin.de     +#+  +:+       +#+        */
+/*   By: lde-ross <lde-ross@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 15:41:38 by tfregni           #+#    #+#             */
-/*   Updated: 2023/04/20 17:31:41 by lde-ross         ###   ########.fr       */
+/*   Updated: 2023/04/23 14:27:13 by lde-ross         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-t_shell	*g_shell;
+// t_shell	*g_shell;
 
 void	free_shell(t_shell *shell)
 {
 	ft_free_str_arr(shell->path);
 	free(shell->prompt);
 	ft_free_str_arr(shell->env);
+	ft_free_str_arr(shell->params);
+	printf("freeeeeeee\n");
 	//rl_clear_history();
 	/* free(shell->lexer)*/
 	/* free(shell->parser)*/
@@ -102,9 +104,42 @@ char	*create_prompt(t_shell *s)
 	char	*prompt;
 
 	tmp = create_cwd(s);
-	prompt = ft_strnjoin(7, GREEN, s->user, YELLOW, "@minishell ", DEFAULT, tmp, "> ");
+	prompt = ft_strnjoin(7, BLUE, s->user, YELLOW, "@minishell ", \
+						DEFAULT, tmp, "> ");
 	free(tmp);
 	return (prompt);
+}
+
+int	init_params(t_shell *s)
+{
+	s->params = malloc(sizeof(char *));
+	if (s->params)
+	{
+		s->params[0] = NULL;
+		return (1);
+	}
+	return (0);
+}
+
+/* Checks if input is a parameter */
+/* https://pubs.opengroup.org/onlinepubs/009695399/utilities
+/xcu_chap02.html#tag_02_05_02 */
+/* A param should have =, not start with a digit and not have
+any of the special chars macroed in SP_PARAM */
+/* Compare to t_bool is_export_valid(char *var) in export.c */
+t_bool	is_param(char *input)
+{
+	int	i;
+
+	i = -1;
+	if (!ft_strchr(input, '=') || ft_isdigit(*input))
+		return (false);
+	while (input[++i])
+	{
+		if (ft_strchr(SP_PARAM, input[i]) || ft_is_space(input[i]))
+			return (false);
+	}
+	return (true);
 }
 
 /* Since getenv will not work anyway maybe we don't
@@ -114,6 +149,7 @@ t_shell	*init(char ***env)
 	t_shell	*shell;
 
 	shell = malloc(sizeof(t_shell));
+	//if (!shell || !init_params(shell))
 	if (!shell)
 		return (NULL);
 	shell->env = matrix_dup(*env, 0);
@@ -123,6 +159,7 @@ t_shell	*init(char ***env)
 	shell->exit = false;
 	shell->pipe = false;
 	init_builtins(shell);
+	shell->params = NULL;
 	//ft_print_strarr(shell->path);
 	return (shell);
 }
@@ -131,8 +168,6 @@ void	get_prompt(t_shell *s)
 {
 	char		*input;
 	int			i = 0;
-	// t_lexer		*lex_list;
-	// t_command	*par_list;
 
 	while (i == 0)
 	{
@@ -141,31 +176,25 @@ void	get_prompt(t_shell *s)
 		if (input == NULL)
 		{
 			printf("EOF encountered. Exiting...\n");
-			free(input);
 			free_shell(s);
 			exit(1);
 		}
 		if (*input)
 		{
 			add_history(input);
-			s->lexer = lexer(input);
-			s->cmd = parser(s->lexer);
-			// t_command *cur;
-			// cur = par_list;
-			// while (cur)
-			// {
-			// 	printf("in: %d out: %d\n", cur->infile, cur->outfile);
-			// 	ft_print_strarr(cur->cmd);
-			// 	cur = cur->next;
-			// })
-			execute(s, s->cmd);
-			// free_prompt(input, &lex_list, &par_list);
-			// write(1, "here\n", 5);
+			if (!is_param(input))
+			{
+				s->lexer = lexer(input);
+				s->cmd = parser(s->lexer);
+				execute(s, s->cmd);
+			}
+			else
+				s->params = env_append(s->params, input);
 			free(s->prompt);
+			free(input);
 		}
 	}
 }
-
 
 int	main(int ac, char *av[], char *env[])
 {

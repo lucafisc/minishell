@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lde-ross <lde-ross@student.42berlin.de     +#+  +:+       +#+        */
+/*   By: lde-ross <lde-ross@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 16:02:25 by tfregni           #+#    #+#             */
-/*   Updated: 2023/04/20 16:06:49 by lde-ross         ###   ########.fr       */
+/*   Updated: 2023/04/23 14:27:22 by lde-ross         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@
 # include "colors.h"
 # define TRAIL_CHAR " \n\t><|\"$"
 # define SPLIT_CHAR "|<>"
+# define SP_PARAM "@*#?-!"
 # define N_BUILTINS 7
 # define HEREDOC_NAME "_heredoc_temp"
 
@@ -78,7 +79,7 @@ struct s_shell
 {
 	char		**env;
 	char		**path;
-	char		**vars;
+	char		**params;
 	char		*user;
 	char		*prompt;
 	t_bool		exit;
@@ -120,6 +121,7 @@ char		**ft_split_keep(char *s, char c);
 void		execute(t_shell *s, t_command *parsed_cmd);
 
 /* FREE */
+void		free_shell(t_shell *shell);
 void		free_builtins(t_builtins *b);
 void		free_lex(t_lexer **list);
 void		free_prompt(char *input, t_lexer **lex_list, t_command **par_list);

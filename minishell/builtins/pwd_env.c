@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pwd_env.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lde-ross <lde-ross@student.42berlin.de>    +#+  +:+       +#+        */
+/*   By: tfregni <tfregni@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/29 19:15:00 by lde-ross          #+#    #+#             */
-/*   Updated: 2023/04/13 10:34:30 by lde-ross         ###   ########.fr       */
+/*   Updated: 2023/04/21 18:24:08 by tfregni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ void	ft_env(t_shell *s, t_command *c)
 		return ;
 	while (*env)
 	{
-		ft_putendl_fd(*env, 1);
+		ft_putendl_fd(*env, c->outfile);
 		env++;
 	}
 }

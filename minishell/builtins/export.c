@@ -6,7 +6,7 @@
 /*   By: tfregni <tfregni@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/29 15:19:22 by tfregni           #+#    #+#             */
-/*   Updated: 2023/04/17 11:30:55 by tfregni          ###   ########.fr       */
+/*   Updated: 2023/04/21 22:04:18 by tfregni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,10 @@ static void	ft_export_append(char ***env, char *var)
 	//ft_print_strarr(new_env);
 }
 
+/* Export will set the variable also in the shell->params so that
+the expander can always get the latest occurrence */
+/* export AR_=bla doesn't throw an error but doesn't set the var */
+/* It should be a valid one: check is_param in main.c */
 void	ft_export(t_shell *s, t_command *c)
 {
 	int		var_index;
@@ -77,6 +81,7 @@ void	ft_export(t_shell *s, t_command *c)
 	var = c->cmd[1];
 	if (!is_export_valid(var))
 		return ;
+	s->params = env_append(s->params, var);
 	var_index = search_array(s->env, var);
 	if (var_index >= 0)
 		ft_export_replace(s->env, var, var_index);
