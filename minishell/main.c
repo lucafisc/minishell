@@ -3,14 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lde-ross <lde-ross@student.42berlin.de>    +#+  +:+       +#+        */
+/*   By: lde-ross <lde-ross@student.42berlin.de     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 15:41:38 by tfregni           #+#    #+#             */
-/*   Updated: 2023/04/24 09:51:34 by lde-ross         ###   ########.fr       */
+/*   Updated: 2023/04/24 14:52:01 by lde-ross         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+t_shell	*g_shell;
 
 void	free_shell(t_shell *shell)
 {
@@ -18,7 +20,6 @@ void	free_shell(t_shell *shell)
 	free(shell->prompt);
 	ft_free_str_arr(shell->env);
 	ft_free_str_arr(shell->params);
-	printf("freeeeeeee\n");
 	//rl_clear_history();
 	/* free(shell->lexer)*/
 	/* free(shell->parser)*/
@@ -175,7 +176,6 @@ void	get_prompt(t_shell *s)
 		input = readline(s->prompt);
 		if (input == NULL)
 		{
-			printf("EOF encountered. Exiting...\n");
 			free_shell(s);
 			exit(1);
 		}

@@ -26,3 +26,4 @@ cd $PWD/file_tests
 cd $OLDPWD/builtins
 
 TODO Escape spaces in dir name
+

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lde-ross <lde-ross@student.42berlin.de>    +#+  +:+       +#+        */
+/*   By: lde-ross <lde-ross@student.42berlin.de     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 16:02:25 by tfregni           #+#    #+#             */
-/*   Updated: 2023/04/24 09:44:19 by lde-ross         ###   ########.fr       */
+/*   Updated: 2023/04/24 13:50:32 by lde-ross         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,8 +69,6 @@ typedef enum e_redir
 
 typedef struct s_shell	t_shell;
 
-t_shell	*g_shell;
-
 typedef struct s_builtins
 {
 	char	*name;
@@ -92,6 +90,8 @@ struct s_shell
 	int			status;
 	t_bool		forked;
 };
+
+extern t_shell	*g_shell;
 
 /* LEXER */
 t_lexer		*lexer(char *fmt);

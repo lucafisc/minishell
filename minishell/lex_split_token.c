@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lex_split_token.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tfregni <tfregni@student.42berlin.de>      +#+  +:+       +#+        */
+/*   By: lde-ross <lde-ross@student.42berlin.de     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/01 12:54:23 by tfregni           #+#    #+#             */
-/*   Updated: 2023/04/17 21:54:36 by tfregni          ###   ########.fr       */
+/*   Updated: 2023/04/24 17:04:44 by lde-ross         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,7 @@ int	split_token(char **arr, char *str, int *state)
 	int		new_cmd_flag;
 	int		i;
 	int		j;
+	int		space;
 
 	cmd = 0;
 	i = 0;
@@ -82,7 +83,10 @@ int	split_token(char **arr, char *str, int *state)
 				if (new_cmd_flag == 1 || lex_check_state(str, j, *state) == 2)
 					break ;
 			}
-			arr[cmd++] = ft_substr(str + i, 0, j - i);
+			space = 0;
+			if (str[j] == ' ')
+				space = 1;
+			arr[cmd++] = ft_substr(str + i, 0, j - i + space);
 			i = j;
 		}
 	}
