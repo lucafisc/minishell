@@ -6,7 +6,7 @@
 /*   By: lde-ross <lde-ross@student.42berlin.de     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/01 12:54:23 by tfregni           #+#    #+#             */
-/*   Updated: 2023/04/24 17:04:44 by lde-ross         ###   ########.fr       */
+/*   Updated: 2023/04/24 20:30:42 by lde-ross         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,36 +29,36 @@ t_bool	is_token(char c, int state)
 /* 0 - no change */
 /* 1 - close quotes */
 /* 2 - open quotes */
-int	count_tokens(char *str)
-{
-	int	count;
-	int	state;
-	int	new_cmd_flag;
-	int	i;
+// int	count_tokens(char *str)
+// {
+// 	int	count;
+// 	int	state;
+// 	int	new_cmd_flag;
+// 	int	i;
 
-	if (!str)
-		return (0);
-	count = 0;
-	state = IN_NORMAL;
-	new_cmd_flag = 0;
-	i = 0;
-	while (str[i])
-	{
-		if (!is_token(str[i], state))
-			new_cmd_flag = lex_update_state(str, &i, &state);
-		else
-		{
-			count++;
-			while (str[i] && is_token(str[i], state))
-			{
-				new_cmd_flag = lex_update_state(str, &i, &state);
-				if (new_cmd_flag == 1 || lex_check_state(str, i, state) == 2)
-					break ;
-			}
-		}
-	}
-	return (count);
-}
+// 	if (!str)
+// 		return (0);
+// 	count = 0;
+// 	state = IN_NORMAL;
+// 	new_cmd_flag = 0;
+// 	i = 0;
+// 	while (str[i])
+// 	{
+// 		if (!is_token(str[i], state))
+// 			new_cmd_flag = lex_update_state(str, &i, &state);
+// 		else
+// 		{
+// 			count++;
+// 			while (str[i] && is_token(str[i], state))
+// 			{
+// 				new_cmd_flag = lex_update_state(str, &i, &state);
+// 				if (new_cmd_flag == 1 || lex_check_state(str, i, state) == 2)
+// 					break ;
+// 			}
+// 		}
+// 	}
+// 	return (count);
+// }
 
 int	split_token(char **arr, char *str, int *state)
 {
@@ -94,25 +94,55 @@ int	split_token(char **arr, char *str, int *state)
 	return (cmd);
 }
 
+int	count_tokens(char *str)
+{
+	int	count;
+	int	i;
+
+	count = 0;
+	i = 0;
+	while (str[i])
+	{
+		//printf("checking str[%d]:%c\n", i, str[i]);
+		if ((ft_is_space(str[i]) && !ft_is_space(str[i + 1]) && str[i + 1]) || (i == 0 && !ft_is_space(str[i])))
+		{
+			count++;
+			//printf("count is now %d\n", count);
+		}	
+		if (str[i] == '\"' || str[i] == '\'')
+		{
+			i++;
+			while (str[i] && (str[i] != '\"' && str[i] != '\''))
+				i++;
+			//printf("saindo da esteira rolante str[%d]:%c\n", i, str[i]);
+		}
+		i++;
+	}
+	return (count);
+}
+
 char	**lex_split_token(char *str)
 {
-	char	**arr;
 	int		n_cmds;
-	int		state;
+	char	**arr;
 	int		i;
 
 	n_cmds = count_tokens(str);
+	printf("%d\n", n_cmds);
+	exit(1);
 	arr = malloc(sizeof(*arr) * (n_cmds + 1));
 	if (!arr)
 		return (NULL);
-	state = IN_NORMAL;
-	if (split_token(arr, str, &state) != n_cmds)
-	{
-		ft_free_str_arr(arr);
-		arr = NULL;
-	}
-	i = -1;
-	while (arr[++i])
-		arr[i] = lex_expander(arr[i]);
-	return (arr);
+	arr[n_cmds] = NULL;
+	
+	// state = IN_NORMAL;
+	// if (split_token(arr, str, &state) != n_cmds)
+	// {
+	// 	ft_free_str_arr(arr);
+	// 	arr = NULL;
+	// }
+	// i = -1;
+	// while (arr[++i])
+	// 	arr[i] = lex_expander(arr[i]);
+	// return (arr);
 }
