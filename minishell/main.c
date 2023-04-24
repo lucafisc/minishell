@@ -6,7 +6,7 @@
 /*   By: tfregni <tfregni@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 15:41:38 by tfregni           #+#    #+#             */
-/*   Updated: 2023/04/23 22:54:03 by tfregni          ###   ########.fr       */
+/*   Updated: 2023/04/24 13:53:16 by tfregni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -168,30 +168,6 @@ void	get_prompt(t_shell *s)
 			free(input);
 		}
 	}
-}
-
-void	exec_script(t_shell *s, int fd)
-{
-	char	*input;
-
-	(void) s;
-	while (1)
-	{
-		input = get_next_line(fd);
-		if (!input)
-			break ;
-		if (*input == '#' || *input == '\n')
-		{
-			free(input);
-			continue ;
-		}
-		s->lexer = lexer(input);
-		s->cmd = parser(s->lexer);
-		execute(s, s->cmd);
-		free(input);
-	}
-	close(fd);
-	exit(0);
 }
 
 int	main(int ac, char *av[], char *env[])

@@ -6,7 +6,7 @@
 /*   By: tfregni <tfregni@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 16:02:25 by tfregni           #+#    #+#             */
-/*   Updated: 2023/04/23 21:46:34 by tfregni          ###   ########.fr       */
+/*   Updated: 2023/04/24 13:49:22 by tfregni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,6 +122,9 @@ void		init_signal(void);
 char		*find_cmd(t_shell *s, char *cmd);
 char		**ft_split_keep(char *s, char c);
 void		execute(t_shell *s, t_command *parsed_cmd);
+
+/* EXEC SCRIPT */
+void		exec_script(t_shell *s, int fd);
 
 /* FREE */
 void		free_shell(t_shell *shell);
