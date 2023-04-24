@@ -6,7 +6,7 @@
 /*   By: tfregni <tfregni@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/12 16:41:40 by lde-ross          #+#    #+#             */
-/*   Updated: 2023/04/17 14:15:53 by tfregni          ###   ########.fr       */
+/*   Updated: 2023/04/24 17:45:20 by tfregni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,12 +78,12 @@ t_bool	has_escaped(char *str)
 	return (false);
 }
 
-t_bool	is_in_quote(char *str)
+t_bool	is_in_quote(char *str, int space)
 {
 	int	len;
 
 	len = ft_strlen(str);
-	if ((str[0] == '\'' || str[0] == '\"') && str[len - 1] == str[0])
+	if ((str[0] == '\'' || str[0] == '\"') && (str[len - 1 - space] == str[0]))
 		return (true);
 	return (false);
 }
@@ -94,15 +94,21 @@ void	par_trim_expand(t_command **cmd)
 	char		*temp;
 	int			i;
 	int			len;
+	int			space;
 
 	cur = *cmd;
 	i = 0;
 	while (cur->cmd[i])
 	{
-		if (is_in_quote(cur->cmd[i]))
+		space = 0;
+		len = ft_strlen(cur->cmd[i]);
+		if (ft_is_space(cur->cmd[i][len - 1]))
+			space = 1;
+		if (is_in_quote(cur->cmd[i], space))
 		{
-			len = ft_strlen(cur->cmd[i]);
-			temp = ft_substr(cur->cmd[i], 1, len - 2);
+			temp = ft_substr(cur->cmd[i], 1, len - 2 - space);
+			if (space)
+				temp = ft_strjoinnfree(temp, ' ');
 			free(cur->cmd[i]);
 			cur->cmd[i] = temp;
 		}

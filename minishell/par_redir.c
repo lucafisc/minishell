@@ -6,7 +6,7 @@
 /*   By: tfregni <tfregni@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/12 16:55:28 by lde-ross          #+#    #+#             */
-/*   Updated: 2023/04/20 00:15:20 by tfregni          ###   ########.fr       */
+/*   Updated: 2023/04/24 18:47:39 by tfregni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,13 @@
 
 t_redir	is_redir(char *str)
 {
-	if (ft_strncmp(str, ">", 2) == 0)
+	if (ft_strncmp(str, ">", 1) == 0)
 		return (OUT_WRITE);
-	else if (ft_strncmp(str, "<", 2) == 0)
+	else if (ft_strncmp(str, "<", 1) == 0)
 		return (IN_READ);
-	else if (ft_strncmp(str, ">>", 3) == 0)
+	else if (ft_strncmp(str, ">>", 2) == 0)
 		return (OUT_APPEND);
-	else if (ft_strncmp(str, "<<", 3) == 0)
+	else if (ft_strncmp(str, "<<", 2) == 0)
 		return (HEREDOC);
 	return (0);
 }
@@ -102,14 +102,18 @@ void	open_in(int redir, t_lexer *start, t_command **cmd_node)
 void	new_redir(int redir, t_lexer **lexer_node, t_command **cmd_node)
 {
 	t_lexer	*start;
+	char	*tmp;
 
 	start = *lexer_node;
-	if (!start->next && (redir == OUT_WRITE || redir == OUT_APPEND || redir == IN_READ)) // same also for HEREDOC?
+	if (!start->next && (redir))
 	{
 		ft_putstr_fd("minishell: syntax error near unexpected token 'newline'\n", 2);
 		start = start->next;
 		return ;
 	}
+	tmp = ft_strtrim(start->next->data, " ");
+	free(start->next->data);
+	start->next->data = tmp;
 	if (redir == OUT_WRITE || redir == OUT_APPEND)
 		open_out(redir, start, cmd_node);
 	else
@@ -128,6 +132,8 @@ void	par_fill_cmd(int *i, t_lexer *start, t_command **cmd_node)
 	if (!new->cmd[*i])
 		return ;
 	ft_strlcpy(new->cmd[*i], start->data, str_len + 1);
+	// if (*i == 0)
+	// 	new->cmd[*i] = ft_strtrim(new->cmd[*i], " ");
 	// printf("new cmd: %s\n", new->cmd[*i]);
 	*i += 1;
 }

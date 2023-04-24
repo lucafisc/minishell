@@ -6,7 +6,7 @@
 /*   By: tfregni <tfregni@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/12 16:54:04 by lde-ross          #+#    #+#             */
-/*   Updated: 2023/04/21 18:11:13 by tfregni          ###   ########.fr       */
+/*   Updated: 2023/04/24 18:30:31 by tfregni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,11 +24,33 @@ static t_command	*init_command(int len)
 		return (NULL);
 	new->infile = 0;
 	new->outfile = 1;
-	new->fd_pipe[0] = 0;
-	new->fd_pipe[1] = 1;
 	new->prev = NULL;
 	new->next = NULL;
 	return (new);
+}
+
+void	trim_matrix(char **cmd)
+{
+	int		i;
+	char	*tmp;
+
+	i = 0;
+	if (ft_strncmp(cmd[0], "echo", 4) != 0)
+	{
+		while (cmd[i])
+		{
+			tmp = ft_strtrim(cmd[i], " ");
+			free(cmd[i]);
+			cmd[i] = tmp;
+			i++;
+		}
+	}
+	else
+	{
+		tmp = ft_strtrim(cmd[0], " ");
+		free(cmd[0]);
+		cmd[0] = tmp;
+	}
 }
 
 t_command	*par_list_new_node(t_lexer *start, int len)
@@ -52,6 +74,8 @@ t_command	*par_list_new_node(t_lexer *start, int len)
 			par_fill_cmd(&i, start, &new);
 		start = start->next;
 	}
+	trim_matrix(new->cmd);
+	ft_print_strarr(new->cmd);
 	return (new);
 }
 
