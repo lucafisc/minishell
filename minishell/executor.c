@@ -6,7 +6,7 @@
 /*   By: tfregni <tfregni@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/04 12:58:08 by tfregni           #+#    #+#             */
-/*   Updated: 2023/04/23 19:57:50 by tfregni          ###   ########.fr       */
+/*   Updated: 2023/04/24 15:56:13 by tfregni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -164,6 +164,7 @@ void	execute(t_shell *s, t_command *parsed_cmd)
 		g_shell->status = 0;
 		tmp = parsed_cmd->next;
 		close_fd(parsed_cmd);
+		unlink(HEREDOC_NAME);
 		free_command(parsed_cmd);
 		parsed_cmd = tmp;
 	}

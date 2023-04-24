@@ -6,7 +6,7 @@
 /*   By: tfregni <tfregni@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 16:02:25 by tfregni           #+#    #+#             */
-/*   Updated: 2023/04/24 13:49:22 by tfregni          ###   ########.fr       */
+/*   Updated: 2023/04/24 15:36:09 by tfregni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@
 # define SPLIT_CHAR "|<>"
 # define SP_PARAM "@*#?-!^+'\'"
 # define N_BUILTINS 7
-# define HEREDOC_NAME "_heredoc_temp"
+# define HEREDOC_NAME "./_heredoc_temp"
 
 typedef enum s_bool
 {
@@ -69,7 +69,7 @@ typedef enum e_redir
 
 typedef struct s_shell	t_shell;
 
-t_shell	*g_shell;
+extern t_shell	*g_shell;
 
 typedef struct s_builtins
 {

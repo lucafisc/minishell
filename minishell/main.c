@@ -6,11 +6,13 @@
 /*   By: tfregni <tfregni@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 15:41:38 by tfregni           #+#    #+#             */
-/*   Updated: 2023/04/24 13:53:16 by tfregni          ###   ########.fr       */
+/*   Updated: 2023/04/24 15:48:31 by tfregni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+t_shell	*g_shell;
 
 void	free_shell(t_shell *shell)
 {
@@ -21,7 +23,6 @@ void	free_shell(t_shell *shell)
 	printf("freeeeeeee\n");
 	free_builtins(shell->builtins);
 	free(shell);
-	unlink(HEREDOC_NAME);
 }
 
 char	*get_username(t_shell *s)
