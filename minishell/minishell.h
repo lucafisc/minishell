@@ -6,7 +6,7 @@
 /*   By: lde-ross <lde-ross@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 16:02:25 by tfregni           #+#    #+#             */
-/*   Updated: 2023/04/23 19:37:34 by lde-ross         ###   ########.fr       */
+/*   Updated: 2023/04/24 09:44:19 by lde-ross         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,6 +90,7 @@ struct s_shell
 	t_command	*cmd;
 	t_builtins	*builtins;
 	int			status;
+	t_bool		forked;
 };
 
 /* LEXER */

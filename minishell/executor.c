@@ -6,7 +6,7 @@
 /*   By: lde-ross <lde-ross@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/04 12:58:08 by tfregni           #+#    #+#             */
-/*   Updated: 2023/04/23 19:59:30 by lde-ross         ###   ########.fr       */
+/*   Updated: 2023/04/24 09:52:18 by lde-ross         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -158,6 +158,7 @@ void	execute(t_shell *s, t_command *parsed_cmd)
 		{
 			parsed_cmd->cmd[0] = find_cmd(s, parsed_cmd->cmd[0]);
 			pid = fork();
+			g_shell->forked = true;
 			if (pid == 0)
 			{
 				create_redir(parsed_cmd);
@@ -173,6 +174,7 @@ void	execute(t_shell *s, t_command *parsed_cmd)
 			if (g_shell->status == 130)
 				kill(pid, SIGINT);
 		}
+		g_shell->forked = false;
 		add_status(g_shell->status);
 		g_shell->status = 0;
 		tmp = parsed_cmd->next;
