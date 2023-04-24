@@ -6,7 +6,7 @@
 /*   By: tfregni <tfregni@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 10:07:19 by tfregni           #+#    #+#             */
-/*   Updated: 2023/04/24 13:52:53 by tfregni          ###   ########.fr       */
+/*   Updated: 2023/04/24 14:04:56 by tfregni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ static int	validate_line(char **input)
 	return (1);
 }
 
+/* It trims the \n char, frees the input and returns the trimmed*/
 static char	*trim_new_line(char *input)
 {
 	char	*trimmed;
@@ -33,44 +34,12 @@ static char	*trim_new_line(char *input)
 	return (trimmed);
 }
 
-// void	exec_script(t_shell *s, int fd)
-// {
-// 	char	*input;
-// 	int		i;
-
-// 	i = 0;
-// 	while (1)
-// 	{
-// 		input = get_next_line(fd);
-// 		i++;
-// 		printf("input: %s\n", input);
-// 		if (!input)
-// 			break ;
-// 		if (!validate_line(&input))
-// 			continue ;
-// 		input = trim_new_line(input);
-// 		if (!is_param(input))
-// 		{
-// 			s->lexer = lexer(input);
-// 			s->cmd = parser(s->lexer);
-// 			printf("fd: %d\n", fd);
-// 			execute(s, s->cmd);
-// 		}
-// 		else
-// 			s->params = env_append(s->params, input);
-// 		free(input);
-// 	}
-// 	close(fd);
-// 	exit(0);
-// }
-
 void	exec_script(t_shell *s, int fd)
 {
 	char	*input;
 	int		i;
 
 	i = 0;
-	(void) s;
 	while (1)
 	{
 		input = get_next_line(fd);
@@ -93,33 +62,3 @@ void	exec_script(t_shell *s, int fd)
 	close(fd);
 	exit(0);
 }
-// void	exec_script(t_shell *s, int fd)
-// {
-// 	char	*input;
-// 	int		i;
-// 	char	*trimmed;
-
-// 	i = 0;
-// 	while (1)
-// 	{
-// 		input = get_next_line(fd);
-// 		i++;
-// 		if (!input)
-// 			break ;
-// 		if (!validate_line(input))
-// 			continue ;
-// 		trimmed = ft_strtrim(input, "\n");
-// 		if (!is_param(trimmed))
-// 		{
-// 			s->lexer = lexer(trimmed);
-// 			s->cmd = parser(s->lexer);
-// 			execute(s, s->cmd);
-// 		}
-// 		else
-// 			s->params = env_append(s->params, trimmed);
-// 		free(input);
-// 		free(trimmed);
-// 	}
-// 	close(fd);
-// 	exit(0);
-// }
