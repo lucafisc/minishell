@@ -6,7 +6,7 @@
 /*   By: lde-ross <lde-ross@student.42berlin.de     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/01 12:54:23 by tfregni           #+#    #+#             */
-/*   Updated: 2023/04/25 16:42:52 by lde-ross         ###   ########.fr       */
+/*   Updated: 2023/04/25 21:19:50 by lde-ross         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,14 +101,6 @@ t_bool	is_next_new_tok(char *str, int i)
 	return (false);
 }
 
-int	skip_quotes(char *str, char c, int i)
-{
-	i++;
-	while (str[i] && str[i] != c)
-		i++;
-	return (i);
-}
-
 int	count_tokens(char *str)
 {
 	int	count;
@@ -125,7 +117,7 @@ int	count_tokens(char *str)
 			//printf("count is now %d\n", count);
 		}	
 		if (str[i] == '\"' || str[i] == '\'')
-			i = skip_quotes(str, str[i], i);
+			i = ft_skip_char(str, str[i], i);
 		i++;
 	}
 	return (count);
@@ -230,7 +222,7 @@ char	**lex_split_token(char *str)
 				if (str[i] == '\"' || str[i] == '\'')
 				{
 					prev = i;
-					i = skip_quotes(str, str[i], i);
+					i = ft_skip_char(str, str[i], i);
 					i++;
 					len += i - prev;
 				}

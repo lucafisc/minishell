@@ -6,7 +6,7 @@
 /*   By: tfregni <tfregni@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 22:30:05 by tfregni           #+#    #+#             */
-/*   Updated: 2023/04/25 21:32:15 by tfregni          ###   ########.fr       */
+/*   Updated: 2023/04/25 21:48:17 by tfregni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,13 +86,7 @@ t_bool	is_next_new_tok(char *str, int i)
 	return (false);
 }
 
-int	skip_quotes(char *str, char c, int i)
-{
-	i++;
-	while (str[i] && str[i] != c)
-		i++;
-	return (i);
-}
+
 
 int	count_tokens(char *str)
 {
@@ -110,7 +104,7 @@ int	count_tokens(char *str)
 			//printf("count is now %d\n", count);
 		}
 		if (str[i] == '\"' || str[i] == '\'')
-			i = skip_quotes(str, str[i], i);
+			i = ft_skip_char(str, str[i], i);
 		i++;
 	}
 	return (count);
@@ -149,7 +143,7 @@ char	**lex_split_token(char *str)
 				if (str[i] == '\"' || str[i] == '\'')
 				{
 					prev = i;
-					i = skip_quotes(str, str[i], i);
+					i = ft_skip_char(str, str[i], i);
 					i++;
 					printf("str[%d] after skipped: %c\n", i, str[i]);
 					len += i - prev;
