@@ -6,7 +6,7 @@
 /*   By: tfregni <tfregni@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 22:30:05 by tfregni           #+#    #+#             */
-/*   Updated: 2023/04/25 16:44:43 by tfregni          ###   ########.fr       */
+/*   Updated: 2023/04/25 18:44:37 by tfregni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -326,6 +326,36 @@ char	**ft_split_tokens_by_char(char *str)
 // 	table = ft_split_tokens;
 // }
 
+/* Given a string without spaces it cleans it from outer quotes
+keeping inner quotes. It frees the given data.
+TODO Flag if a quote is not closed in the data */
+char	*trim_quotes(char *data)
+{
+	int		i;
+	int		j;
+	char	*trimmed;
+	char	c;
+
+	trimmed = ft_calloc(ft_strlen(data) + 1, sizeof(*trimmed));
+	if (!trimmed)
+		return (NULL);
+	i = 0;
+	j = 0;
+	while (data[i])
+	{
+		if (ft_strchr(QUOTES, data[i]))
+		{
+			c = data[i];
+			i++;
+			while (data[i] && data[i] != c)
+				trimmed[j++] = data[i++];
+
+		}
+	}
+	free(data);
+	return (trimmed);
+}
+
 #include <string.h>
 int	main(void)
 {
@@ -345,8 +375,9 @@ int	main(void)
 		// 	printf("%s$\n", word);
 		// 	word = strtok(NULL, " \n");
 		// }
-		printf("count luca: %d count tim: %d\n", count_tokens(input), ft_count_tokens_by_char(input));
-		ft_print_strarr(ft_split_tokens_by_char(input));
+		// printf("count luca: %d count tim: %d\n", count_tokens(input), ft_count_tokens_by_char(input));
+		// ft_print_strarr(ft_split_tokens_by_char(input));
+		printf("trimmed: %s\n", trim_quotes(ft_strdup(input)));
 		free(input);
 	}
 }
