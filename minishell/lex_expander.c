@@ -6,7 +6,7 @@
 /*   By: tfregni <tfregni@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/12 14:59:28 by lde-ross          #+#    #+#             */
-/*   Updated: 2023/04/23 16:37:07 by tfregni          ###   ########.fr       */
+/*   Updated: 2023/04/25 17:29:17 by tfregni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,19 +51,45 @@ char	*expand_var(char *cur, char *cmds, int i)
 	return (new_cmd);
 }
 
+// char	*lex_expander(char *cmds)
+// {
+// 	char	*cur;
+// 	int		i;
+
+// 	if (!cmds || *cmds == '\'')
+// 		return (cmds);
+// 	cur = cmds;
+// 	i = 0;
+// 	while (cur[i])
+// 	{
+// 		// printf("lex_expander: %c\n", cur[i]);
+// 		if (cur[i] == '~' || cur[i] == '$')
+// 		{
+// 			cmds = expand_var(cur, cmds, i);
+// 			cur = cmds;
+// 		}
+// 		i++;
+// 	}
+// 	return (cmds);
+// }
+
 char	*lex_expander(char *cmds)
 {
 	char	*cur;
 	int		i;
+	int		state;
+	int		prev_state;
 
-	if (!cmds || *cmds == '\'')
+	if (!cmds)
 		return (cmds);
 	cur = cmds;
 	i = 0;
+	state = IN_NORMAL;
+	prev_state = state;
 	while (cur[i])
 	{
-		// printf("lex_expander: %c\n", cur[i]);
-		if (cur[i] == '~' || cur[i] == '$')
+		ft_update_state(cur[i], &state, &prev_state);
+		if ((cur[i] == '~' || cur[i] == '$') && state != IN_S_QUOTE)
 		{
 			cmds = expand_var(cur, cmds, i);
 			cur = cmds;

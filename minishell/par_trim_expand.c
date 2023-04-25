@@ -6,7 +6,7 @@
 /*   By: tfregni <tfregni@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/12 16:41:40 by lde-ross          #+#    #+#             */
-/*   Updated: 2023/04/17 14:15:53 by tfregni          ###   ########.fr       */
+/*   Updated: 2023/04/25 18:44:49 by tfregni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,4 +114,34 @@ void	par_trim_expand(t_command **cmd)
 		}
 		i++;
 	}
+}
+
+/* Given a string without spaces it cleans it from outer quotes
+keeping inner quotes. It frees the given data.
+TODO Flag if a quote is not closed in the data */
+char	*trim_quotes(char *data)
+{
+	int		i;
+	int		j;
+	char	*trimmed;
+	char	c;
+
+	trimmed = ft_calloc(ft_strlen(data) + 1, sizeof(*trimmed));
+	if (!trimmed)
+		return (NULL);
+	i = 0;
+	j = 0;
+	while (data[i])
+	{
+		if (ft_strchr(QUOTES, data[i]))
+		{
+			c = data[i];
+			i++;
+			while (data[i] && data[i] != c)
+				trimmed[j++] = data[i++];
+
+		}
+	}
+	free(data);
+	return (trimmed);
 }

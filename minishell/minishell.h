@@ -6,7 +6,7 @@
 /*   By: lde-ross <lde-ross@student.42berlin.de     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 16:02:25 by tfregni           #+#    #+#             */
-/*   Updated: 2023/04/25 18:01:31 by lde-ross         ###   ########.fr       */
+/*   Updated: 2023/04/25 18:57:15 by lde-ross         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@
 # define SP_PARAM "@*#?-!"
 # define N_BUILTINS 7
 # define HEREDOC_NAME "_heredoc_temp"
+# define QUOTES "\'\""
 
 typedef enum s_bool
 {
@@ -117,6 +118,7 @@ void		par_fill_cmd(int *i, t_lexer *start, t_command **cmd_node);
 t_redir		is_redir(char *str);
 void		new_redir(int redir, t_lexer **lexer_node, t_command **cmd_node);
 void		setup_pipe(t_command *cmd, int n_cmds);
+char		*trim_quotes(char *data);
 
 /* ETC? */
 void		init_signal(void);
