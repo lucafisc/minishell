@@ -6,7 +6,7 @@
 /*   By: lde-ross <lde-ross@student.42berlin.de     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2023/04/25 16:47:42 by lde-ross         ###   ########.fr       */
+/*   Updated: 2023/04/25 21:20:26 by lde-ross         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,6 @@ t_lexer	*lexer(char *fmt)
 		printf("%s\n", list->data);
 		list = list->next;
 	}
-	exit(1);
 	// execute(s, list);
 	return (list);
 }
