@@ -6,7 +6,7 @@
 /*   By: tfregni <tfregni@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/12 16:41:40 by lde-ross          #+#    #+#             */
-/*   Updated: 2023/04/25 18:44:49 by tfregni          ###   ########.fr       */
+/*   Updated: 2023/04/25 22:53:25 by tfregni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -139,8 +139,10 @@ char	*trim_quotes(char *data)
 			i++;
 			while (data[i] && data[i] != c)
 				trimmed[j++] = data[i++];
-
+			i++;
 		}
+		else
+			trimmed[j++] = data[i++];
 	}
 	free(data);
 	return (trimmed);
