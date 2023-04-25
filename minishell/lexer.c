@@ -6,7 +6,7 @@
 /*   By: lde-ross <lde-ross@student.42berlin.de     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2023/04/24 19:59:10 by lde-ross         ###   ########.fr       */
+/*   Updated: 2023/04/25 16:47:42 by lde-ross         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,15 +20,16 @@ t_lexer	*lexer(char *fmt)
 	char	**raw_tokens;
 
 	raw_tokens = lex_split_token(fmt);
-	ft_print_strarr(raw_tokens);
+	//ft_print_strarr(raw_tokens);
 	list = lex_list_from_table(raw_tokens);
 	ft_free_str_arr(raw_tokens);
 	lex_split_list(&list);
-	// while (list->data)
-	// {
-	// 	printf("%s\n", list->data);
-	// 	list = list->next;
-	// }
+	while (list)
+	{
+		printf("%s\n", list->data);
+		list = list->next;
+	}
+	exit(1);
 	// execute(s, list);
 	return (list);
 }

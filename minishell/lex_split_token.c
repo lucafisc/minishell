@@ -6,7 +6,7 @@
 /*   By: lde-ross <lde-ross@student.42berlin.de     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/01 12:54:23 by tfregni           #+#    #+#             */
-/*   Updated: 2023/04/24 20:30:42 by lde-ross         ###   ########.fr       */
+/*   Updated: 2023/04/25 16:42:52 by lde-ross         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,6 +94,21 @@ int	split_token(char **arr, char *str, int *state)
 	return (cmd);
 }
 
+t_bool	is_next_new_tok(char *str, int i)
+{
+	if ((ft_is_space(str[i]) && !ft_is_space(str[i + 1]) && str[i + 1]) || (i == 0 && !ft_is_space(str[i])))
+		return (true);
+	return (false);
+}
+
+int	skip_quotes(char *str, char c, int i)
+{
+	i++;
+	while (str[i] && str[i] != c)
+		i++;
+	return (i);
+}
+
 int	count_tokens(char *str)
 {
 	int	count;
@@ -104,18 +119,77 @@ int	count_tokens(char *str)
 	while (str[i])
 	{
 		//printf("checking str[%d]:%c\n", i, str[i]);
-		if ((ft_is_space(str[i]) && !ft_is_space(str[i + 1]) && str[i + 1]) || (i == 0 && !ft_is_space(str[i])))
+		if (is_next_new_tok(str, i))
 		{
 			count++;
 			//printf("count is now %d\n", count);
 		}	
 		if (str[i] == '\"' || str[i] == '\'')
+			i = skip_quotes(str, str[i], i);
+		i++;
+	}
+	return (count);
+}
+
+#define QUOTES "\'\""
+void	ft_update_state(char c, int *state, int *prev_state)
+{
+    // open quotes
+	if (*state == IN_NORMAL || \
+	(*state == IN_S_QUOTE && c == D_QUOTE) || \
+	(*state == IN_D_QUOTE && c == S_QUOTE))
+	{
+		*prev_state = *state;
+		if (c == S_QUOTE)
+			*state = IN_S_QUOTE;
+		else
+			*state = IN_D_QUOTE;
+	}
+    // close quotes
+	else if ((*state == IN_S_QUOTE && c == S_QUOTE) || \
+	(*state == IN_D_QUOTE && c == D_QUOTE))
+	{
+		*state = *prev_state;
+		*prev_state = IN_NORMAL;
+	}
+}
+
+int	is_new_wo(char const *s, int i, int state, int prev_state)
+{
+	int	initial_state;
+
+	initial_state = state;
+	if ((!ft_is_space(s[i]) && ft_is_space(s[i - 1])) || (i == 0 && !ft_is_space(s[i])))
+	{
+		if (!ft_strchr(QUOTES, s[i]) && state == IN_NORMAL)
+			return (1);
+		if (ft_strchr(QUOTES, s[i]))
 		{
-			i++;
-			while (str[i] && (str[i] != '\"' && str[i] != '\''))
-				i++;
-			//printf("saindo da esteira rolante str[%d]:%c\n", i, str[i]);
+			ft_update_state(s[i], &state, &prev_state);
+			if (state != initial_state && initial_state == IN_NORMAL)
+				return (1);
 		}
+	}
+	return (0);
+}
+
+int	ft_count_tokens_by_char(char *str)
+{
+	int	state;
+	int	prev_state;
+	int	i;
+	int	count;
+
+	count = 0;
+	state = IN_NORMAL;
+	prev_state = state;
+	i = 0;
+	while (str[i])
+	{
+		if (is_new_wo(str, i, state, prev_state))
+			count++;
+		if (str[i] == S_QUOTE || str[i] == D_QUOTE)
+			ft_update_state(str[i], &state, &prev_state);
 		i++;
 	}
 	return (count);
@@ -126,23 +200,56 @@ char	**lex_split_token(char *str)
 	int		n_cmds;
 	char	**arr;
 	int		i;
+	int		tim_counter;
+	int		start;
+	int		len = 0;
+	int		prev;
+	int		j;
 
 	n_cmds = count_tokens(str);
-	printf("%d\n", n_cmds);
-	exit(1);
+	tim_counter = ft_count_tokens_by_char(str);
+	printf("my counter: %d tims counter: %d\n", n_cmds, tim_counter);
+	
 	arr = malloc(sizeof(*arr) * (n_cmds + 1));
 	if (!arr)
 		return (NULL);
 	arr[n_cmds] = NULL;
 	
-	// state = IN_NORMAL;
-	// if (split_token(arr, str, &state) != n_cmds)
-	// {
-	// 	ft_free_str_arr(arr);
-	// 	arr = NULL;
-	// }
+	i = 0;
+	j = 0;
+	while (str[i])
+	{
+		if (is_next_new_tok(str, i))
+		{
+			if (i != 0)
+				i++;
+			start = i;
+			len = 0;
+			while (str[i] && !ft_is_space(str[i]))
+			{
+				if (str[i] == '\"' || str[i] == '\'')
+				{
+					prev = i;
+					i = skip_quotes(str, str[i], i);
+					i++;
+					len += i - prev;
+				}
+				else
+				{
+					i++;
+					len++;
+				}
+			}
+			arr[j] = ft_substr(str, start, len);
+			j++;
+		}
+		else
+			i++;
+	}
+	printf("\n\n\n_________\n");
 	// i = -1;
 	// while (arr[++i])
 	// 	arr[i] = lex_expander(arr[i]);
-	// return (arr);
+	//ft_print_strarr(arr);
+	return(arr);
 }
