@@ -6,7 +6,7 @@
 /*   By: tfregni <tfregni@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 22:30:05 by tfregni           #+#    #+#             */
-/*   Updated: 2023/04/25 16:37:36 by tfregni          ###   ########.fr       */
+/*   Updated: 2023/04/25 16:44:43 by tfregni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -309,8 +309,12 @@ char	**ft_split_tokens_by_char(char *str)
 			ft_update_state(str[i], &state, &prev_state);
 		i++;
 	}
-	arr[cmd] = ft_substr(str, 0, i);
-	printf("written arr[%d]: %s\n", cmd - 1, arr[cmd - 1]);
+	if (i > 0)
+	{
+		arr[cmd] = ft_substr(str, 0, i);
+		printf("written arr[%d]: %s\n", cmd - 1, arr[cmd - 1]);
+	}
+	printf("len: %d cmd: %d\n", len, cmd);
 	arr[cmd + 1] = NULL;
 	return (arr);
 }
