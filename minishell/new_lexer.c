@@ -6,7 +6,7 @@
 /*   By: tfregni <tfregni@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 22:30:05 by tfregni           #+#    #+#             */
-/*   Updated: 2023/04/25 18:44:37 by tfregni          ###   ########.fr       */
+/*   Updated: 2023/04/25 21:32:15 by tfregni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -356,6 +356,43 @@ char	*trim_quotes(char *data)
 	return (trimmed);
 }
 
+int	ft_count_words_keep(char *s)
+{
+	int		i;
+	int		count;
+	char	c;
+
+	i = 0;
+	count = 0;
+	while (s[i])
+	{
+		if (ft_is_space(s[i]))
+			return (printf("Found a space!\n"));
+		if (ft_strchr(QUOTES, s[i]) && (i == 0 || !ft_strchr(QUOTES, s[i - 1])))
+		{
+			count++;
+			c = s[i++];
+			printf("enter quotes at %c count: %d\n", c, count);
+			while (s[i] && s[i] != c)
+				i++;
+			printf("exit quotes at %s\n", &s[i]);
+		}
+		if (ft_strchr(SPLIT_CHAR, s[i]))
+		{
+			count++;
+			c = s[i + 1];
+			if (s[i] == c && c != '|')
+			{
+				printf("double token\n");
+				i++;
+			}
+			printf("split char at: %s count: %d\n", &s[i], count);
+		}
+		i++;
+	}
+	return (count);
+}
+
 #include <string.h>
 int	main(void)
 {
@@ -377,7 +414,8 @@ int	main(void)
 		// }
 		// printf("count luca: %d count tim: %d\n", count_tokens(input), ft_count_tokens_by_char(input));
 		// ft_print_strarr(ft_split_tokens_by_char(input));
-		printf("trimmed: %s\n", trim_quotes(ft_strdup(input)));
+		// printf("trimmed: %s\n", trim_quotes(ft_strdup(input)));
+		printf("count: %d\n", ft_count_words_keep(input));
 		free(input);
 	}
 }
