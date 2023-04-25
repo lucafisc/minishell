@@ -6,7 +6,7 @@
 /*   By: lde-ross <lde-ross@student.42berlin.de     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/28 16:31:54 by tfregni           #+#    #+#             */
-/*   Updated: 2023/04/24 13:54:15 by lde-ross         ###   ########.fr       */
+/*   Updated: 2023/04/25 21:36:35 by lde-ross         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,6 +104,14 @@ void	free_lex_list(t_lexer **lex)
 	}
 }
 
+void	print_cmd_node(t_command **cmd)
+{
+	t_command	*c;
+
+	c = *cmd;
+	ft_print_strarr(c->cmd);
+}
+
 t_command	*parser(t_lexer *lex)
 {
 	t_command	*cmd;
@@ -111,7 +119,9 @@ t_command	*parser(t_lexer *lex)
 
 	n_cmds = par_count_cmds(lex);
 	cmd = par_list_from_lex(lex, n_cmds);
-	for_each_par_node(&cmd, par_trim_expand);
+	for_each_par_node(&cmd, print_cmd_node);
+	exit(1);
+	//for_each_par_node(&cmd, par_trim_expand);
 	free_lex_list(&lex);
 	if (g_shell->pipe)
 		setup_pipe(cmd, n_cmds);
