@@ -6,7 +6,7 @@
 /*   By: lde-ross <lde-ross@student.42berlin.de     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 16:02:25 by tfregni           #+#    #+#             */
-/*   Updated: 2023/04/24 13:50:32 by lde-ross         ###   ########.fr       */
+/*   Updated: 2023/04/25 18:01:31 by lde-ross         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -154,5 +154,6 @@ int			throw_err(char *str, char *arg);
 
 /* TEMP */
 t_command	*simple_parser(t_lexer *lex);
+int	skip_quotes(char *str, char c, int i);
 
 #endif

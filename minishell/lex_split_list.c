@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lex_split_list.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tfregni <tfregni@student.42berlin.de>      +#+  +:+       +#+        */
+/*   By: lde-ross <lde-ross@student.42berlin.de     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/03 15:53:30 by lde-ross          #+#    #+#             */
-/*   Updated: 2023/04/23 11:51:39 by tfregni          ###   ########.fr       */
+/*   Updated: 2023/04/25 17:08:47 by lde-ross         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,11 +15,17 @@
 char	*str_chr_escaped(char *s, int c)
 {
 	int	i;
+	char	quote;
 
 	i = 0;
+	quote = '0';
 	while (s[i])
 	{
-		if (s[i] == (char)c && !ft_is_escaped(i, s))
+		if ((s[i] == '\'' || s[i] == '\"') && quote == '0')
+			quote = s[i];
+		else if (quote == s[i])
+			quote = '0';
+		else if (s[i] == (char)c && !ft_is_escaped(i, s) && quote == '0')
 			return ((char *)&s[i]);
 		i++;
 	}
@@ -33,7 +39,7 @@ char	should_split(char *str)
 	int	i;
 
 	i = 0;
-	if (*str == '\'' || *str == '\"' || !str[1])
+	if (!str[1])
 		return (0);
 	while (SPLIT_CHAR[i])
 	{
@@ -61,30 +67,6 @@ void	fill_new_nodes_lexer(t_lexer **to_insert, t_lexer **new_list, int *i)
 	}
 }
 
-// t_lexer	*replace_node_by_list(t_lexer **list, t_lexer *node, t_lexer **to_insert)
-// {
-// 	t_lexer	*new_list;
-// 	t_lexer	*old;
-// 	int		i;
-
-// 	old = *list;
-// 	i = 0;
-// 	while (old)
-// 	{
-// 		if (old->index == node->index)
-// 			fill_new_nodes_lexer(to_insert, &new_list, &i);
-// 		else
-// 		{
-// 			fill_lex_list(&new_list, old->data, old->info, i);
-// 			i++;
-// 		}
-// 		old = old->next;
-// 	}
-// 	free_lex(list);
-// 	free_lex(to_insert);
-// 	return (new_list);
-// }
-
 t_lexer	*replace_node(t_lexer *cur, t_lexer *new, t_lexer **start)
 {
 	t_lexer	*end;
@@ -105,7 +87,6 @@ t_lexer	*replace_node(t_lexer *cur, t_lexer *new, t_lexer **start)
 	return (*start);
 }
 
-/**/
 void	lex_split_list(t_lexer **list)
 {
 	t_lexer	*cur;
