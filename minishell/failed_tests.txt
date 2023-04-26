@@ -1,6 +1,6 @@
 SOLVED cd
 -----
-cd /etc -> on minishell goes to private/etc
+SOLVED cd /etc -> on minishell goes to private/etc
 ChatGPT says that:
 The behavior you're seeing might be related to the default behavior of the macOS filesystem.
 
@@ -25,7 +25,7 @@ SOLVED cd $PWD/file_tests
 ------
 SOLVED cd $OLDPWD/builtins
 
-TODO Escape spaces in dir name
+TODO Escape spaces in dir name (or it's fine not to)
 
 ------
 SOLVED echo $
@@ -40,29 +40,36 @@ echo "-n -n -n"-n bonjour -> -n -n -n-n bonjour
 ------
 echo "-n '-n'" bonjour -> -n '-n' bonjour
 ------
-echo "'$USER'" -> 'tim'
+SOLVED echo "'$USER'" -> 'tim'
 ------
-echo " '$USER' " ->  'tim'
+SOLVED echo " '$USER' " ->  'tim'
 ------
-echo text"$USER" -> texttim
+SOLVED echo text"$USER" -> texttim
 ------
-echo text"'$USER'" ' $USER ' -> text'tim'  $USER
+SOLVED echo text"'$USER'" ' $USER ' -> text'tim'  $USER
 ------
-echo               text "$USER"            "$USER"text -> text tim timtext
+SOLVED echo               text "$USER"            "$USER"text -> text tim timtext
 ------
-echo ''''''''''$USER'''''''''' -> tim
+SOLVED echo ''''''''''$USER'''''''''' -> tim
 ------
-echo """"""""$USER"""""""" -> tim
+SOLVED echo """"""""$USER"""""""" -> tim
 ------
-echo $USER'$USER'text oui oui     oui  oui $USER oui      $USER '' -> tim$USERtext oui oui oui oui tim oui tim
+SOLVED echo $USER'$USER'text oui oui     oui  oui $USER oui      $USER '' -> tim$USERtext oui oui oui oui tim oui tim
 ------
-echo ' \' ' \' ->  \  \
+SOLVED echo ' \' ' \' ->  \  \
 ------
 echo '\" ' " \"\"" -> \"   ""
 ------
 echo \\\" \\\" \\\" \\\"\\\"\\\" \\\'\\\'\\\' -> \" \" \" \"\"\" \'\'\'
 ------
-echo "$USER""$USER""$USER" -> timtimtim
+echo '$'
 ------
-echo text"$USER"test -> texttimtest
+ex
 ------
+SOLVED echo "$USER""$USER""$USER" -> timtimtim
+------
+SOLVED echo text"$USER"test -> texttimtest
+------
+SOLVED echo '$USER' "$USER" "text \' text" -> $USER tfregni text \' text
+------
+export | grep "SHLVL" -> declare -x SHLVL="3"
