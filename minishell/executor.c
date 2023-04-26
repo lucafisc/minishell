@@ -6,7 +6,7 @@
 /*   By: lde-ross <lde-ross@student.42berlin.de     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/04 12:58:08 by tfregni           #+#    #+#             */
-/*   Updated: 2023/04/24 13:54:10 by lde-ross         ###   ########.fr       */
+/*   Updated: 2023/04/26 15:16:38 by lde-ross         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ int	find_builtin(t_shell *s, char *cmd)
 	len = ft_strlen(cmd);
 	while (s->builtins[i].name)
 	{
-		if (!ft_strncmp(s->builtins[i].name, cmd, len))
+		if (!ft_strncmp(s->builtins[i].name, cmd, len) && len == (int)ft_strlen(s->builtins[i].name))
 			return (i);
 		i++;
 	}
