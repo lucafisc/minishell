@@ -6,7 +6,7 @@
 /*   By: tfregni <tfregni@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/12 14:59:28 by lde-ross          #+#    #+#             */
-/*   Updated: 2023/04/26 13:30:16 by tfregni          ###   ########.fr       */
+/*   Updated: 2023/04/26 13:45:51 by tfregni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,9 @@ char	*lex_expander(char *cmds)
 	prev_state = state;
 	while (cur[i])
 	{
+		// printf("before %c -> state: %d\n", cur[i], state);
 		ft_update_state(cur[i], &state, &prev_state);
+		// printf("after  %c -> state: %d\n", cur[i], state);
 		if ((cur[i] == '~' && state != IN_S_QUOTE) || \
 		(cur[i] == '$' && !(state == IN_S_QUOTE && prev_state == IN_NORMAL)))
 		// if ((cur[i] == '~' || cur[i] == '$') && state != IN_S_QUOTE)

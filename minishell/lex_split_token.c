@@ -6,7 +6,7 @@
 /*   By: tfregni <tfregni@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/01 12:54:23 by tfregni           #+#    #+#             */
-/*   Updated: 2023/04/26 02:33:23 by tfregni          ###   ########.fr       */
+/*   Updated: 2023/04/26 13:45:30 by tfregni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,10 +123,11 @@ int	count_tokens(char *str)
 	return (count);
 }
 
-#define QUOTES "\'\""
 void	ft_update_state(char c, int *state, int *prev_state)
 {
-    // open quotes
+	if (!ft_strchr(QUOTES, c))
+		return ;
+	// open quotes
 	if (*state == IN_NORMAL || \
 	(*state == IN_S_QUOTE && c == D_QUOTE) || \
 	(*state == IN_D_QUOTE && c == S_QUOTE))
