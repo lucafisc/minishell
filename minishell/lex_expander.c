@@ -3,14 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lex_expander.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tfregni <tfregni@student.42berlin.de>      +#+  +:+       +#+        */
+/*   By: lde-ross <lde-ross@student.42berlin.de     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/12 14:59:28 by lde-ross          #+#    #+#             */
-<<<<<<< HEAD
-/*   Updated: 2023/04/26 13:45:51 by tfregni          ###   ########.fr       */
-=======
-/*   Updated: 2023/04/23 17:07:25 by tfregni          ###   ########.fr       */
->>>>>>> tim
+/*   Updated: 2023/04/26 16:25:40 by lde-ross         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,15 +44,10 @@ char	*expand_var(char *cur, char *cmds, int i)
 	{
 		trimmed = ft_strtrunc(&cur[i + 1], TRAIL_CHAR);
 		len_trim = ft_strlen(trimmed);
-<<<<<<< HEAD
-		new_cmd = ft_strins(cmds, retrieve_param(trimmed), len_trim + 1, i);
-		// printf("trimmed: %s cur: %s cmds: %s new_cmd: %s\n", trimmed, cur, cmds, new_cmd);
-=======
 		if (len_trim == 0)
 			new_cmd = ft_strdup("$");
 		else
 			new_cmd = ft_strins(cmds, retrieve_param(trimmed), len_trim + 1, i);
->>>>>>> tim
 		free(trimmed);
 	}
 	free(cmds);

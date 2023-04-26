@@ -6,7 +6,7 @@
 /*   By: lde-ross <lde-ross@student.42berlin.de     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/30 17:35:35 by lde-ross          #+#    #+#             */
-/*   Updated: 2023/04/26 16:24:09 by lde-ross         ###   ########.fr       */
+/*   Updated: 2023/04/26 16:28:18 by lde-ross         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,6 +82,7 @@ char		*ft_strins(char *s1, char *s2, int len, int idx);
 char		*ft_strtrunc(char *s1, char *set);
 char		**ft_split_keep(char *s, char c);
 int			ft_is_escaped(int i, char *s);
+char		*get_next_line(int fd);
 int			ft_skip_char(char *str, char c, int i);
 
 #endif
