@@ -1,45 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   lex_utils.c                                        :+:      :+:    :+:   */
+/*   ft_skip_char.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lde-ross <lde-ross@student.42berlin.de     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/04/12 15:48:10 by lde-ross          #+#    #+#             */
-/*   Updated: 2023/04/25 21:35:13 by lde-ross         ###   ########.fr       */
+/*   Created: 2023/04/25 21:19:00 by lde-ross          #+#    #+#             */
+/*   Updated: 2023/04/25 21:19:31 by lde-ross         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "libft.h"
 
-void	for_each_lex_node(t_lexer **list, void (*f)(t_lexer **cmd))
+int	ft_skip_char(char *str, char c, int i)
 {
-	t_lexer	*cur;
-	t_lexer	*temp;
-
-	cur = *list;
-	while (cur)
-	{
-		temp = cur->next;
-		f(&cur);
-		cur = temp;
-	}
-}
-
-void	lex_print_list(t_lexer *list)
-{
-	while (list)
-	{
-		printf("node: %s\n", list->data);
-		list = list->next;
-	}
-}
-
-void	free_lex(t_lexer **list)
-{
-	t_lexer	*c;
-
-	c = *list;
-	free(c->data);
-	free(c);
+	i++;
+	while (str[i] && str[i] != c)
+		i++;
+	return (i);
 }
