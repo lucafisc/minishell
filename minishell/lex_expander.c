@@ -6,7 +6,7 @@
 /*   By: tfregni <tfregni@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/12 14:59:28 by lde-ross          #+#    #+#             */
-/*   Updated: 2023/04/25 17:29:17 by tfregni          ###   ########.fr       */
+/*   Updated: 2023/04/26 02:31:44 by tfregni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,8 +46,10 @@ char	*expand_var(char *cur, char *cmds, int i)
 		len_trim = ft_strlen(trimmed);
 		new_cmd = ft_strins(cmds, retrieve_param(trimmed), len_trim + 1, i);
 		free(trimmed);
+		// printf("trimmed: %s cur: %s cmds: %s new_cmd: %s\n", trimmed, cur, cmds, new_cmd);
 	}
 	free(cmds);
+	// printf("segfault\n");
 	return (new_cmd);
 }
 

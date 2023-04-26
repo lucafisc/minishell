@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lex_split_list.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lde-ross <lde-ross@student.42berlin.de     +#+  +:+       +#+        */
+/*   By: tfregni <tfregni@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/03 15:53:30 by lde-ross          #+#    #+#             */
-/*   Updated: 2023/04/25 18:57:57 by lde-ross         ###   ########.fr       */
+/*   Updated: 2023/04/25 22:52:07 by tfregni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 char	*str_chr_escaped(char *s, int c)
 {
-	int	i;
+	int		i;
 	char	quote;
 
 	i = 0;
@@ -45,7 +45,8 @@ char	should_split(char *str)
 	{
 		if (str_chr_escaped(str, SPLIT_CHAR[i]))
 		{
-			if (str[0] == SPLIT_CHAR[i] && str[1] == SPLIT_CHAR[i] && !str[2] && SPLIT_CHAR[i] != '|')
+			if (str[0] == SPLIT_CHAR[i] && str[1] == SPLIT_CHAR[i] \
+			&& !str[2] && SPLIT_CHAR[i] != '|')
 				return (0);
 			return (SPLIT_CHAR[i]);
 		}

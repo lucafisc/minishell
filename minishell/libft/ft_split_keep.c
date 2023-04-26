@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   ft_split_keep.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lde-ross <lde-ross@student.42berlin.de     +#+  +:+       +#+        */
+/*   By: tfregni <tfregni@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/25 20:57:02 by lde-ross          #+#    #+#             */
-/*   Updated: 2023/04/25 21:19:58 by lde-ross         ###   ########.fr       */
+/*   Updated: 2023/04/26 02:41:48 by tfregni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-int count_words_keep(char *s, char c)
+int	count_words_keep(char *s, char c)
 {
 	int		i;
 	int		count;
@@ -36,9 +36,9 @@ int count_words_keep(char *s, char c)
 	return (count);
 }
 
-size_t str_siz_keep(char *s, char c)
+size_t	str_siz_keep(char *s, char c)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (s[i] && (s[i] != c))
@@ -50,20 +50,20 @@ size_t str_siz_keep(char *s, char c)
 	return (i);
 }
 
-char **ft_split_keep(char *s, char c)
+char	**ft_split_keep(char *s, char c)
 {
-	int words;
-	char **arr;
-	int i;
-	int	j;
-	int	len;
+	int		words;
+	char	**arr;
+	int		i;
+	int		j;
+	int		len;
 
-	printf("splitting by %c\n", c);
+	//printf("splitting by %c\n", c);
 	if (!s)
 		return (NULL);
 	words = count_words_keep(s, c);
-	printf("string:%s\n", s);
-	printf("words: %d\n", words);
+	// printf("string:%s\n", s);
+	// printf("words: %d\n", words);
 	//exit(1);
 	arr = malloc(sizeof(char *) * (words + 1));
 	if (!arr)

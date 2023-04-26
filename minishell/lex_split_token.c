@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lex_split_token.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lde-ross <lde-ross@student.42berlin.de     +#+  +:+       +#+        */
+/*   By: tfregni <tfregni@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/01 12:54:23 by tfregni           #+#    #+#             */
-/*   Updated: 2023/04/25 21:19:50 by lde-ross         ###   ########.fr       */
+/*   Updated: 2023/04/26 02:33:23 by tfregni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,7 +115,7 @@ int	count_tokens(char *str)
 		{
 			count++;
 			//printf("count is now %d\n", count);
-		}	
+		}
 		if (str[i] == '\"' || str[i] == '\'')
 			i = ft_skip_char(str, str[i], i);
 		i++;
@@ -192,21 +192,17 @@ char	**lex_split_token(char *str)
 	int		n_cmds;
 	char	**arr;
 	int		i;
-	int		tim_counter;
 	int		start;
 	int		len = 0;
 	int		prev;
 	int		j;
 
 	n_cmds = count_tokens(str);
-	tim_counter = ft_count_tokens_by_char(str);
-	printf("my counter: %d tims counter: %d\n", n_cmds, tim_counter);
-	
+
 	arr = malloc(sizeof(*arr) * (n_cmds + 1));
 	if (!arr)
 		return (NULL);
 	arr[n_cmds] = NULL;
-	
 	i = 0;
 	j = 0;
 	while (str[i])
@@ -238,10 +234,10 @@ char	**lex_split_token(char *str)
 		else
 			i++;
 	}
-	printf("\n\n\n_________\n");
-	// i = -1;
-	// while (arr[++i])
-	// 	arr[i] = lex_expander(arr[i]);
+	//printf("\n\n\n_________\n");
+	i = -1;
+	while (arr[++i])
+		arr[i] = lex_expander(arr[i]);
 	//ft_print_strarr(arr);
 	return(arr);
 }

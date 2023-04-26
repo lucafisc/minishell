@@ -6,20 +6,26 @@
 /*   By: tfregni <tfregni@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 18:56:58 by tfregni           #+#    #+#             */
-/*   Updated: 2023/04/23 16:02:47 by tfregni          ###   ########.fr       */
+/*   Updated: 2023/04/26 02:26:30 by tfregni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+/* passing the trimmed version of the node */
 t_lexer	*lex_list_new_node(char *data, int info)
 {
 	t_lexer	*new;
+	char	*trimmed_data;
 
 	new = malloc(sizeof(*new));
 	if (!new)
 		return (NULL);
-	new->data = ft_strdup(data);
+	trimmed_data = trim_quotes(data);
+	new->data = ft_strdup(trimmed_data);
+	// printf("lex new node data: %s trimmed: %s\n", data, new->data);
+	free(trimmed_data);
+	// new->data = ft_strdup(data);
 	new->info = info;
 	new->pipe = 0;
 	new->prev = NULL;

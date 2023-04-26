@@ -6,7 +6,7 @@
 /*   By: tfregni <tfregni@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/12 16:41:40 by lde-ross          #+#    #+#             */
-/*   Updated: 2023/04/25 22:53:25 by tfregni          ###   ########.fr       */
+/*   Updated: 2023/04/26 02:17:34 by tfregni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -144,6 +144,6 @@ char	*trim_quotes(char *data)
 		else
 			trimmed[j++] = data[i++];
 	}
-	free(data);
+	// free(data);
 	return (trimmed);
 }
