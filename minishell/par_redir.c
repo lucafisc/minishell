@@ -6,7 +6,7 @@
 /*   By: tfregni <tfregni@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/12 16:55:28 by lde-ross          #+#    #+#             */
-/*   Updated: 2023/04/20 00:15:20 by tfregni          ###   ########.fr       */
+/*   Updated: 2023/04/26 02:29:37 by tfregni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,6 +123,7 @@ void	par_fill_cmd(int *i, t_lexer *start, t_command **cmd_node)
 	t_command	*new;
 
 	new = *cmd_node;
+	// printf("Filling node\n");
 	str_len = ft_strlen(start->data);
 	new->cmd[*i] = malloc(sizeof(char) * (str_len + 1));
 	if (!new->cmd[*i])

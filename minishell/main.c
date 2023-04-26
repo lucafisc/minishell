@@ -6,7 +6,7 @@
 /*   By: tfregni <tfregni@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 15:41:38 by tfregni           #+#    #+#             */
-/*   Updated: 2023/04/24 15:48:31 by tfregni          ###   ########.fr       */
+/*   Updated: 2023/04/26 15:07:22 by tfregni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,9 @@ void	free_shell(t_shell *shell)
 	free(shell->prompt);
 	ft_free_str_arr(shell->env);
 	ft_free_str_arr(shell->params);
-	printf("freeeeeeee\n");
+	//rl_clear_history();
+	/* free(shell->lexer)*/
+	/* free(shell->parser)*/
 	free_builtins(shell->builtins);
 	free(shell);
 }
@@ -136,6 +138,8 @@ t_shell	*init(char ***env)
 	init_builtins(shell);
 	shell->params = NULL;
 	shell->status = 0;
+	shell->forked = false;
+	//ft_print_strarr(shell->path);
 	return (shell);
 }
 
@@ -150,7 +154,6 @@ void	get_prompt(t_shell *s)
 		input = readline(s->prompt);
 		if (input == NULL)
 		{
-			printf("EOF encountered. Exiting...\n");
 			free_shell(s);
 			exit(1);
 		}

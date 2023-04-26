@@ -1,27 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_print_strarr.c                                  :+:      :+:    :+:   */
+/*   ft_skip_char.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lde-ross <lde-ross@student.42berlin.de     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/02/01 13:38:49 by tfregni           #+#    #+#             */
-/*   Updated: 2023/04/24 17:07:41 by lde-ross         ###   ########.fr       */
+/*   Created: 2023/04/25 21:19:00 by lde-ross          #+#    #+#             */
+/*   Updated: 2023/04/25 21:19:31 by lde-ross         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	ft_print_strarr(char **arr)
+int	ft_skip_char(char *str, char c, int i)
 {
-	int	i;
-
-	if (!arr)
-		return ;
-	i = 0;
-	while (arr[i])
-	{
-		printf("%s$\n", arr[i]);
+	i++;
+	while (str[i] && str[i] != c)
 		i++;
-	}
+	return (i);
 }

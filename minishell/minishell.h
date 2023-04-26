@@ -6,7 +6,7 @@
 /*   By: tfregni <tfregni@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 16:02:25 by tfregni           #+#    #+#             */
-/*   Updated: 2023/04/24 15:36:09 by tfregni          ###   ########.fr       */
+/*   Updated: 2023/04/26 15:02:45 by tfregni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,11 +28,12 @@
 # include "lexer.h"
 # include "parser.h"
 # include "colors.h"
-# define TRAIL_CHAR " \n\t><|\"$/"
-# define SPLIT_CHAR "|<>"
-# define SP_PARAM "@*#?-!^+'\'"
+# define TRAIL_CHAR " \n\t><|\"$/\'="
+# define SPLIT_CHAR "><|"
+# define SP_PARAM "@*#?-!"
 # define N_BUILTINS 7
-# define HEREDOC_NAME "./_heredoc_temp"
+# define HEREDOC_NAME "_heredoc_temp"
+# define QUOTES "\'\""
 
 typedef enum s_bool
 {
@@ -69,8 +70,6 @@ typedef enum e_redir
 
 typedef struct s_shell	t_shell;
 
-extern t_shell	*g_shell;
-
 typedef struct s_builtins
 {
 	char	*name;
@@ -90,7 +89,10 @@ struct s_shell
 	t_command	*cmd;
 	t_builtins	*builtins;
 	int			status;
+	t_bool		forked;
 };
+
+extern t_shell	*g_shell;
 
 /* LEXER */
 t_lexer		*lexer(char *fmt);
@@ -116,6 +118,7 @@ void		par_fill_cmd(int *i, t_lexer *start, t_command **cmd_node);
 t_redir		is_redir(char *str);
 void		new_redir(int redir, t_lexer **lexer_node, t_command **cmd_node);
 void		setup_pipe(t_command *cmd, int n_cmds);
+char		*trim_quotes(char *data);
 
 /* ETC? */
 void		init_signal(void);
@@ -157,5 +160,6 @@ int			throw_err(char *str, char *arg);
 
 /* TEMP */
 t_command	*simple_parser(t_lexer *lex);
+void		ft_update_state(char c, int *state, int *prev_state);
 
 #endif
