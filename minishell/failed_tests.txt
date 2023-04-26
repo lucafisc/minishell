@@ -79,6 +79,6 @@ SOLVED echo text"$USER"test -> texttimtest
 ------
 SOLVED echo '$USER' "$USER" "text \' text" -> $USER tfregni text \' text
 ------
-export | grep "SHLVL" -> declare -x SHLVL="3"
-
+SOLVED (undefined) export | grep "SHLVL" -> declare -x SHLVL="3"
+------
 export test=" foo   bar " 

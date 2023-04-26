@@ -6,7 +6,7 @@
 /*   By: tfregni <tfregni@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 16:02:25 by tfregni           #+#    #+#             */
-/*   Updated: 2023/04/26 20:10:43 by tfregni          ###   ########.fr       */
+/*   Updated: 2023/04/26 20:54:22 by tfregni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -166,5 +166,6 @@ void		add_status(int status);
 t_command	*simple_parser(t_lexer *lex);
 void		ft_update_state(char c, int *state, int *prev_state);
 t_bool		has_unclosed_quotes(char *str);
+void		print_cmd_node(t_command **cmd);
 
 #endif

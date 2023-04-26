@@ -6,7 +6,7 @@
 /*   By: tfregni <tfregni@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 15:41:38 by tfregni           #+#    #+#             */
-/*   Updated: 2023/04/26 20:12:15 by tfregni          ###   ########.fr       */
+/*   Updated: 2023/04/26 21:01:47 by tfregni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -145,17 +145,17 @@ void	get_prompt(t_shell *s)
 		if (*input)
 		{
 			add_history(input);
-			if (!is_param(input))
+			// if (!is_param(input))
+			// {
+			s->lexer = lexer(input);
+			if (s->lexer)
 			{
-				s->lexer = lexer(input);
-				if (s->lexer)
-				{
-					s->cmd = parser(s->lexer);
-					execute(s, s->cmd);
-				}
+				s->cmd = parser(s->lexer);
+				execute(s, s->cmd);
 			}
-			else
-				s->params = env_append(s->params, input);
+			// }
+			// else
+			// 	s->params = env_append(s->params, input);
 			free(s->prompt);
 			free(input);
 		}

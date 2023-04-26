@@ -6,7 +6,7 @@
 /*   By: tfregni <tfregni@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/04 12:58:08 by tfregni           #+#    #+#             */
-/*   Updated: 2023/04/26 20:18:17 by tfregni          ###   ########.fr       */
+/*   Updated: 2023/04/26 21:48:05 by tfregni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,8 @@ int	find_builtin(t_shell *s, char *cmd)
 	len = ft_strlen(cmd);
 	while (s->builtins[i].name)
 	{
-		if (!ft_strncmp(s->builtins[i].name, cmd, len) && len == (int)ft_strlen(s->builtins[i].name))
+		if (!ft_strncmp(s->builtins[i].name, cmd, len) && \
+		len == (int)ft_strlen(s->builtins[i].name))
 			return (i);
 		i++;
 	}
@@ -116,15 +117,9 @@ void	exec_builtin(t_shell *s, t_command *cmd, int builtin_idx)
 void	close_fd(t_command *cmd)
 {
 	if (cmd->infile != 0)
-	{
-		// printf("Closing file descriptor %d\n", cmd->infile);
 		close(cmd->infile);
-	}
 	if (cmd->outfile != 1)
-	{
-		// printf("Closing file descriptor %d\n", cmd->outfile);
 		close(cmd->outfile);
-	}
 }
 
 void	execute(t_shell *s, t_command *parsed_cmd)
@@ -136,7 +131,11 @@ void	execute(t_shell *s, t_command *parsed_cmd)
 	while (parsed_cmd)
 	{
 		builtin_idx = find_builtin(s, parsed_cmd->cmd[0]);
-		if (builtin_idx >= 0)
+		// printf("cmd node:\n");
+		// print_cmd_node(&parsed_cmd);
+		if (is_param(parsed_cmd->cmd[0]))
+			s->params = env_append(s->params, parsed_cmd->cmd[0]);
+		else if (builtin_idx >= 0)
 			exec_builtin(s, parsed_cmd, builtin_idx);
 		else
 		{
