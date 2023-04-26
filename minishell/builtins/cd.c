@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tfregni <tfregni@student.42berlin.de>      +#+  +:+       +#+        */
+/*   By: lde-ross <lde-ross@student.42berlin.de     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/30 07:33:56 by tfregni           #+#    #+#             */
-/*   Updated: 2023/04/23 16:10:12 by tfregni          ###   ########.fr       */
+/*   Updated: 2023/04/26 19:46:03 by lde-ross         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,15 +82,9 @@ void	ft_cd(t_shell *s, t_command *c)
 		return ;
 	set_path(c, &path);
 	oldpwd = getcwd(NULL, 0);
-	if (!oldpwd)
+	if (!oldpwd || chdir(path) < 0)
 	{
-		throw_err("cd", path);
-		free_cd(path, oldpwd);
-		return ;
-	}
-	if (chdir(path) < 0)
-	{
-		throw_err("chdir", path);
+		ft_error("minishell: cd", path, strerror(errno), 1);
 		free_cd(path, oldpwd);
 		return ;
 	}

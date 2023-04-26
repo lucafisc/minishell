@@ -6,7 +6,7 @@
 /*   By: tfregni <tfregni@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 15:41:38 by tfregni           #+#    #+#             */
-/*   Updated: 2023/04/26 15:07:22 by tfregni          ###   ########.fr       */
+/*   Updated: 2023/04/26 20:12:15 by tfregni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,24 +36,6 @@ char	*get_username(t_shell *s)
 	if (!usr)
 		ft_strlcpy(usr, "guest", 6);
 	return (usr);
-}
-
-/* more elaborate version of throw error */
-int	throw_err(char *str, char *arg)
-{
-	if (str && str[0])
-	{
-		ft_putstr_fd(str, 2);
-		ft_putstr_fd(": ", 2);
-	}
-	write(2, strerror(errno), ft_strlen(strerror(errno)));
-	if (arg && arg[0])
-	{
-		ft_putstr_fd(": ", 2);
-		ft_putstr_fd(arg, 2);
-	}
-	write(2, "\n", 1);
-	return (1);
 }
 
 char	**matrix_dup(char **matrix, int extra)
@@ -87,6 +69,11 @@ char	*create_cwd(t_shell *s)
 	if (!home)
 		return (ft_strdup(""));
 	current = getcwd(NULL, 0);
+	if (!current)
+	{
+		chdir("/");
+		current = getcwd(NULL, 0);
+	}
 	if (ft_strnstr(current, home, ft_strlen(home)))
 	{
 		tmp = current;
@@ -122,25 +109,23 @@ char	*create_prompt(t_shell *s)
 
 /* Since getenv will not work anyway maybe we don't
 need the real env to point to our duplicated one */
-t_shell	*init(char ***env)
+void	init(char ***env)
 {
-	t_shell	*shell;
-
-	shell = malloc(sizeof(t_shell));
-	if (!shell)
-		return (NULL);
-	shell->env = matrix_dup(*env, 0);
-	*env = shell->env;
-	shell->path = ft_split(getenv("PATH"), ':');
-	shell->user = get_username(shell);
-	shell->exit = false;
-	shell->pipe = false;
-	init_builtins(shell);
-	shell->params = NULL;
-	shell->status = 0;
-	shell->forked = false;
+	g_shell = malloc(sizeof(t_shell));
+	if (!g_shell)
+		return ;
+	g_shell->env = matrix_dup(*env, 0);
+	*env = g_shell->env;
+	g_shell->path = ft_split(getenv("PATH"), ':');
+	g_shell->user = get_username(g_shell);
+	g_shell->exit = false;
+	g_shell->pipe = false;
+	init_builtins(g_shell);
+	g_shell->params = NULL;
+	g_shell->status = 0;
+	g_shell->forked = false;
+	add_status(0);
 	//ft_print_strarr(shell->path);
-	return (shell);
 }
 
 void	get_prompt(t_shell *s)
@@ -163,8 +148,11 @@ void	get_prompt(t_shell *s)
 			if (!is_param(input))
 			{
 				s->lexer = lexer(input);
-				s->cmd = parser(s->lexer);
-				execute(s, s->cmd);
+				if (s->lexer)
+				{
+					s->cmd = parser(s->lexer);
+					execute(s, s->cmd);
+				}
 			}
 			else
 				s->params = env_append(s->params, input);
@@ -176,13 +164,11 @@ void	get_prompt(t_shell *s)
 
 int	main(int ac, char *av[], char *env[])
 {
-	t_shell	*shell;
 	int		fd;
 
-	shell = init(&env);
-	if (!shell)
+	init(&env);
+	if (!g_shell)
 		return (throw_err("init", NULL));
-	g_shell = shell;
 	init_signal();
 	if (ac > 1)
 	{
@@ -192,8 +178,8 @@ int	main(int ac, char *av[], char *env[])
 			throw_err("minishell", av[1]);
 			exit(127);
 		}
-		exec_script(shell, fd);
+		exec_script(g_shell, fd);
 	}
-	get_prompt(shell);
-	free_shell(shell);
+	get_prompt(g_shell);
+	free_shell(g_shell);
 }

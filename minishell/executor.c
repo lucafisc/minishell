@@ -6,7 +6,7 @@
 /*   By: tfregni <tfregni@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/04 12:58:08 by tfregni           #+#    #+#             */
-/*   Updated: 2023/04/26 15:16:42 by tfregni          ###   ########.fr       */
+/*   Updated: 2023/04/26 20:18:17 by tfregni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ int	find_builtin(t_shell *s, char *cmd)
 	len = ft_strlen(cmd);
 	while (s->builtins[i].name)
 	{
-		if (!ft_strncmp(s->builtins[i].name, cmd, len))
+		if (!ft_strncmp(s->builtins[i].name, cmd, len) && len == (int)ft_strlen(s->builtins[i].name))
 			return (i);
 		i++;
 	}
@@ -94,7 +94,7 @@ void	create_redir(t_command *cmd)
 	{
 		if (dup2(cmd->infile, 0) == -1)
 		{
-			throw_err("redirection", NULL);
+			ft_error("minishell", strerror(errno), "redirection", errno);
 			exit(1);
 		}
 	}
@@ -102,7 +102,7 @@ void	create_redir(t_command *cmd)
 	{
 		if (dup2(cmd->outfile, 1) == -1)
 		{
-			throw_err("redirection", NULL);
+			ft_error("minishell", strerror(errno), "redirection", errno);
 			exit(1);
 		}
 	}
@@ -127,20 +127,6 @@ void	close_fd(t_command *cmd)
 	}
 }
 
-void	add_status(int status)
-{
-	char	*stat;
-	char	*value;
-
-	if (status >= 255)
-		status = 1;
-	stat = ft_itoa(status);
-	value = ft_strjoin("?=", stat);
-	free(stat);
-	g_shell->params = env_append(g_shell->params, value);
-	free(value);
-}
-
 void	execute(t_shell *s, t_command *parsed_cmd)
 {
 	pid_t		pid;
@@ -162,9 +148,7 @@ void	execute(t_shell *s, t_command *parsed_cmd)
 				create_redir(parsed_cmd);
 				parsed_cmd->cmd[0] = find_cmd(s, parsed_cmd->cmd[0]);
 				execve(parsed_cmd->cmd[0], parsed_cmd->cmd, s->env);
-				ft_putstr_fd("minishell: ", 2);
-				ft_putstr_fd(parsed_cmd->cmd[0], 2);
-				ft_putstr_fd(": command not found\n", 2);
+				ft_error("minishell", parsed_cmd->cmd[0], "command not found", 127);
 				exit(1);
 			}
 		}

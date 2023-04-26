@@ -1,3 +1,6 @@
+
+ 
+
 SOLVED cd
 -----
 SOLVED cd /etc -> on minishell goes to private/etc
@@ -68,7 +71,7 @@ SOLVED echo "'$   bla'" -> '$   bla'
 ------
 SOLVED echo "$   bla" -> $   bla
 ------
-ex
+SOLVED ex
 ------
 SOLVED echo "$USER""$USER""$USER" -> timtimtim
 ------
@@ -77,3 +80,5 @@ SOLVED echo text"$USER"test -> texttimtest
 SOLVED echo '$USER' "$USER" "text \' text" -> $USER tfregni text \' text
 ------
 export | grep "SHLVL" -> declare -x SHLVL="3"
+
+export test=" foo   bar " 

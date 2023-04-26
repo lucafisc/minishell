@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: tfregni <tfregni@student.42berlin.de>      +#+  +:+       +#+         #
+#    By: lde-ross <lde-ross@student.42berlin.de     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/04/17 13:03:17 by tfregni           #+#    #+#              #
-#    Updated: 2023/04/24 13:49:33 by tfregni          ###   ########.fr        #
+#    Updated: 2023/04/26 18:38:14 by lde-ross         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,7 @@ SRC = main.c free.c signal.c search_bin.c \
 		lexer.c lex_split_token.c lex_state.c lex_expander.c lex_list.c lex_utils.c lex_split_list.c \
 		parser.c par_utils.c par_trim_expand.c par_list.c par_redir.c\
 		 executor.c builtins.c $(addprefix builtins/,cd.c echo.c export.c pwd_env.c unset.c exit.c builtins_util.c)\
-		 exec_script.c
+		 exec_script.c has_unclosed_quotes.c error_handling.c
 OBJDIR = obj
 OBJ = $(addprefix $(OBJDIR)/, $(SRC:.c=.o))
 CC = cc
