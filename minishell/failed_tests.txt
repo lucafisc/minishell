@@ -25,7 +25,11 @@ SOLVED cd $PWD/file_tests
 ------
 SOLVED cd $OLDPWD/builtins
 
+<<<<<<< HEAD
 TODO Escape spaces in dir name (or it's fine not to)
+=======
+TODO Escape spaces in dir name
+>>>>>>> tim
 
 ------
 SOLVED echo $
@@ -40,6 +44,7 @@ echo "-n -n -n"-n bonjour -> -n -n -n-n bonjour
 ------
 echo "-n '-n'" bonjour -> -n '-n' bonjour
 ------
+<<<<<<< HEAD
 SOLVED echo "'$USER'" -> 'tim'
 ------
 SOLVED echo " '$USER' " ->  'tim'
@@ -57,11 +62,31 @@ SOLVED echo """"""""$USER"""""""" -> tim
 SOLVED echo $USER'$USER'text oui oui     oui  oui $USER oui      $USER '' -> tim$USERtext oui oui oui oui tim oui tim
 ------
 SOLVED echo ' \' ' \' ->  \  \
+=======
+echo "'$USER'" -> 'tim'
+------
+echo " '$USER' " ->  'tim'
+------
+echo text"$USER" -> texttim
+------
+echo text"'$USER'" ' $USER ' -> text'tim'  $USER
+------
+echo               text "$USER"            "$USER"text -> text tim timtext
+------
+echo ''''''''''$USER'''''''''' -> tim
+------
+echo """"""""$USER"""""""" -> tim
+------
+echo $USER'$USER'text oui oui     oui  oui $USER oui      $USER '' -> tim$USERtext oui oui oui oui tim oui tim
+------
+echo ' \' ' \' ->  \  \
+>>>>>>> tim
 ------
 echo '\" ' " \"\"" -> \"   ""
 ------
 echo \\\" \\\" \\\" \\\"\\\"\\\" \\\'\\\'\\\' -> \" \" \" \"\"\" \'\'\'
 ------
+<<<<<<< HEAD
 echo '$'
 ------
 SOLVED ex
@@ -73,3 +98,9 @@ SOLVED echo text"$USER"test -> texttimtest
 SOLVED echo '$USER' "$USER" "text \' text" -> $USER tfregni text \' text
 ------
 export | grep "SHLVL" -> declare -x SHLVL="3"
+=======
+echo "$USER""$USER""$USER" -> timtimtim
+------
+echo text"$USER"test -> texttimtest
+------
+>>>>>>> tim

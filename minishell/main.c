@@ -6,7 +6,11 @@
 /*   By: lde-ross <lde-ross@student.42berlin.de     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 15:41:38 by tfregni           #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2023/04/24 14:52:01 by lde-ross         ###   ########.fr       */
+=======
+/*   Updated: 2023/04/24 15:48:31 by tfregni          ###   ########.fr       */
+>>>>>>> tim
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,37 +113,16 @@ char	*create_prompt(t_shell *s)
 	return (prompt);
 }
 
-int	init_params(t_shell *s)
-{
-	s->params = malloc(sizeof(char *));
-	if (s->params)
-	{
-		s->params[0] = NULL;
-		return (1);
-	}
-	return (0);
-}
-
-/* Checks if input is a parameter */
-/* https://pubs.opengroup.org/onlinepubs/009695399/utilities
-/xcu_chap02.html#tag_02_05_02 */
-/* A param should have =, not start with a digit and not have
-any of the special chars macroed in SP_PARAM */
-/* Compare to t_bool is_export_valid(char *var) in export.c */
-t_bool	is_param(char *input)
-{
-	int	i;
-
-	i = -1;
-	if (!ft_strchr(input, '=') || ft_isdigit(*input))
-		return (false);
-	while (input[++i])
-	{
-		if (ft_strchr(SP_PARAM, input[i]) || ft_is_space(input[i]))
-			return (false);
-	}
-	return (true);
-}
+// int	init_params(t_shell *s)
+// {
+// 	s->params = malloc(sizeof(char *));
+// 	if (s->params)
+// 	{
+// 		s->params[0] = NULL;
+// 		return (1);
+// 	}
+// 	return (0);
+// }
 
 /* Since getenv will not work anyway maybe we don't
 need the real env to point to our duplicated one */
@@ -148,7 +131,6 @@ t_shell	*init(char ***env)
 	t_shell	*shell;
 
 	shell = malloc(sizeof(t_shell));
-	//if (!shell || !init_params(shell))
 	if (!shell)
 		return (NULL);
 	shell->env = matrix_dup(*env, 0);
@@ -160,8 +142,11 @@ t_shell	*init(char ***env)
 	init_builtins(shell);
 	shell->params = NULL;
 	shell->status = 0;
+<<<<<<< HEAD
 	shell->forked = false;
 	//ft_print_strarr(shell->path);
+=======
+>>>>>>> tim
 	return (shell);
 }
 
@@ -199,14 +184,23 @@ void	get_prompt(t_shell *s)
 int	main(int ac, char *av[], char *env[])
 {
 	t_shell	*shell;
+	int		fd;
 
-	(void) ac;
-	(void) av;
 	shell = init(&env);
 	if (!shell)
 		return (throw_err("init", NULL));
 	g_shell = shell;
 	init_signal();
+	if (ac > 1)
+	{
+		fd = open(av[1], O_RDONLY);
+		if (fd < 0)
+		{
+			throw_err("minishell", av[1]);
+			exit(127);
+		}
+		exec_script(shell, fd);
+	}
 	get_prompt(shell);
 	free_shell(shell);
 }

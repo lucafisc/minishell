@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tfregni <tfregni@student.42berlin.de>      +#+  +:+       +#+        */
+/*   By: lde-ross <lde-ross@student.42berlin.de     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 16:02:25 by tfregni           #+#    #+#             */
-/*   Updated: 2023/04/26 13:58:52 by tfregni          ###   ########.fr       */
+/*   Updated: 2023/04/26 15:58:55 by lde-ross         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,8 @@ typedef enum e_redir
 
 typedef struct s_shell	t_shell;
 
+extern t_shell	*g_shell;
+
 typedef struct s_builtins
 {
 	char	*name;
@@ -126,6 +128,9 @@ char		*find_cmd(t_shell *s, char *cmd);
 char		**ft_split_keep(char *s, char c);
 void		execute(t_shell *s, t_command *parsed_cmd);
 
+/* EXEC SCRIPT */
+void		exec_script(t_shell *s, int fd);
+
 /* FREE */
 void		free_shell(t_shell *shell);
 void		free_builtins(t_builtins *b);
@@ -150,6 +155,7 @@ int			arg_index(char **env, char *var);
 char		*ft_getenv(char *key);
 void		ft_export_append(char ***env, char *var);
 void		ft_export_replace(char **env, char *var, int index);
+t_bool		is_param(char *input);
 
 /* ERROR HANDLING*/
 int			throw_err(char *str, char *arg);

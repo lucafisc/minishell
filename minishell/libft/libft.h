@@ -3,10 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
+<<<<<<< HEAD
 /*   By: lde-ross <lde-ross@student.42berlin.de     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/30 17:35:35 by lde-ross          #+#    #+#             */
 /*   Updated: 2023/04/25 21:19:25 by lde-ross         ###   ########.fr       */
+=======
+/*   By: tfregni <tfregni@student.42berlin.de>      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/11/30 17:35:35 by lde-ross          #+#    #+#             */
+/*   Updated: 2023/04/23 22:24:39 by tfregni          ###   ########.fr       */
+>>>>>>> tim
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,6 +89,10 @@ char		*ft_strins(char *s1, char *s2, int len, int idx);
 char		*ft_strtrunc(char *s1, char *set);
 char		**ft_split_keep(char *s, char c);
 int			ft_is_escaped(int i, char *s);
+<<<<<<< HEAD
 int			ft_skip_char(char *str, char c, int i);
+=======
+char		*get_next_line(int fd);
+>>>>>>> tim
 
 #endif
