@@ -64,7 +64,7 @@ echo \\\" \\\" \\\" \\\"\\\"\\\" \\\'\\\'\\\' -> \" \" \" \"\"\" \'\'\'
 ------
 echo '$'
 ------
-ex
+SOLVED ex
 ------
 SOLVED echo "$USER""$USER""$USER" -> timtimtim
 ------
