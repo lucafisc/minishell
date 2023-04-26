@@ -6,7 +6,7 @@
 /*   By: tfregni <tfregni@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/12 14:59:28 by lde-ross          #+#    #+#             */
-/*   Updated: 2023/04/26 02:31:44 by tfregni          ###   ########.fr       */
+/*   Updated: 2023/04/26 13:30:16 by tfregni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,8 +45,8 @@ char	*expand_var(char *cur, char *cmds, int i)
 		trimmed = ft_strtrunc(&cur[i + 1], TRAIL_CHAR);
 		len_trim = ft_strlen(trimmed);
 		new_cmd = ft_strins(cmds, retrieve_param(trimmed), len_trim + 1, i);
-		free(trimmed);
 		// printf("trimmed: %s cur: %s cmds: %s new_cmd: %s\n", trimmed, cur, cmds, new_cmd);
+		free(trimmed);
 	}
 	free(cmds);
 	// printf("segfault\n");
@@ -84,6 +84,7 @@ char	*lex_expander(char *cmds)
 
 	if (!cmds)
 		return (cmds);
+	// printf("expander cmd: %s\n", cmds);
 	cur = cmds;
 	i = 0;
 	state = IN_NORMAL;
@@ -91,7 +92,9 @@ char	*lex_expander(char *cmds)
 	while (cur[i])
 	{
 		ft_update_state(cur[i], &state, &prev_state);
-		if ((cur[i] == '~' || cur[i] == '$') && state != IN_S_QUOTE)
+		if ((cur[i] == '~' && state != IN_S_QUOTE) || \
+		(cur[i] == '$' && !(state == IN_S_QUOTE && prev_state == IN_NORMAL)))
+		// if ((cur[i] == '~' || cur[i] == '$') && state != IN_S_QUOTE)
 		{
 			cmds = expand_var(cur, cmds, i);
 			cur = cmds;
