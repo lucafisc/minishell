@@ -6,11 +6,7 @@
 /*   By: lde-ross <lde-ross@student.42berlin.de     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 15:41:38 by tfregni           #+#    #+#             */
-<<<<<<< HEAD
-/*   Updated: 2023/04/24 14:52:01 by lde-ross         ###   ########.fr       */
-=======
-/*   Updated: 2023/04/24 15:48:31 by tfregni          ###   ########.fr       */
->>>>>>> tim
+/*   Updated: 2023/04/26 16:01:10 by lde-ross         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -142,11 +138,8 @@ t_shell	*init(char ***env)
 	init_builtins(shell);
 	shell->params = NULL;
 	shell->status = 0;
-<<<<<<< HEAD
 	shell->forked = false;
 	//ft_print_strarr(shell->path);
-=======
->>>>>>> tim
 	return (shell);
 }
 

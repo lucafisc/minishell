@@ -6,21 +6,12 @@
 /*   By: lde-ross <lde-ross@student.42berlin.de     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/04 12:58:08 by tfregni           #+#    #+#             */
-<<<<<<< HEAD
-/*   Updated: 2023/04/26 15:16:38 by lde-ross         ###   ########.fr       */
-=======
-/*   Updated: 2023/04/24 15:56:13 by tfregni          ###   ########.fr       */
->>>>>>> tim
+/*   Updated: 2023/04/26 16:00:27 by lde-ross         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-<<<<<<< HEAD
-//t_shell	*g_shell;
-
-=======
->>>>>>> tim
 int	ft_lexersize(t_lexer *lst)
 {
 	int	i;
