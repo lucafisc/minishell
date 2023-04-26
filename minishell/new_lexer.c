@@ -6,7 +6,7 @@
 /*   By: tfregni <tfregni@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 22:30:05 by tfregni           #+#    #+#             */
-/*   Updated: 2023/04/26 02:31:01 by tfregni          ###   ########.fr       */
+/*   Updated: 2023/04/26 15:32:48 by tfregni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,13 @@ t_bool	is_next_new_tok(char *str, int i)
 	return (false);
 }
 
-
+int	skip_quotes(char *str, char c, int i)
+{
+	i++;
+	while (str[i] && str[i] != c)
+		i++;
+	return (i);
+}
 
 int	count_tokens(char *str)
 {
@@ -104,7 +110,7 @@ int	count_tokens(char *str)
 			//printf("count is now %d\n", count);
 		}
 		if (str[i] == '\"' || str[i] == '\'')
-			i = ft_skip_char(str, str[i], i);
+			i = skip_quotes(str, str[i], i);
 		i++;
 	}
 	return (count);
@@ -133,7 +139,7 @@ char	**lex_split_token(char *str)
 	{
 		if (is_next_new_tok(str, i))
 		{
-			// printf("new tok: str[%d]:%c\n", i, str[i]);
+			printf("new tok: str[%d]:%c\n", i, str[i]);
 			if (i != 0)
 				i++;
 			start = i;
@@ -143,9 +149,9 @@ char	**lex_split_token(char *str)
 				if (str[i] == '\"' || str[i] == '\'')
 				{
 					prev = i;
-					i = ft_skip_char(str, str[i], i);
+					i = skip_quotes(str, str[i], i);
 					i++;
-					// printf("str[%d] after skipped: %c\n", i, str[i]);
+					printf("str[%d] after skipped: %c\n", i, str[i]);
 					len += i - prev;
 				}
 				else
@@ -155,15 +161,15 @@ char	**lex_split_token(char *str)
 				}
 			}
 			arr[j] = ft_substr(str, start, len);
-			// printf("start: %d len %d\n", start, len);
+			printf("start: %d len %d\n", start, len);
 
 			j++;
 		}
 		else
 			i++;
 	}
-	// printf("\n\n\n_________\n");
-	// ft_print_strarr(arr);
+	printf("\n\n\n_________\n");
+	ft_print_strarr(arr);
 	exit(1);
 }
 
@@ -343,10 +349,8 @@ char	*trim_quotes(char *data)
 			i++;
 			while (data[i] && data[i] != c)
 				trimmed[j++] = data[i++];
-			i++;
+
 		}
-		else
-			trimmed[j++] = data[i++];
 	}
 	free(data);
 	return (trimmed);
@@ -410,8 +414,8 @@ int	main(void)
 		// }
 		// printf("count luca: %d count tim: %d\n", count_tokens(input), ft_count_tokens_by_char(input));
 		// ft_print_strarr(ft_split_tokens_by_char(input));
-		printf("trimmed: %s\n", trim_quotes(ft_strdup(input)));
-		// printf("count: %d\n", ft_count_words_keep(input));
+		// printf("trimmed: %s\n", trim_quotes(ft_strdup(input)));
+		printf("count: %d\n", ft_count_words_keep(input));
 		free(input);
 	}
 }
