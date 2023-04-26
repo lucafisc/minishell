@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lde-ross <lde-ross@student.42berlin.de     +#+  +:+       +#+        */
+/*   By: tfregni <tfregni@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 16:02:25 by tfregni           #+#    #+#             */
-/*   Updated: 2023/04/25 21:17:53 by lde-ross         ###   ########.fr       */
+/*   Updated: 2023/04/26 13:58:52 by tfregni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@
 # include "lexer.h"
 # include "parser.h"
 # include "colors.h"
-# define TRAIL_CHAR " \n\t><|\"$/"
+# define TRAIL_CHAR " \n\t><|\"$/\'="
 # define SPLIT_CHAR "><|"
 # define SP_PARAM "@*#?-!"
 # define N_BUILTINS 7
