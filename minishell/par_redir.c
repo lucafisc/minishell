@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   par_redir.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tfregni <tfregni@student.42berlin.de>      +#+  +:+       +#+        */
+/*   By: lde-ross <lde-ross@student.42berlin.de     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/12 16:55:28 by lde-ross          #+#    #+#             */
-/*   Updated: 2023/04/26 02:29:37 by tfregni          ###   ########.fr       */
+/*   Updated: 2023/04/26 19:37:20 by lde-ross         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,8 @@ void	open_out(int redir, t_lexer *start, t_command **cmd_node)
 		open_flag = (O_WRONLY | O_CREAT | O_APPEND);
 	new->outfile = open(start->next->data, open_flag, 0644);
 	if (new->outfile == -1)
-		throw_err("open", start->next->data);
+		// throw_err("open", start->next->data);
+		ft_error(new->cmd[0], strerror(errno), start->next->data, errno);
 }
 
 static void	read_stdin(t_lexer *lex, int heredoc_fd, char *line)
@@ -96,7 +97,7 @@ void	open_in(int redir, t_lexer *start, t_command **cmd_node)
 	else
 		new->infile = open(start->next->data, open_flag);
 	if (new->infile == -1)
-		throw_err("open", start->next->data);
+		ft_error(new->cmd[0], strerror(errno), start->next->data, 1);
 }
 
 void	new_redir(int redir, t_lexer **lexer_node, t_command **cmd_node)
@@ -104,7 +105,7 @@ void	new_redir(int redir, t_lexer **lexer_node, t_command **cmd_node)
 	t_lexer	*start;
 
 	start = *lexer_node;
-	if (!start->next && (redir == OUT_WRITE || redir == OUT_APPEND || redir == IN_READ)) // same also for HEREDOC?
+	if (!start->next && redir)
 	{
 		ft_putstr_fd("minishell: syntax error near unexpected token 'newline'\n", 2);
 		start = start->next;

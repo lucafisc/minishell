@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   unset.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tfregni <tfregni@student.42berlin.de>      +#+  +:+       +#+        */
+/*   By: lde-ross <lde-ross@student.42berlin.de     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/29 19:48:25 by lde-ross          #+#    #+#             */
-/*   Updated: 2023/04/22 00:13:14 by tfregni          ###   ########.fr       */
+/*   Updated: 2023/04/26 19:40:07 by lde-ross         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,7 @@ void	ft_unset(t_shell *s, t_command *c)
 
 	if (!s || !c || !c->cmd || !c->cmd[0])
 	{
-		throw_err("unset", NULL);
+		ft_error(NULL, NULL, NULL, 1);
 		return ;
 	}
 	if (!c->cmd[1])

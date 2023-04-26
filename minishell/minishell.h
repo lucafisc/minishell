@@ -6,7 +6,7 @@
 /*   By: lde-ross <lde-ross@student.42berlin.de     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 16:02:25 by tfregni           #+#    #+#             */
-/*   Updated: 2023/04/26 15:58:55 by lde-ross         ###   ########.fr       */
+/*   Updated: 2023/04/26 18:39:42 by lde-ross         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -159,9 +159,12 @@ t_bool		is_param(char *input);
 
 /* ERROR HANDLING*/
 int			throw_err(char *str, char *arg);
+void		ft_error(char *general, char *err, char *arg, int error_code);
+void		add_status(int status);
 
 /* TEMP */
 t_command	*simple_parser(t_lexer *lex);
-void	ft_update_state(char c, int *state, int *prev_state);
+void		ft_update_state(char c, int *state, int *prev_state);
+t_bool		has_unclosed_quotes(char *str);
 
 #endif
