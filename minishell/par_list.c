@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   par_list.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tfregni <tfregni@student.42berlin.de>      +#+  +:+       +#+        */
+/*   By: lde-ross <lde-ross@student.42berlin.de     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/12 16:54:04 by lde-ross          #+#    #+#             */
-/*   Updated: 2023/04/26 02:29:17 by tfregni          ###   ########.fr       */
+/*   Updated: 2023/04/27 17:04:56 by lde-ross         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,14 +38,11 @@ t_command	*par_list_new_node(t_lexer *start, int len)
 	int			redir;
 
 	new = init_command(len);
-	// printf("Making new node %d long\n", len);
 	if (!new)
 		return (NULL);
 	i = 0;
 	while (start)
 	{
-		// printf("new node. checking %s\n", start->data);
-		// printf("attributes: info %d pipe %d\n", start->info, start->pipe);
 		redir = is_redir(start->data);
 		if (redir)
 			new_redir(redir, &start, &new);

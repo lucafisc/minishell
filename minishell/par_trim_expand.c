@@ -3,20 +3,23 @@
 /*                                                        :::      ::::::::   */
 /*   par_trim_expand.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tfregni <tfregni@student.42berlin.de>      +#+  +:+       +#+        */
+/*   By: lde-ross <lde-ross@student.42berlin.de     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/12 16:41:40 by lde-ross          #+#    #+#             */
-/*   Updated: 2023/04/26 02:17:34 by tfregni          ###   ########.fr       */
+/*   Updated: 2023/04/27 16:59:46 by lde-ross         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+
+
 t_bool	is_escapable(char c)
 {
 	if (!c)
 		return (false);
-	if (c == '\"' || c == '\'' || c == '|' || c == '<' || c == '>' || c == '\\')
+	if (c == '\"' || c == '\'' || c == '|'
+		|| c == '<' || c == '>' || c == '\\')
 		return (true);
 	return (false);
 }
@@ -64,20 +67,6 @@ char	*expand_escaped(char *str)
 	return (new);
 }
 
-t_bool	has_escaped(char *str)
-{
-	int	i;
-
-	i = 0;
-	while (str[i])
-	{
-		if (is_escapable(str[i]) && i > 0 && str[i - 1] == '\\')
-			return (true);
-		i++;
-	}
-	return (false);
-}
-
 t_bool	is_in_quote(char *str)
 {
 	int	len;
@@ -86,34 +75,6 @@ t_bool	is_in_quote(char *str)
 	if ((str[0] == '\'' || str[0] == '\"') && str[len - 1] == str[0])
 		return (true);
 	return (false);
-}
-
-void	par_trim_expand(t_command **cmd)
-{
-	t_command	*cur;
-	char		*temp;
-	int			i;
-	int			len;
-
-	cur = *cmd;
-	i = 0;
-	while (cur->cmd[i])
-	{
-		if (is_in_quote(cur->cmd[i]))
-		{
-			len = ft_strlen(cur->cmd[i]);
-			temp = ft_substr(cur->cmd[i], 1, len - 2);
-			free(cur->cmd[i]);
-			cur->cmd[i] = temp;
-		}
-		else if (has_escaped(cur->cmd[i]))
-		{
-			temp = expand_escaped(cur->cmd[i]);
-			free(cur->cmd[i]);
-			cur->cmd[i] = temp;
-		}
-		i++;
-	}
 }
 
 /* Given a string without spaces it cleans it from outer quotes
@@ -144,6 +105,5 @@ char	*trim_quotes(char *data)
 		else
 			trimmed[j++] = data[i++];
 	}
-	// free(data);
 	return (trimmed);
 }

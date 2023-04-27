@@ -6,7 +6,7 @@
 /*   By: lde-ross <lde-ross@student.42berlin.de     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 16:02:25 by tfregni           #+#    #+#             */
-/*   Updated: 2023/04/27 16:45:59 by lde-ross         ###   ########.fr       */
+/*   Updated: 2023/04/27 17:27:08 by lde-ross         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,6 +126,7 @@ void		print_cmd_node(t_command **cmd);
 void		trim_cmd(t_command **cmd);
 int			get_node_len(t_lexer **lex);
 t_bool		is_pipe(char *str);
+void		handle_heredoc(t_lexer *lex, int *open_flag);
 
 /* EXECUTOR */
 void		execute(t_shell *s, t_command *parsed_cmd);
@@ -135,6 +136,7 @@ void		free_command(t_command *cmd);
 int			find_builtin(t_shell *s, char *cmd);
 
 /* ETC? */
+void		get_prompt(t_shell *s);
 void		init_signal(void);
 char		*find_cmd(t_shell *s, char *cmd);
 char		**ft_split_keep(char *s, char c);
@@ -175,7 +177,6 @@ void		add_status(int status);
 
 /* TEMP */
 t_command	*simple_parser(t_lexer *lex);
-void		ft_update_state(char c, int *state, int *prev_state);
 t_bool		has_unclosed_quotes(char *str);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: lde-ross <lde-ross@student.42berlin.de     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/12 14:59:28 by lde-ross          #+#    #+#             */
-/*   Updated: 2023/04/26 16:25:40 by lde-ross         ###   ########.fr       */
+/*   Updated: 2023/04/27 17:28:37 by lde-ross         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,31 +51,30 @@ char	*expand_var(char *cur, char *cmds, int i)
 		free(trimmed);
 	}
 	free(cmds);
-	// printf("segfault\n");
 	return (new_cmd);
 }
 
-// char	*lex_expander(char *cmds)
-// {
-// 	char	*cur;
-// 	int		i;
-
-// 	if (!cmds || *cmds == '\'')
-// 		return (cmds);
-// 	cur = cmds;
-// 	i = 0;
-// 	while (cur[i])
-// 	{
-// 		// printf("lex_expander: %c\n", cur[i]);
-// 		if (cur[i] == '~' || cur[i] == '$')
-// 		{
-// 			cmds = expand_var(cur, cmds, i);
-// 			cur = cmds;
-// 		}
-// 		i++;
-// 	}
-// 	return (cmds);
-// }
+void	ft_update_state(char c, int *state, int *prev_state)
+{
+	if (!ft_strchr(QUOTES, c))
+		return ;
+	if (*state == IN_NORMAL || \
+	(*state == IN_S_QUOTE && c == D_QUOTE) || \
+	(*state == IN_D_QUOTE && c == S_QUOTE))
+	{
+		*prev_state = *state;
+		if (c == S_QUOTE)
+			*state = IN_S_QUOTE;
+		else
+			*state = IN_D_QUOTE;
+	}
+	else if ((*state == IN_S_QUOTE && c == S_QUOTE) || \
+	(*state == IN_D_QUOTE && c == D_QUOTE))
+	{
+		*state = *prev_state;
+		*prev_state = IN_NORMAL;
+	}
+}
 
 char	*lex_expander(char *cmds)
 {
@@ -86,19 +85,15 @@ char	*lex_expander(char *cmds)
 
 	if (!cmds)
 		return (cmds);
-	// printf("expander cmd: %s\n", cmds);
 	cur = cmds;
 	i = 0;
 	state = IN_NORMAL;
 	prev_state = state;
 	while (cur[i])
 	{
-		// printf("before %c -> state: %d\n", cur[i], state);
 		ft_update_state(cur[i], &state, &prev_state);
-		// printf("after  %c -> state: %d\n", cur[i], state);
 		if ((cur[i] == '~' && state != IN_S_QUOTE) || \
 		(cur[i] == '$' && !(state == IN_S_QUOTE && prev_state == IN_NORMAL)))
-		// if ((cur[i] == '~' || cur[i] == '$') && state != IN_S_QUOTE)
 		{
 			cmds = expand_var(cur, cmds, i);
 			cur = cmds;

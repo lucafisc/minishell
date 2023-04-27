@@ -6,7 +6,7 @@
 /*   By: lde-ross <lde-ross@student.42berlin.de     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/04 12:58:08 by tfregni           #+#    #+#             */
-/*   Updated: 2023/04/27 14:56:36 by lde-ross         ###   ########.fr       */
+/*   Updated: 2023/04/27 17:37:42 by lde-ross         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,9 @@ void	execute(t_shell *s, t_command *parsed_cmd)
 	while (parsed_cmd)
 	{
 		builtin_idx = find_builtin(s, parsed_cmd->cmd[0]);
-		if (builtin_idx >= 0)
+		if (is_param(parsed_cmd->cmd[0]))
+			s->params = env_append(s->params, parsed_cmd->cmd[0]);
+		else if (builtin_idx >= 0)
 			exec_builtin(s, parsed_cmd, builtin_idx);
 		else
 		{

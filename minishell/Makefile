@@ -6,13 +6,13 @@
 #    By: lde-ross <lde-ross@student.42berlin.de     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/04/17 13:03:17 by tfregni           #+#    #+#              #
-#    Updated: 2023/04/27 16:42:33 by lde-ross         ###   ########.fr        #
+#    Updated: 2023/04/27 17:09:18 by lde-ross         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-SRC = main.c free.c signal.c search_bin.c \
+SRC = main.c prompt.c free.c signal.c search_bin.c \
 		lexer.c lex_split_token.c lex_state.c lex_expander.c lex_list.c lex_utils.c lex_split_list.c \
-		parser.c par_utils.c par_trim_expand.c par_list.c par_redir.c par_node.c\
+		parser.c par_utils.c par_trim_expand.c par_list.c par_redir.c par_redir_utils.c par_node.c\
 		 executor.c exec_utils.c builtins.c $(addprefix builtins/,cd.c echo.c export.c pwd_env.c unset.c exit.c builtins_util.c)\
 		 exec_script.c error_handling.c
 OBJDIR = obj

@@ -6,7 +6,7 @@
 /*   By: lde-ross <lde-ross@student.42berlin.de     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/12 15:02:56 by lde-ross          #+#    #+#             */
-/*   Updated: 2023/04/12 15:04:54 by lde-ross         ###   ########.fr       */
+/*   Updated: 2023/04/27 17:22:35 by lde-ross         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,11 +24,14 @@ int	lex_update_state(char *str, int *i, int *state)
 	if (!str || !state)
 		return (-1);
 	res = 1;
-	if (*state == IN_D_QUOTE && str[*i] == '"' && str[*i - 1] != '\\')
+	if (*state == IN_D_QUOTE && str[*i] == '"'
+		&& str[*i - 1] != '\\')
 		*state = IN_NORMAL;
-	else if (*state == IN_S_QUOTE && str[*i] == '\'' && str[*i - 1] != '\\')
+	else if (*state == IN_S_QUOTE && str[*i] == '\''
+		&& str[*i - 1] != '\\')
 		*state = IN_NORMAL;
-	else if (*state == IN_NORMAL && (str[*i] == '"' || str[*i] == '\'') && (*i == 0 || str[*i - 1] != '\\'))
+	else if (*state == IN_NORMAL && (str[*i] == '"' || str[*i] == '\'')
+		&& (*i == 0 || str[*i - 1] != '\\'))
 	{
 		res = 2;
 		if (str[*i] == '"')
@@ -55,7 +58,8 @@ int	lex_check_state(char *str, int i, int state)
 	if ((state == IN_D_QUOTE && str[i] == '"' && str[i - 1] != '\\') || \
 	(state == IN_S_QUOTE && str[i] == '\'' && str[i - 1] != '\\'))
 		res = 1;
-	else if (state == IN_NORMAL && (str[i] == '"' || str[i] == '\'') && (i == 0 || str[i - 1] != '\\'))
+	else if (state == IN_NORMAL && (str[i] == '"' || str[i] == '\'')
+		&& (i == 0 || str[i - 1] != '\\'))
 		res = 2;
 	else
 		res = 0;
