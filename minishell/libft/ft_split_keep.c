@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_split_keep.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tfregni <tfregni@student.42berlin.de>      +#+  +:+       +#+        */
+/*   By: lde-ross <lde-ross@student.42berlin.de     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/25 20:57:02 by lde-ross          #+#    #+#             */
-/*   Updated: 2023/04/26 02:41:48 by tfregni          ###   ########.fr       */
+/*   Updated: 2023/04/27 20:38:17 by lde-ross         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,25 @@ size_t	str_siz_keep(char *s, char c)
 	return (i);
 }
 
+char	*keep_char(char *s, char c, int *i)
+{
+	char	*str;
+
+	if (s[*i + 1] == c && c != '|')
+	{
+		str = ft_calloc(3, sizeof(char));
+		str[0] = c;
+		str[1] = c;
+		*i += 1;
+	}
+	else
+	{
+		str = ft_calloc(2, sizeof(char));
+		str[0] = c;
+	}	
+	return (str);
+}
+
 char	**ft_split_keep(char *s, char c)
 {
 	int		words;
@@ -58,13 +77,9 @@ char	**ft_split_keep(char *s, char c)
 	int		j;
 	int		len;
 
-	//printf("splitting by %c\n", c);
 	if (!s)
 		return (NULL);
 	words = count_words_keep(s, c);
-	// printf("string:%s\n", s);
-	// printf("words: %d\n", words);
-	//exit(1);
 	arr = malloc(sizeof(char *) * (words + 1));
 	if (!arr)
 		return (0);
@@ -75,30 +90,16 @@ char	**ft_split_keep(char *s, char c)
 	{
 		if (s[i] == c)
 		{
-			if (s[i + 1] == c && c != '|')
-			{
-				arr[j] = ft_calloc(3, sizeof(char));
-				arr[j][0] = c;
-				arr[j][1] = c;
-				i++;
-				i++;
-				j++;
-			}
-			else
-			{
-				arr[j] = ft_calloc(2, sizeof(char));
-				arr[j][0] = c;
-				i++;
-				j++;
-			}
+			arr[j] = keep_char(s, c, &i);
+			i++;
 		}
 		else
 		{
 			len = str_siz_keep((s + i), c);
 			arr[j] = ft_substr(s, i, len);
-			j++;
 			i += len;
 		}
+		j++;
 	}
 	return (arr);
 }
