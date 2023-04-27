@@ -6,7 +6,7 @@
 /*   By: lde-ross <lde-ross@student.42berlin.de     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/01 12:54:23 by tfregni           #+#    #+#             */
-/*   Updated: 2023/04/27 17:36:00 by lde-ross         ###   ########.fr       */
+/*   Updated: 2023/04/27 18:11:36 by lde-ross         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,21 +16,19 @@
 Quotes included */
 t_bool	is_token(char c, int state)
 {
-	if (state == IN_D_QUOTE || \
-	state == IN_S_QUOTE || \
-	(state == IN_NORMAL && !ft_is_space(c)))
+	if (state == IN_D_QUOTE
+		||state == IN_S_QUOTE
+		|| (state == IN_NORMAL && !ft_is_space(c)))
 		return (true);
 	return (false);
 }
 
-int	split_token(char **arr, char *str, int *state)
+void	loop_token(int *state, int *cmd, char **arr, char *str)
 {
-	int		cmd;
-	int		new_cmd_flag;
-	int		i;
-	int		j;
+	int	j;
+	int	new_cmd_flag;
+	int	i;
 
-	cmd = 0;
 	i = 0;
 	while (str[i])
 	{
@@ -45,18 +43,26 @@ int	split_token(char **arr, char *str, int *state)
 				if (new_cmd_flag == 1 || lex_check_state(str, j, *state) == 2)
 					break ;
 			}
-			arr[cmd++] = ft_substr(str + i, 0, j - i);
+			arr[*cmd++] = ft_substr(str + i, 0, j - i);
 			i = j;
 		}
 	}
+}
+
+int	split_token(char **arr, char *str, int *state)
+{
+	int	cmd;
+
+	cmd = 0;
+	loop_token(state, &cmd, arr, str);
 	arr[cmd] = NULL;
 	return (cmd);
 }
 
 t_bool	is_next_new_tok(char *str, int i)
 {
-	if ((ft_is_space(str[i]) && !ft_is_space(str[i + 1])
-			&& str[i + 1]) || (i == 0 && !ft_is_space(str[i])))
+	if ((ft_is_space(str[i]) && !ft_is_space(str[i + 1]) && str[i + 1])
+		|| (i == 0 && !ft_is_space(str[i])))
 		return (true);
 	return (false);
 }
@@ -79,16 +85,15 @@ int	count_tokens(char *str)
 	return (count);
 }
 
-
 char	**lex_split_token(char *str)
 {
 	int		n_cmds;
 	char	**arr;
 	int		i;
+	int		j;
 	int		start;
 	int		len;
 	int		prev;
-	int		j;
 
 	n_cmds = count_tokens(str);
 	len = 0;
@@ -128,7 +133,6 @@ char	**lex_split_token(char *str)
 			i++;
 	}
 	i = -1;
-	while (arr[++i])
-		arr[i] = lex_expander(arr[i]);
+
 	return (arr);
 }

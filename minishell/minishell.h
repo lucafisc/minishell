@@ -6,7 +6,7 @@
 /*   By: lde-ross <lde-ross@student.42berlin.de     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 16:02:25 by tfregni           #+#    #+#             */
-/*   Updated: 2023/04/27 17:27:08 by lde-ross         ###   ########.fr       */
+/*   Updated: 2023/04/27 18:12:34 by lde-ross         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,6 +108,7 @@ void		lex_print_list(t_lexer *list);
 void		free_lex(t_lexer **list);
 void		for_each_lex_node(t_lexer **list, void (*f)(t_lexer **cmd));
 void		lex_split_list(t_lexer **list);
+char		**expander(char **arr);
 
 /* PARSER */
 t_command	*parser(t_lexer *lex);

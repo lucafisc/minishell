@@ -6,7 +6,7 @@
 /*   By: lde-ross <lde-ross@student.42berlin.de     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/12 14:59:28 by lde-ross          #+#    #+#             */
-/*   Updated: 2023/04/27 17:28:37 by lde-ross         ###   ########.fr       */
+/*   Updated: 2023/04/27 18:13:14 by lde-ross         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,7 @@ char	*expand_var(char *cur, char *cmds, int i)
 		free(trimmed);
 	}
 	free(cmds);
+	// printf("segfault\n");
 	return (new_cmd);
 }
 
@@ -101,4 +102,15 @@ char	*lex_expander(char *cmds)
 		i++;
 	}
 	return (cmds);
+}
+
+char **expander(char **arr)
+{
+	int	i = 0;
+	while (arr[i])
+	{
+		arr[i] = lex_expander(arr[i]);
+		i++;
+	}
+	return (arr);
 }

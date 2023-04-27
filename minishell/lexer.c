@@ -6,7 +6,7 @@
 /*   By: lde-ross <lde-ross@student.42berlin.de     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/27 17:14:03 by lde-ross          #+#    #+#             */
-/*   Updated: 2023/04/27 17:14:05 by lde-ross         ###   ########.fr       */
+/*   Updated: 2023/04/27 18:12:19 by lde-ross         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ t_lexer	*lexer(char *fmt)
 		return (NULL);
 	}
 	raw_tokens = lex_split_token(fmt);
+	raw_tokens = expander(raw_tokens);
 	if (!raw_tokens[0])
 	{
 		free(raw_tokens);
