@@ -6,7 +6,7 @@
 /*   By: tfregni <tfregni@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 16:02:25 by tfregni           #+#    #+#             */
-/*   Updated: 2023/04/27 11:19:50 by tfregni          ###   ########.fr       */
+/*   Updated: 2023/04/27 18:05:49 by tfregni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,9 +30,9 @@
 # include "colors.h"
 # define TRAIL_CHAR " \n\t><|\"$/\'="
 # define SPLIT_CHAR "><|"
-# define SP_PARAM "@*#?-!"
+# define SP_PARAM "@*#?-!()[]{}"
 # define N_BUILTINS 7
-# define HEREDOC_NAME "_heredoc_temp"
+# define HEREDOC_NAME "._heredoc_temp"
 # define QUOTES "\'\""
 
 typedef enum s_bool
@@ -156,6 +156,7 @@ char		*ft_getenv(char *key);
 void		ft_export_append(char ***env, char *var);
 void		ft_export_replace(char **env, char *var, int index);
 t_bool		is_param(char *input);
+char		*clean_variable(char *input);
 
 /* ERROR HANDLING*/
 int			throw_err(char *str, char *arg);

@@ -6,7 +6,7 @@
 /*   By: tfregni <tfregni@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/29 15:19:22 by tfregni           #+#    #+#             */
-/*   Updated: 2023/04/27 13:32:36 by tfregni          ###   ########.fr       */
+/*   Updated: 2023/04/27 18:13:14 by tfregni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,30 +40,43 @@ void	ft_export_append(char ***env, char *var)
 	*env = new_env;
 }
 
+// char	*clean_variable(char *input)
+// {
+// 	char	*var;
+// 	char	**args;
+// 	char	*param;
+// 	char	*join;
+
+// 	var = ft_strchr(input, '=') + 1;
+// 	param = ft_calloc(sizeof(char), var - input);
+// 	join = ft_calloc(ft_strlen(input), sizeof(*join));
+// 	if (!param || !join || !var)
+// 		return (input);
+// 	ft_strlcpy(param, input, var - input + 1);
+// 	// printf("param: %s\n", param);
+// 	args = ft_split(var, ' ');
+// 	// printf("var_arr:\n");
+// 	// ft_print_strarr(args);
+// 	var = ft_strnjoinchar(args, ' ');
+// 	ft_free_str_arr(args);
+// 	join = ft_strjoin(param, var);
+// 	// printf("join: %s\n", join);
+// 	free(param);
+// 	// free(join);
+// 	return (join);
+// }
+
 char	*clean_variable(char *input)
 {
 	char	*var;
-	char	**args;
-	char	*param;
-	char	*join;
+	char	**arr;
 
-	var = ft_strchr(input, '=') + 1;
-	param = ft_calloc(sizeof(char), var - input);
-	join = ft_calloc(ft_strlen(input), sizeof(*join));
-	if (!param || !join || !var)
+	var = ft_calloc(sizeof(*var), ft_strlen(input));
+	if (!var)
 		return (input);
-	ft_strlcpy(param, input, var - input + 1);
-	// printf("param: %s\n", param);
-	args = ft_split(var, ' ');
-	// printf("var_arr:\n");
-	// ft_print_strarr(args);
-	var = ft_strnjoinchar(args, ' ');
-	ft_free_str_arr(args);
-	join = ft_strjoin(param, var);
-	// printf("join: %s\n", join);
-	free(param);
-	// free(join);
-	return (join);
+	arr = ft_split(input, ' ');
+	var = ft_strnjoinchar(arr, ' ');
+	return (var);
 }
 
 /* Checks if input is a parameter */
@@ -71,22 +84,52 @@ char	*clean_variable(char *input)
 /xcu_chap02.html#tag_02_05_02 */
 /* A param should have =, not start with a digit and not have
 any of the special chars macroed in SP_PARAM */
-/* Compare to t_bool is_export_valid(char *var) in export.c */
+// t_bool	is_param(char *input)
+// {
+// 	int		i;
+// 	char	*clean;
+
+// 	i = -1;
+// 	if (!ft_strchr(input, '=') || ft_isdigit(*input))
+// 		return (false);
+// 	clean = clean_variable(input);
+// 	printf("input: %s\n", input);
+// 	while (input && input[++i])
+// 	{
+// 		// printf("%c\n", input[i]);
+// 		if (ft_strchr(QUOTES, input[i]))
+// 			i = ft_skip_char(input, input[i], i);
+// 		if (ft_strchr(SP_PARAM, input[i]) || ft_is_space(input[i]))
+// 			return (false);
+// 	}
+// 	return (true);
+// }
+
 t_bool	is_param(char *input)
 {
 	int		i;
-	char	*clean;
 
 	i = -1;
 	if (!ft_strchr(input, '=') || ft_isdigit(*input))
 		return (false);
-	clean = clean_variable(input);
-	printf("clean: %s\n", clean);
-	while (clean && clean[++i])
+	while (++i <= (ft_strchr(input, '=') - input))
 	{
-		// printf("%c\n", clean[i]);
-		if (ft_strchr(SP_PARAM, clean[i]))
+		if (ft_strchr(SP_PARAM, input[i]))
 			return (false);
+	}
+	while (input[i])
+	{
+		if (input[i] && ft_strchr(QUOTES, input[i]))
+		{
+			i = ft_skip_char(input, input[i], i);
+			i++;
+		}
+		else if (input[i] && input[i] == '!' && input[i + 1])
+		{
+			ft_error("minishell", "event not found", input + i, 1);
+			return (false);
+		}
+		i++;
 	}
 	return (true);
 }

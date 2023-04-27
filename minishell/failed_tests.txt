@@ -83,4 +83,10 @@ SOLVED echo '$USER' "$USER" "text \' text" -> $USER tfregni text \' text
 ------
 SOLVED (undefined) export | grep "SHLVL" -> declare -x SHLVL="3"
 ------
-export test=" foo   bar "
+export test=" foo   bar " -> foo bar
+------
+export test="  ' foo    bar'  " -> ' foo bar'
+------
+export test="   '   $USER  bla ' " -> ' tfregni bla '
+------
+echo hello $test -> hello ' tfregni bla '
