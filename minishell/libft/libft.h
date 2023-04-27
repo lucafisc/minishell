@@ -6,7 +6,7 @@
 /*   By: tfregni <tfregni@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/30 17:35:35 by lde-ross          #+#    #+#             */
-/*   Updated: 2023/04/26 20:08:56 by tfregni          ###   ########.fr       */
+/*   Updated: 2023/04/27 01:27:28 by tfregni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,5 +84,7 @@ char		**ft_split_keep(char *s, char c);
 int			ft_is_escaped(int i, char *s);
 char		*get_next_line(int fd);
 int			ft_skip_char(char *str, char c, int i);
+char		*ft_strjoinchar(char const *s1, char const *s2, char c);
+char		*ft_strnjoinchar(char **arr, char c);
 
 #endif
