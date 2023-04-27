@@ -55,11 +55,11 @@ SOLVED echo text"'$USER'" ' $USER ' -> text'tim'  $USER
 ------
 SOLVED echo               text "$USER"            "$USER"text -> text tim timtext
 ------
-SOLVED echo ''''''''''$USER'''''''''' -> tim
+echo ''''''''''$USER'''''''''' -> tim (it triggers the unclosed quotes error)
 ------
-SOLVED echo """"""""$USER"""""""" -> tim
+echo """"""""$USER"""""""" -> tim
 ------
-SOLVED echo $USER'$USER'text oui oui     oui  oui $USER oui      $USER '' -> tim$USERtext oui oui oui oui tim oui tim
+echo $USER'$USER'text oui oui     oui  oui $USER oui      $USER '' -> tim$USERtext oui oui oui oui tim oui tim
 ------
 SOLVED echo ' \' ' \' ->  \  \
 ------
@@ -67,7 +67,7 @@ echo '\" ' " \"\"" -> \"   ""
 ------
 echo \\\" \\\" \\\" \\\"\\\"\\\" \\\'\\\'\\\' -> \" \" \" \"\"\" \'\'\'
 ------
-echo '$'
+SOLVED echo '$'
 ------
 SOLVED echo "'$   bla'" -> '$   bla'
 ------
