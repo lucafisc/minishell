@@ -6,7 +6,7 @@
 /*   By: tfregni <tfregni@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/29 15:19:22 by tfregni           #+#    #+#             */
-/*   Updated: 2023/04/26 21:47:59 by tfregni          ###   ########.fr       */
+/*   Updated: 2023/04/27 11:53:25 by tfregni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,15 +40,30 @@ void	ft_export_append(char ***env, char *var)
 	*env = new_env;
 }
 
-void	clean_variable(char **input)
+char	*clean_variable(char *input)
 {
 	char	*var;
-	char	len_param;
+	char	**args;
+	char	*param;
+	char	*join;
 
-	var = ft_strchr(*input, '=') + 1;
-	len_param = var - *input;
-	*input = ft_strins(*input, var, ft_strlen(var), len_param);
-	printf("len: %d var clean: %s$\n", len_param, *input);
+	var = ft_strchr(input, '=') + 1;
+	param = ft_calloc(sizeof(char), var - input);
+	join = ft_calloc(ft_strlen(input), sizeof(*join));
+	if (!param || !join || !var)
+		return (input);
+	ft_strlcpy(param, input, var - input + 1);
+	// printf("param: %s\n", param);
+	args = ft_split(var, ' ');
+	// printf("var_arr:\n");
+	// ft_print_strarr(args);
+	var = ft_strnjoinchar(args, ' ');
+	ft_free_str_arr(args);
+	join = ft_strjoin(param, var);
+	// printf("join: %s\n", join);
+	free(param);
+	// free(join);
+	return (join);
 }
 
 /* Checks if input is a parameter */
@@ -59,15 +74,18 @@ any of the special chars macroed in SP_PARAM */
 /* Compare to t_bool is_export_valid(char *var) in export.c */
 t_bool	is_param(char *input)
 {
-	int	i;
+	int		i;
+	char	*clean;
 
 	i = -1;
 	if (!ft_strchr(input, '=') || ft_isdigit(*input))
 		return (false);
-	// clean_variable(&input);
-	while (input[++i])
+	clean = clean_variable(input);
+	printf("clean: %s\n", clean);
+	while (clean && clean[++i])
 	{
-		if (ft_strchr(SP_PARAM, input[i]) || ft_is_space(input[i]))
+		// printf("%c\n", clean[i]);
+		if (ft_strchr(SP_PARAM, clean[i]))
 			return (false);
 	}
 	return (true);
@@ -84,13 +102,16 @@ void	ft_export(t_shell *s, t_command *c)
 
 	if (!c || !s || !c->cmd || !c->cmd[0] || !c->cmd[1])
 		return ;
-	var = c->cmd[1];
+	// var = c->cmd[1];
+	var = clean_variable(c->cmd[1]);
 	if (!is_param(var))
 	{
 		ft_error("minishell: export", "not a valid identifier", var, 1);
 		return ;
 	}
 	s->params = env_append(s->params, var);
+	printf("params:\n");
+	ft_print_strarr(s->params);
 	var_index = search_array(s->env, var);
 	if (var_index >= 0)
 		ft_export_replace(s->env, var, var_index);
