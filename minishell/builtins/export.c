@@ -6,7 +6,7 @@
 /*   By: tfregni <tfregni@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/29 15:19:22 by tfregni           #+#    #+#             */
-/*   Updated: 2023/04/27 11:53:25 by tfregni          ###   ########.fr       */
+/*   Updated: 2023/04/27 13:32:36 by tfregni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,8 +102,8 @@ void	ft_export(t_shell *s, t_command *c)
 
 	if (!c || !s || !c->cmd || !c->cmd[0] || !c->cmd[1])
 		return ;
-	// var = c->cmd[1];
-	var = clean_variable(c->cmd[1]);
+	var = c->cmd[1];
+	// var = clean_variable(c->cmd[1]);
 	if (!is_param(var))
 	{
 		ft_error("minishell: export", "not a valid identifier", var, 1);

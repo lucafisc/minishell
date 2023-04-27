@@ -6,7 +6,7 @@
 /*   By: tfregni <tfregni@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/01 12:54:23 by tfregni           #+#    #+#             */
-/*   Updated: 2023/04/26 20:13:59 by tfregni          ###   ########.fr       */
+/*   Updated: 2023/04/27 13:34:13 by tfregni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -143,46 +143,46 @@ void	ft_update_state(char c, int *state, int *prev_state)
 	}
 }
 
-int	is_new_wo(char const *s, int i, int state, int prev_state)
-{
-	int	initial_state;
+// int	is_new_wo(char const *s, int i, int state, int prev_state)
+// {
+// 	int	initial_state;
 
-	initial_state = state;
-	if ((!ft_is_space(s[i]) && ft_is_space(s[i - 1])) || (i == 0 && !ft_is_space(s[i])))
-	{
-		if (!ft_strchr(QUOTES, s[i]) && state == IN_NORMAL)
-			return (1);
-		if (ft_strchr(QUOTES, s[i]))
-		{
-			ft_update_state(s[i], &state, &prev_state);
-			if (state != initial_state && initial_state == IN_NORMAL)
-				return (1);
-		}
-	}
-	return (0);
-}
+// 	initial_state = state;
+// 	if ((!ft_is_space(s[i]) && ft_is_space(s[i - 1])) || (i == 0 && !ft_is_space(s[i])))
+// 	{
+// 		if (!ft_strchr(QUOTES, s[i]) && state == IN_NORMAL)
+// 			return (1);
+// 		if (ft_strchr(QUOTES, s[i]))
+// 		{
+// 			ft_update_state(s[i], &state, &prev_state);
+// 			if (state != initial_state && initial_state == IN_NORMAL)
+// 				return (1);
+// 		}
+// 	}
+// 	return (0);
+// }
 
-int	ft_count_tokens_by_char(char *str)
-{
-	int	state;
-	int	prev_state;
-	int	i;
-	int	count;
+// int	ft_count_tokens_by_char(char *str)
+// {
+// 	int	state;
+// 	int	prev_state;
+// 	int	i;
+// 	int	count;
 
-	count = 0;
-	state = IN_NORMAL;
-	prev_state = state;
-	i = 0;
-	while (str[i])
-	{
-		if (is_new_wo(str, i, state, prev_state))
-			count++;
-		if (str[i] == S_QUOTE || str[i] == D_QUOTE)
-			ft_update_state(str[i], &state, &prev_state);
-		i++;
-	}
-	return (count);
-}
+// 	count = 0;
+// 	state = IN_NORMAL;
+// 	prev_state = state;
+// 	i = 0;
+// 	while (str[i])
+// 	{
+// 		if (is_new_wo(str, i, state, prev_state))
+// 			count++;
+// 		if ((str[i] == S_QUOTE || str[i] == D_QUOTE) && (i > 0 && str[i - 1] != '\\'))
+// 			ft_update_state(str[i], &state, &prev_state);
+// 		i++;
+// 	}
+// 	return (count);
+// }
 
 char	**lex_split_token(char *str)
 {
@@ -234,7 +234,10 @@ char	**lex_split_token(char *str)
 	//printf("\n\n\n_________\n");
 	i = -1;
 	while (arr[++i])
+	{
+		//if (i > 0 && ft_strncmp(arr[i - 1], "echo", 5))
 		arr[i] = lex_expander(arr[i]);
+	}
 	//ft_print_strarr(arr);
 	return(arr);
 }

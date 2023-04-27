@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lde-ross <lde-ross@student.42berlin.de     +#+  +:+       +#+        */
+/*   By: tfregni <tfregni@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/30 15:46:57 by lde-ross          #+#    #+#             */
-/*   Updated: 2023/04/24 16:10:15 by lde-ross         ###   ########.fr       */
+/*   Updated: 2023/04/27 13:32:46 by tfregni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,8 @@ void	ft_echo(t_shell *s, t_command *c)
 	}
 	while (args[i])
 	{
+		// args[i] = lex_expander(args[i]);
+		// args[i] = trim_quotes(args[i]);
 		ft_putstr_fd(args[i], c->outfile);
 		if (args[i][0] && args[i + 1])
 			ft_putchar_fd(' ', c->outfile);

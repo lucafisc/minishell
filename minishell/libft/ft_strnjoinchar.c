@@ -6,7 +6,7 @@
 /*   By: tfregni <tfregni@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/31 08:53:50 by tfregni           #+#    #+#             */
-/*   Updated: 2023/04/27 02:00:52 by tfregni          ###   ########.fr       */
+/*   Updated: 2023/04/27 12:27:26 by tfregni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,6 @@ static int	strjoinchar_size(char **arr, int len)
 		size += ft_strlen(arr[i]);
 		i++;
 	}
-	printf("size: %d\n", size + len - 1);
 	return (size + len - 1);
 }
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lex_split_list.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lde-ross <lde-ross@student.42berlin.de     +#+  +:+       +#+        */
+/*   By: tfregni <tfregni@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/03 15:53:30 by lde-ross          #+#    #+#             */
-/*   Updated: 2023/04/26 17:27:49 by lde-ross         ###   ########.fr       */
+/*   Updated: 2023/04/26 23:45:07 by tfregni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,5 +110,6 @@ void	lex_split_list(t_lexer **list)
 		}
 		else
 			cur = cur->next;
+		// printf("%s$\n", cur->data);
 	}
 }

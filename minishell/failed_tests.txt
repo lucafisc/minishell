@@ -1,5 +1,5 @@
 
- 
+
 
 SOLVED cd
 -----
@@ -27,6 +27,8 @@ Note that the behavior of the "cd" command might vary depending on the implement
 SOLVED cd $PWD/file_tests
 ------
 SOLVED cd $OLDPWD/builtins
+------
+cd "~/Desktop" -> bash: cd: ~/Desktop: No such file or directory (check expansion in error message)
 
 TODO Escape spaces in dir name (or it's fine not to)
 
@@ -81,4 +83,4 @@ SOLVED echo '$USER' "$USER" "text \' text" -> $USER tfregni text \' text
 ------
 SOLVED (undefined) export | grep "SHLVL" -> declare -x SHLVL="3"
 ------
-export test=" foo   bar " 
+export test=" foo   bar "
