@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tfregni <tfregni@student.42berlin.de>      +#+  +:+       +#+        */
+/*   By: lde-ross <lde-ross@student.42berlin.de     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/28 16:31:54 by tfregni           #+#    #+#             */
-/*   Updated: 2023/04/26 02:33:44 by tfregni          ###   ########.fr       */
+/*   Updated: 2023/04/27 16:02:50 by lde-ross         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,23 +113,32 @@ void	print_cmd_node(t_command **cmd)
 	ft_print_strarr(c->cmd);
 }
 
+void	trim_cmd(t_command **cmd)
+{
+	int			i;
+	char		*temp;
+	t_command	*command;
+
+	i = 0;
+	command = *cmd;
+	while (command->cmd[i])
+	{
+		temp = trim_quotes(command->cmd[i]);
+		free(command->cmd[i]);
+		command->cmd[i] = temp;
+		i++;
+	}
+}
+
 t_command	*parser(t_lexer *lex)
 {
 	t_command	*cmd;
 	int			n_cmds;
 
 	n_cmds = par_count_cmds(lex);
-	// printf("n_cmds: %d\n", n_cmds);
-	// while (lex)
-	// {
-	// 	printf("%s\n", lex->data);
-	// 	lex = lex->next;
-	// }
 	cmd = par_list_from_lex(lex, n_cmds);
-	// for_each_par_node(&cmd, print_cmd_node);
-	//for_each_par_node(&cmd, par_trim_expand);
 	free_lex_list(&lex);
-	// exit(1);
+	for_each_par_node(&cmd, trim_cmd);
 	if (g_shell->pipe)
 		setup_pipe(cmd, n_cmds);
 	// printf("n_cmd: %d\n", n_cmds);
