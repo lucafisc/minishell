@@ -6,7 +6,7 @@
 /*   By: lde-ross <lde-ross@student.42berlin.de     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 16:02:25 by tfregni           #+#    #+#             */
-/*   Updated: 2023/04/26 18:39:42 by lde-ross         ###   ########.fr       */
+/*   Updated: 2023/04/27 14:55:24 by lde-ross         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,11 +122,17 @@ void		new_redir(int redir, t_lexer **lexer_node, t_command **cmd_node);
 void		setup_pipe(t_command *cmd, int n_cmds);
 char		*trim_quotes(char *data);
 
+/* EXECUTOR */
+void		execute(t_shell *s, t_command *parsed_cmd);
+void		create_redir(t_command *cmd);
+void		close_fd(t_command *cmd);
+void		free_command(t_command *cmd);
+int			find_builtin(t_shell *s, char *cmd);
+
 /* ETC? */
 void		init_signal(void);
 char		*find_cmd(t_shell *s, char *cmd);
 char		**ft_split_keep(char *s, char c);
-void		execute(t_shell *s, t_command *parsed_cmd);
 
 /* EXEC SCRIPT */
 void		exec_script(t_shell *s, int fd);

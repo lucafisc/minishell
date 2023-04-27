@@ -6,132 +6,56 @@
 /*   By: lde-ross <lde-ross@student.42berlin.de     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/04 12:58:08 by tfregni           #+#    #+#             */
-/*   Updated: 2023/04/26 19:42:06 by lde-ross         ###   ########.fr       */
+/*   Updated: 2023/04/27 14:56:36 by lde-ross         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-int	ft_lexersize(t_lexer *lst)
-{
-	int	i;
-
-	i = 0;
-	while (lst)
-	{
-		lst = lst->next;
-		i++;
-	}
-	return (i);
-}
-
-// t_command	*simple_parser(t_lexer *lex)
-// {
-// 	t_command	*cmd;
-// 	int			i;
-// 	int			len;
-
-// 	cmd = malloc(sizeof(*cmd));
-// 	if (!cmd)
-// 		return (NULL);
-// 	cmd->cmd = malloc(sizeof(char *) * (ft_lexersize(lex) + 1));
-// 	if (!cmd->cmd)
-// 		return (NULL);
-// 	i = 0;
-// 	while (lex)
-// 	{
-// 		len = ft_strlen(lex->data);
-// 		cmd->cmd[i] = malloc(sizeof(char) * (len + 1));
-// 		ft_strlcpy(cmd->cmd[i], lex->data, len + 1);
-// 		lex = lex->next;
-// 		i++;
-// 	}
-// 	cmd->cmd[i] = NULL;
-// 	return (cmd);
-// }
-
-void	free_command(t_command *cmd)
-{
-	ft_free_str_arr(cmd->cmd);
-	free(cmd);
-}
-
-/* Checks if the cmd is a builtin and in that case
-returns its index number. Returns -1 if no match */
-int	find_builtin(t_shell *s, char *cmd)
-{
-	int	i;
-	int	len;
-
-	if (!cmd || !cmd[0])
-		return (-1);
-	i = 0;
-	len = ft_strlen(cmd);
-	while (s->builtins[i].name)
-	{
-		if (!ft_strncmp(s->builtins[i].name, cmd, len) && len == (int)ft_strlen(s->builtins[i].name))
-			return (i);
-		i++;
-	}
-	return (-1);
-}
-
-// void	exec_builtin(t_shell *s, t_command *cmd, int builtin_idx)
-// {
-// 	pid_t	pid;
-
-// 	pid = fork();
-// 	if (pid == 0)
-// 	{
-// 		s->builtins[builtin_idx].func (s, cmd);
-// 		exit(0);
-// 	}
-// }
-
-void	create_redir(t_command *cmd)
-{
-	if (cmd->infile != 0)
-	{
-		if (dup2(cmd->infile, 0) == -1)
-		{
-			ft_error("minishell", strerror(errno), "redirection", errno);
-			exit(1);
-		}
-	}
-	if (cmd->outfile != 1)
-	{
-		if (dup2(cmd->outfile, 1) == -1)
-		{
-			ft_error("minishell", strerror(errno), "redirection", errno);
-			exit(1);
-		}
-	}
-}
 
 void	exec_builtin(t_shell *s, t_command *cmd, int builtin_idx)
 {
 	s->builtins[builtin_idx].func (s, cmd);
 }
 
-void	close_fd(t_command *cmd)
+void	child_routine(t_shell *s, t_command *command)
 {
-	if (cmd->infile != 0)
+	create_redir(command);
+	execve(command->cmd[0], command->cmd, s->env);
+	ft_error("minishell", command->cmd[0],
+		"command not found", 127);
+	exit(1);
+}
+
+void	wait_for_child(int pid)
+{
+	while (g_shell->status != 130 && waitpid(pid, NULL, WNOHANG) == 0)
 	{
-		// printf("Closing file descriptor %d\n", cmd->infile);
-		close(cmd->infile);
+		if (g_shell->status == 130)
+			kill(pid, SIGINT);
 	}
-	if (cmd->outfile != 1)
-	{
-		// printf("Closing file descriptor %d\n", cmd->outfile);
-		close(cmd->outfile);
-	}
+}
+
+void	parent_routine(int pid, t_command **command)
+{
+	t_command	*tmp;
+	t_command	*current;
+
+	current = *command;
+	wait_for_child(pid);
+	g_shell->forked = false;
+	add_status(g_shell->status);
+	g_shell->status = 0;
+	tmp = current->next;
+	close_fd(current);
+	unlink(HEREDOC_NAME);
+	free_command(current);
+	*command = tmp;
 }
 
 void	execute(t_shell *s, t_command *parsed_cmd)
 {
 	pid_t		pid;
 	int			builtin_idx;
-	t_command	*tmp;
 
 	while (parsed_cmd)
 	{
@@ -144,25 +68,8 @@ void	execute(t_shell *s, t_command *parsed_cmd)
 			pid = fork();
 			g_shell->forked = true;
 			if (pid == 0)
-			{
-				create_redir(parsed_cmd);
-				execve(parsed_cmd->cmd[0], parsed_cmd->cmd, s->env);
-				ft_error("minishell", parsed_cmd->cmd[0], "command not found", 127);
-				exit(1);
-			}
+				child_routine(s, parsed_cmd);
 		}
-		while (g_shell->status != 130 && waitpid(pid, NULL, WNOHANG) == 0)
-		{
-			if (g_shell->status == 130)
-				kill(pid, SIGINT);
-		}
-		g_shell->forked = false;
-		add_status(g_shell->status);
-		g_shell->status = 0;
-		tmp = parsed_cmd->next;
-		close_fd(parsed_cmd);
-		unlink(HEREDOC_NAME);
-		free_command(parsed_cmd);
-		parsed_cmd = tmp;
+		parent_routine(pid, &parsed_cmd);
 	}
 }
