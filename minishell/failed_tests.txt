@@ -90,3 +90,15 @@ export test="  ' foo    bar'  " -> ' foo bar'
 export test="   '   $USER  bla ' " -> ' tfregni bla '
 ------
 echo hello $test -> hello ' tfregni bla '
+In bash:
+	cmd							stored									output			clean
+	export test="'$USER'" -> 				test='tfregni'				'tfregni'
+	export test='$USER' -> 					test=$USER					$USER
+	export test=$USER -> 					test=tfregni				tfregni
+	export test="  ' foo  bar'" -> 			test=  ' foo  bar'			' foo bar'		yes
+	export test="  '  foo  $USER   ' " -> 	test=  '  foo  tfregni   '	' foo tfregni '	yes
+	export test="    foo   $USER    " -> 	test=    foo   tfregni		foo tfregni		yes
+	export test=" '  $USER   foo '  "		test= '  tfregni   foo '	' tfregni foo '	yes
+	export test="'   foo  $USER ' "			test='   foo  tfregni '		' foo tfregni '	yes
+	export test="'foo  $USER ' "			test='foo  tfregni '		'foo tfregni '	yes
+	export test="foo    $USER  "			test=foo    tfregni			foo tfregni
