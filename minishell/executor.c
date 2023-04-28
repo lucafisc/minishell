@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executor.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lde-ross <lde-ross@student.42berlin.de     +#+  +:+       +#+        */
+/*   By: lde-ross <lde-ross@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/04 12:58:08 by tfregni           #+#    #+#             */
-/*   Updated: 2023/04/27 17:37:42 by lde-ross         ###   ########.fr       */
+/*   Updated: 2023/04/28 16:00:29 by lde-ross         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,16 +35,12 @@ void	wait_for_child(int pid)
 	}
 }
 
-void	parent_routine(int pid, t_command **command)
+void	parent_routine(t_command **command)
 {
 	t_command	*tmp;
 	t_command	*current;
 
 	current = *command;
-	wait_for_child(pid);
-	g_shell->forked = false;
-	add_status(g_shell->status);
-	g_shell->status = 0;
 	tmp = current->next;
 	close_fd(current);
 	unlink(HEREDOC_NAME);
@@ -72,6 +68,10 @@ void	execute(t_shell *s, t_command *parsed_cmd)
 			if (pid == 0)
 				child_routine(s, parsed_cmd);
 		}
-		parent_routine(pid, &parsed_cmd);
+		parent_routine(&parsed_cmd);
 	}
+	wait_for_child(pid);
+	g_shell->forked = false;
+	add_status(g_shell->status);
+	g_shell->status = 0;
 }
