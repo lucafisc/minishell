@@ -6,7 +6,7 @@
 /*   By: tfregni <tfregni@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/30 15:46:57 by lde-ross          #+#    #+#             */
-/*   Updated: 2023/04/28 17:27:41 by tfregni          ###   ########.fr       */
+/*   Updated: 2023/04/28 18:39:31 by tfregni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,26 @@ char	*clean_variable(char *input)
 	return (var);
 }
 
+t_bool	check_echo_flag(char **args)
+{
+	char	*flag;
+	int		i;
+	int		j;
+
+	j = 1;
+	i = 0;
+	flag = trim_quotes(args[j]);
+	if (!ft_strncmp(flag, "-n", 2))
+	{
+		while (flag[++i] == 'n')
+			printf("skipping %c\n", flag[i]);
+		printf("after skipping point at %c\n", flag[i]);
+		if (!flag[i])
+			return (true);
+	}
+	return (false);
+}
+
 /* The variable expansion works already even if it's not
 implemented in the function: it means it's running on every
 string passed to the shell before calling any cmd */
@@ -77,29 +97,30 @@ void	ft_echo(t_shell *s, t_command *c)
 	if (!c || !c->cmd)
 		return ;
 	args = c->cmd;
-	n = true;
+	n = check_echo_flag(args);
+	printf("flag: %d\n", n);
 	i = 1;
-	if (args[i] && !ft_strncmp(args[i], "-n", 2))
-	{
-		i++;
-		n = false;
-	}
+	printf("echo args\n");
+	ft_print_strarr(args);
+	// if (args[i] && !ft_strncmp(args[i], "-n", 2))
+	// {
+	// 	i++;
+	// 	n = false;
+	// }
 	// printf("echo before clean: %s\n", args[i]);
 	// printf("echo after clean: %s\n", args[i]);
 	while (args[i])
 	{
-		// args[i] = lex_expander(args[i]);
 		var = clean_variable(args[i]);
-		// args[i] = trim_quotes(args[i]);
 		ft_putstr_fd(var, c->outfile);
 		if (var[0] && args[i + 1])
 			ft_putchar_fd(' ', c->outfile);
 		i++;
+		free(var);
 	}
-	if (n)
+	if (!n)
 		ft_putchar_fd('\n', c->outfile);
 	// printf("echo var: %p\n", var);
-	free(var);
 }
 
 // int	main(int ac, char **av, char **env)

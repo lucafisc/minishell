@@ -35,9 +35,9 @@ TODO Escape spaces in dir name (or it's fine not to)
 ------
 SOLVED echo $
 ------
-echo -n -n -n bonjour -> bonjour$
+echo -n -n -n bonjour -> bonjour$	4 args
 ------
-echo -n"-n" bonjour -> -n-n bonjour
+echo -n"-n" bonjour -> -n-n bonjour 2 args		quotes are not trimmed
 ------
 echo "-nnnn" -n bonjour	-> bonjour$
 ------
