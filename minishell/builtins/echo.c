@@ -6,7 +6,7 @@
 /*   By: tfregni <tfregni@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/30 15:46:57 by lde-ross          #+#    #+#             */
-/*   Updated: 2023/04/27 18:08:23 by tfregni          ###   ########.fr       */
+/*   Updated: 2023/04/28 12:32:43 by tfregni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,12 +72,12 @@ void	ft_echo(t_shell *s, t_command *c)
 		i++;
 		n = false;
 	}
-	printf("echo before clean: %s\n", args[i]);
-	args[i] = clean_variable(args[i]);
-	printf("echo after clean: %s\n", args[i]);
+	// printf("echo before clean: %s\n", args[i]);
+	// printf("echo after clean: %s\n", args[i]);
 	while (args[i])
 	{
 		// args[i] = lex_expander(args[i]);
+		args[i] = clean_variable(args[i]);
 		// args[i] = trim_quotes(args[i]);
 		ft_putstr_fd(args[i], c->outfile);
 		if (args[i][0] && args[i + 1])

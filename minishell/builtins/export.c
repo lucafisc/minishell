@@ -6,7 +6,7 @@
 /*   By: tfregni <tfregni@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/29 15:19:22 by tfregni           #+#    #+#             */
-/*   Updated: 2023/04/27 18:13:14 by tfregni          ###   ########.fr       */
+/*   Updated: 2023/04/28 13:24:45 by tfregni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,11 +71,10 @@ char	*clean_variable(char *input)
 	char	*var;
 	char	**arr;
 
-	var = ft_calloc(sizeof(*var), ft_strlen(input));
-	if (!var)
-		return (input);
 	arr = ft_split(input, ' ');
 	var = ft_strnjoinchar(arr, ' ');
+	printf("var %p\n", var);
+	ft_free_str_arr(arr);
 	return (var);
 }
 
@@ -145,21 +144,22 @@ void	ft_export(t_shell *s, t_command *c)
 
 	if (!c || !s || !c->cmd || !c->cmd[0] || !c->cmd[1])
 		return ;
-	var = c->cmd[1];
-	// var = clean_variable(c->cmd[1]);
+	// var = c->cmd[1];
+	var = trim_quotes(c->cmd[1]);
+	// printf("exp cmd: %s\n", var);
 	if (!is_param(var))
 	{
 		ft_error("minishell: export", "not a valid identifier", var, 1);
 		return ;
 	}
 	s->params = env_append(s->params, var);
-	printf("params:\n");
-	ft_print_strarr(s->params);
 	var_index = search_array(s->env, var);
 	if (var_index >= 0)
 		ft_export_replace(s->env, var, var_index);
 	else
 		ft_export_append(&s->env, var);
+	printf("free var %p", var);
+	free(var);
 }
 
 // int	main(int ac, char **av, char **env)

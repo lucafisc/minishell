@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lde-ross <lde-ross@student.42berlin.de     +#+  +:+       +#+        */
+/*   By: tfregni <tfregni@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/30 07:33:56 by tfregni           #+#    #+#             */
-/*   Updated: 2023/04/26 19:46:03 by lde-ross         ###   ########.fr       */
+/*   Updated: 2023/04/28 12:49:40 by tfregni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,17 +60,25 @@ void	free_cd(char *path, char *oldpwd)
 /* It sets the value of path expanding - or "" */
 void	set_path(t_command *c, char **path)
 {
+	char	*trimmed;
+	
 	if (!c->cmd[1])
 	{
 		*path = ft_strdup(ft_getenv("HOME"));
 		c->cmd = env_append(c->cmd, *path);
 	}
-	else if (!c->cmd[1][0])
-		*path = ft_strdup(".");
-	else if (!ft_strncmp(c->cmd[1], "-", 2))
-		*path = ft_strdup(ft_getenv("OLDPWD"));
 	else
-		*path = ft_strdup(c->cmd[1]);
+	{
+		trimmed = trim_quotes(c->cmd[1]);
+		free(c->cmd[1]);
+		c->cmd[1] = trimmed;	
+		if (!c->cmd[1][0])
+			*path = ft_strdup(".");
+		else if (!ft_strncmp(c->cmd[1], "-", 2))
+			*path = ft_strdup(ft_getenv("OLDPWD"));
+		else
+			*path = ft_strdup(c->cmd[1]);
+	}
 }
 
 void	ft_cd(t_shell *s, t_command *c)

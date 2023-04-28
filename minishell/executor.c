@@ -6,7 +6,7 @@
 /*   By: tfregni <tfregni@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/04 12:58:08 by tfregni           #+#    #+#             */
-/*   Updated: 2023/04/27 18:21:16 by tfregni          ###   ########.fr       */
+/*   Updated: 2023/04/28 13:13:00 by tfregni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -144,24 +144,19 @@ void	execute(t_shell *s, t_command *parsed_cmd)
 	pid_t		pid;
 	int			builtin_idx;
 	t_command	*tmp;
+	char		*trimmed;
 
 	while (parsed_cmd)
 	{
 		builtin_idx = find_builtin(s, parsed_cmd->cmd[0]);
-		// printf("cmd node:\n");
-		// print_cmd_node(&parsed_cmd);
 		if (is_param(parsed_cmd->cmd[0]))
 		{
-			printf("executor not exp: %s\n", parsed_cmd->cmd[0]);
-			parsed_cmd->cmd[0] = lex_expander(parsed_cmd->cmd[0]);
-			printf("executor exp: %s\n", parsed_cmd->cmd[0]);
-			s->params = env_append(s->params, trim_quotes(parsed_cmd->cmd[0]));
+			trimmed = trim_quotes(parsed_cmd->cmd[0]);
+			s->params = env_append(s->params, trimmed);
+			free(trimmed);
 		}
 		else if (builtin_idx >= 0)
-		{
-			printf("executor builtin: %s\n", parsed_cmd->cmd[0]);
 			exec_builtin(s, parsed_cmd, builtin_idx);
-		}
 		else
 		{
 			trim_cmd(&parsed_cmd);
