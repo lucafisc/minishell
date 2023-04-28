@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   executor .c                                        :+:      :+:    :+:   */
+/*   executor.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tfregni <tfregni@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/04 12:58:08 by tfregni           #+#    #+#             */
-/*   Updated: 2023/04/28 17:01:13 by tfregni          ###   ########.fr       */
+/*   Updated: 2023/04/28 17:40:21 by tfregni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,9 +53,9 @@ void	execute(t_shell *s, t_command *parsed_cmd)
 	pid_t		pid;
 	int			builtin_idx;
 
-	pid = -1;
 	while (parsed_cmd)
 	{
+		pid = -1;
 		builtin_idx = find_builtin(s, parsed_cmd->cmd[0]);
 		if (is_param(parsed_cmd->cmd[0]))
 			add_param(s, parsed_cmd);
@@ -63,6 +63,7 @@ void	execute(t_shell *s, t_command *parsed_cmd)
 			exec_builtin(s, parsed_cmd, builtin_idx);
 		else
 		{
+			trim_cmd(&parsed_cmd);
 			parsed_cmd->cmd[0] = find_cmd(s, parsed_cmd->cmd[0]);
 			pid = fork();
 			g_shell->forked = true;
