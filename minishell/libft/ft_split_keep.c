@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_split_keep.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lde-ross <lde-ross@student.42berlin.de     +#+  +:+       +#+        */
+/*   By: lde-ross <lde-ross@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/25 20:57:02 by lde-ross          #+#    #+#             */
-/*   Updated: 2023/04/27 20:38:17 by lde-ross         ###   ########.fr       */
+/*   Updated: 2023/04/28 12:18:09 by lde-ross         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,24 @@ char	*keep_char(char *s, char c, int *i)
 	return (str);
 }
 
+char	*fill_array(char *s, char c, int len, int *i)
+{
+	char	*str;
+
+	if (s[*i] == c)
+	{
+		str = keep_char(s, c, i);
+		*i += 1;
+	}
+	else
+	{
+		len = str_siz_keep((s + *i), c);
+		str = ft_substr(s, *i, len);
+		*i += len;
+	}
+	return (str);
+}
+
 char	**ft_split_keep(char *s, char c)
 {
 	int		words;
@@ -88,17 +106,7 @@ char	**ft_split_keep(char *s, char c)
 	i = 0;
 	while (s[i])
 	{
-		if (s[i] == c)
-		{
-			arr[j] = keep_char(s, c, &i);
-			i++;
-		}
-		else
-		{
-			len = str_siz_keep((s + i), c);
-			arr[j] = ft_substr(s, i, len);
-			i += len;
-		}
+		arr[j] = fill_array(s, c, len, &i);
 		j++;
 	}
 	return (arr);
