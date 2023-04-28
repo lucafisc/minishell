@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lde-ross <lde-ross@student.42berlin.de>    +#+  +:+       +#+        */
+/*   By: tfregni <tfregni@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 16:02:25 by tfregni           #+#    #+#             */
-/*   Updated: 2023/04/28 12:03:15 by lde-ross         ###   ########.fr       */
+/*   Updated: 2023/04/28 17:02:09 by tfregni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -133,6 +133,7 @@ void		create_redir(t_command *cmd);
 void		close_fd(t_command *cmd);
 void		free_command(t_command *cmd);
 int			find_builtin(t_shell *s, char *cmd);
+void		add_param(t_shell *s, t_command *c);
 
 /* ETC? */
 void		get_prompt(t_shell *s);
