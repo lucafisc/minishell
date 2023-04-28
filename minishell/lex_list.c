@@ -6,7 +6,7 @@
 /*   By: tfregni <tfregni@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 18:56:58 by tfregni           #+#    #+#             */
-/*   Updated: 2023/04/27 17:40:49 by tfregni          ###   ########.fr       */
+/*   Updated: 2023/04/27 20:50:49 by tfregni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,17 +16,11 @@
 t_lexer	*lex_list_new_node(char *data, int info)
 {
 	t_lexer	*new;
-	// char	*trimmed_data;
 
 	new = malloc(sizeof(*new));
 	if (!new)
 		return (NULL);
-	// trimmed_data = trim_quotes(data);
-	// trimmed_data = ft_strdup(data);
 	new->data = ft_strdup(data);
-	// printf("lex new node data: %s trimmed: %s\n", data, new->data);
-	// free(trimmed_data);
-	// new->data = ft_strdup(data);
 	new->info = info;
 	new->pipe = 0;
 	new->prev = NULL;

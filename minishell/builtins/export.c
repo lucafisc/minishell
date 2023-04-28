@@ -6,7 +6,7 @@
 /*   By: tfregni <tfregni@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/29 15:19:22 by tfregni           #+#    #+#             */
-/*   Updated: 2023/04/28 13:24:45 by tfregni          ###   ########.fr       */
+/*   Updated: 2023/04/28 15:22:07 by tfregni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ char	*clean_variable(char *input)
 
 	arr = ft_split(input, ' ');
 	var = ft_strnjoinchar(arr, ' ');
-	printf("var %p\n", var);
+	// printf("clean->var %p\n", var);
 	ft_free_str_arr(arr);
 	return (var);
 }
@@ -146,6 +146,7 @@ void	ft_export(t_shell *s, t_command *c)
 		return ;
 	// var = c->cmd[1];
 	var = trim_quotes(c->cmd[1]);
+	// printf("export assign var %p\n", var);
 	// printf("exp cmd: %s\n", var);
 	if (!is_param(var))
 	{
@@ -158,7 +159,7 @@ void	ft_export(t_shell *s, t_command *c)
 		ft_export_replace(s->env, var, var_index);
 	else
 		ft_export_append(&s->env, var);
-	printf("free var %p", var);
+	// printf("export free var %p\n", var);
 	free(var);
 }
 

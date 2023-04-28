@@ -6,7 +6,7 @@
 /*   By: tfregni <tfregni@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/04 12:58:08 by tfregni           #+#    #+#             */
-/*   Updated: 2023/04/28 13:13:00 by tfregni          ###   ########.fr       */
+/*   Updated: 2023/04/28 15:22:37 by tfregni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -148,12 +148,14 @@ void	execute(t_shell *s, t_command *parsed_cmd)
 
 	while (parsed_cmd)
 	{
+		pid = -1;
 		builtin_idx = find_builtin(s, parsed_cmd->cmd[0]);
 		if (is_param(parsed_cmd->cmd[0]))
 		{
 			trimmed = trim_quotes(parsed_cmd->cmd[0]);
-			s->params = env_append(s->params, trimmed);
-			free(trimmed);
+			free(parsed_cmd->cmd[0]);
+			parsed_cmd->cmd[0] = trimmed;
+			s->params = env_append(s->params, parsed_cmd->cmd[0]);
 		}
 		else if (builtin_idx >= 0)
 			exec_builtin(s, parsed_cmd, builtin_idx);

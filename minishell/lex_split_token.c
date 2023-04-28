@@ -6,7 +6,7 @@
 /*   By: tfregni <tfregni@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/01 12:54:23 by tfregni           #+#    #+#             */
-/*   Updated: 2023/04/27 18:28:55 by tfregni          ###   ########.fr       */
+/*   Updated: 2023/04/28 12:32:32 by tfregni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -195,7 +195,6 @@ char	**lex_split_token(char *str)
 	int		j;
 
 	n_cmds = count_tokens(str);
-
 	arr = malloc(sizeof(*arr) * (n_cmds + 1));
 	if (!arr)
 		return (NULL);
@@ -236,9 +235,9 @@ char	**lex_split_token(char *str)
 	while (arr[++i])
 	{
 		//if (i > 0 && ft_strncmp(arr[i - 1], "echo", 5))
-		printf("lex_split_token bef exp: %s\n", arr[i]);
+		// printf("lex_split_token bef exp: %s\n", arr[i]);
 		arr[i] = lex_expander(arr[i]);
-		printf("lex_split_token after exp: %s\n", arr[i]);
+		// printf("lex_split_token after exp: %s\n", arr[i]);
 	}
 	//ft_print_strarr(arr);
 	return(arr);

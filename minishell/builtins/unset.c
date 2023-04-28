@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   unset.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lde-ross <lde-ross@student.42berlin.de     +#+  +:+       +#+        */
+/*   By: tfregni <tfregni@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/29 19:48:25 by lde-ross          #+#    #+#             */
-/*   Updated: 2023/04/26 19:40:07 by lde-ross         ###   ########.fr       */
+/*   Updated: 2023/04/28 14:22:17 by tfregni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,8 @@ void	ft_unset(t_shell *s, t_command *c)
 		ft_putendl_fd("unset: not enough arguments", 2);
 		return ;
 	}
-	var = c->cmd[1];
+	// var = c->cmd[1];
+	var = trim_quotes(c->cmd[1]);
 	var_index = 1;
 	while (var_index >= 0)
 	{
@@ -101,6 +102,7 @@ void	ft_unset(t_shell *s, t_command *c)
 	var_index = arg_index(s->env, var);
 	if (var_index >= 0)
 		ft_unset_remove(&(s->env), var_index);
+	free(var);
 	return ;
 }
 

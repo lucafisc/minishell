@@ -6,7 +6,7 @@
 /*   By: tfregni <tfregni@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/12 14:59:28 by lde-ross          #+#    #+#             */
-/*   Updated: 2023/04/27 18:42:36 by tfregni          ###   ########.fr       */
+/*   Updated: 2023/04/28 11:47:34 by tfregni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,8 @@ char	*retrieve_param(char *key)
 	char	**params;
 
 	params = g_shell->params;
-	printf("retrieve\n");
-	ft_print_strarr(params);
+	// printf("retrieve\n");
+	// ft_print_strarr(params);
 	if (params)
 	{
 		len = ft_strlen(key);
@@ -29,7 +29,7 @@ char	*retrieve_param(char *key)
 		{
 			if (!ft_strncmp(params[i], key, len) && params[i][len] == '=')
 			{
-				printf("retrieve par: %s\n", params[i]);
+				// printf("retrieve par: %s\n", params[i]);
 				return (params[i] + len + 1);
 			}
 		}
@@ -90,7 +90,7 @@ char	*lex_expander(char *cmds)
 
 	if (!cmds)
 		return (cmds);
-	printf("expander cmd: %s\n", cmds);
+	// printf("expander cmd: %s\n", cmds);
 	cur = cmds;
 	i = 0;
 	state = IN_NORMAL;
@@ -105,7 +105,7 @@ char	*lex_expander(char *cmds)
 		// if ((cur[i] == '~' || cur[i] == '$') && state != IN_S_QUOTE)
 		{
 			cmds = expand_var(cur, cmds, i);
-			printf("expander cmd expanded: %s\n", cmds);
+			// printf("expander cmd expanded: %s\n", cmds);
 			cur = cmds;
 		}
 		i++;

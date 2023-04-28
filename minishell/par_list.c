@@ -6,7 +6,7 @@
 /*   By: tfregni <tfregni@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/12 16:54:04 by lde-ross          #+#    #+#             */
-/*   Updated: 2023/04/26 02:29:17 by tfregni          ###   ########.fr       */
+/*   Updated: 2023/04/27 20:39:03 by tfregni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,7 @@ static t_command	*init_command(int len)
 		return (NULL);
 	new->infile = 0;
 	new->outfile = 1;
-	new->fd_pipe[0] = 0;
-	new->fd_pipe[1] = 1;
+	new->expanded = 0;
 	new->prev = NULL;
 	new->next = NULL;
 	return (new);
