@@ -6,7 +6,7 @@
 /*   By: lde-ross <lde-ross@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/25 20:57:02 by lde-ross          #+#    #+#             */
-/*   Updated: 2023/04/28 12:18:09 by lde-ross         ###   ########.fr       */
+/*   Updated: 2023/04/28 12:21:38 by lde-ross         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,9 +69,10 @@ char	*keep_char(char *s, char c, int *i)
 	return (str);
 }
 
-char	*fill_array(char *s, char c, int len, int *i)
+char	*fill_array(char *s, char c, int *i)
 {
 	char	*str;
+	int		len;
 
 	if (s[*i] == c)
 	{
@@ -93,7 +94,6 @@ char	**ft_split_keep(char *s, char c)
 	char	**arr;
 	int		i;
 	int		j;
-	int		len;
 
 	if (!s)
 		return (NULL);
@@ -106,7 +106,7 @@ char	**ft_split_keep(char *s, char c)
 	i = 0;
 	while (s[i])
 	{
-		arr[j] = fill_array(s, c, len, &i);
+		arr[j] = fill_array(s, c, &i);
 		j++;
 	}
 	return (arr);
