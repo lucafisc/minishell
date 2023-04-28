@@ -6,7 +6,7 @@
 /*   By: tfregni <tfregni@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/27 14:49:58 by lde-ross          #+#    #+#             */
-/*   Updated: 2023/04/28 17:01:27 by tfregni          ###   ########.fr       */
+/*   Updated: 2023/04/28 21:05:22 by tfregni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,9 +70,9 @@ int	find_builtin(t_shell *s, char *cmd)
 void	add_param(t_shell *s, t_command *c)
 {
 	char		*trimmed;
-		
+
 	trimmed = trim_quotes(c->cmd[0]);
-	free(c->cmd[0]);
-	c->cmd[0] = trimmed;
-	s->params = env_append(s->params, c->cmd[0]);
+	// free(c->cmd[0]);
+	// c->cmd[0] = trimmed;
+	s->params = env_append(s->params, trimmed);
 }

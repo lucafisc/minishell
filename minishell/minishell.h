@@ -6,7 +6,7 @@
 /*   By: tfregni <tfregni@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 16:02:25 by tfregni           #+#    #+#             */
-/*   Updated: 2023/04/28 17:02:09 by tfregni          ###   ########.fr       */
+/*   Updated: 2023/04/28 20:27:06 by tfregni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@
 # define N_BUILTINS 7
 # define HEREDOC_NAME "_heredoc_temp"
 # define QUOTES "\'\""
+# define FLAG_CHAR 255
 
 typedef enum s_bool
 {

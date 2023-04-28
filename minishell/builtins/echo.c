@@ -6,7 +6,7 @@
 /*   By: tfregni <tfregni@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/30 15:46:57 by lde-ross          #+#    #+#             */
-/*   Updated: 2023/04/28 18:39:31 by tfregni          ###   ########.fr       */
+/*   Updated: 2023/04/28 20:33:21 by tfregni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,11 +102,11 @@ void	ft_echo(t_shell *s, t_command *c)
 	i = 1;
 	printf("echo args\n");
 	ft_print_strarr(args);
-	// if (args[i] && !ft_strncmp(args[i], "-n", 2))
-	// {
-	// 	i++;
-	// 	n = false;
-	// }
+	if (args[i] && !ft_strncmp(args[i], "-n", 2))
+	{
+		i++;
+		n = false;
+	}
 	// printf("echo before clean: %s\n", args[i]);
 	// printf("echo after clean: %s\n", args[i]);
 	while (args[i])

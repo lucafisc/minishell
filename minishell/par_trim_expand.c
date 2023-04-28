@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   par_trim_expand.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lde-ross <lde-ross@student.42berlin.de>    +#+  +:+       +#+        */
+/*   By: tfregni <tfregni@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/12 16:41:40 by lde-ross          #+#    #+#             */
-/*   Updated: 2023/04/28 11:55:47 by lde-ross         ###   ########.fr       */
+/*   Updated: 2023/04/28 21:04:48 by tfregni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,8 +76,7 @@ t_bool	is_in_quote(char *str)
 }
 
 /* Given a string without spaces it cleans it from outer quotes
-keeping inner quotes. It frees the given data.
-TODO Flag if a quote is not closed in the data */
+keeping inner quotes */
 char	*trim_quotes(char *data)
 {
 	int		i;
@@ -85,23 +84,28 @@ char	*trim_quotes(char *data)
 	char	*trimmed;
 	char	c;
 
-	trimmed = ft_calloc(ft_strlen(data) + 1, sizeof(*trimmed));
-	if (!trimmed)
-		return (NULL);
 	i = 0;
 	j = 0;
-	while (data[i])
+	if (!ft_strchr(data, FLAG_CHAR))
 	{
-		if (ft_strchr(QUOTES, data[i]))
+		trimmed = ft_calloc(ft_strlen(data) + 1, sizeof(*trimmed));
+		if (!trimmed)
+			return (data);
+		while (data[i])
 		{
-			c = data[i];
-			i++;
-			while (data[i] && data[i] != c)
+			if (ft_strchr(QUOTES, data[i]))
+			{
+				c = data[i];
+				i++;
+				while (data[i] && data[i] != c)
+					trimmed[j++] = data[i++];
+				i++;
+			}
+			else
 				trimmed[j++] = data[i++];
-			i++;
 		}
-		else
-			trimmed[j++] = data[i++];
+		return (trimmed);
 	}
-	return (trimmed);
+	*(ft_strchr(data, FLAG_CHAR)) = '\0';
+	return (data);
 }

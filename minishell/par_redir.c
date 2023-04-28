@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   par_redir.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lde-ross <lde-ross@student.42berlin.de     +#+  +:+       +#+        */
+/*   By: tfregni <tfregni@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/12 16:55:28 by lde-ross          #+#    #+#             */
-/*   Updated: 2023/04/27 17:00:29 by lde-ross         ###   ########.fr       */
+/*   Updated: 2023/04/28 20:41:47 by tfregni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,14 +46,15 @@ void	handle_heredoc(t_lexer *lex, int *open_flag)
 
 void	par_fill_cmd(int *i, t_lexer *start, t_command **cmd_node)
 {
-	int			str_len;
+	// int			str_len;
 	t_command	*new;
 
 	new = *cmd_node;
-	str_len = ft_strlen(start->data);
-	new->cmd[*i] = malloc(sizeof(char) * (str_len + 1));
-	if (!new->cmd[*i])
-		return ;
-	ft_strlcpy(new->cmd[*i], start->data, str_len + 1);
+	// str_len = ft_strlen(start->data);
+	new->cmd[*i] = ft_strdup(start->data);
+	// new->cmd[*i] = malloc(sizeof(char) * (str_len + 1));
+	// if (!new->cmd[*i])
+	// 	return ;
+	// ft_strlcpy(new->cmd[*i], start->data, str_len + 1);
 	*i += 1;
 }
