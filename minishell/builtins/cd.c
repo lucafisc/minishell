@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lde-ross <lde-ross@student.42berlin.de     +#+  +:+       +#+        */
+/*   By: lde-ross <lde-ross@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/30 07:33:56 by tfregni           #+#    #+#             */
-/*   Updated: 2023/04/26 19:46:03 by lde-ross         ###   ########.fr       */
+/*   Updated: 2023/04/28 11:38:25 by lde-ross         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,6 @@ void	update_pwd(t_shell *s, t_command *c, char *oldpwd)
 
 	(void) c;
 	cwd = getcwd(NULL, 0);
-	// printf("pwd: %s oldpwd: %s\n", cwd, oldpwd);
 	if (!cwd)
 	{
 		throw_err("cd", cwd);
@@ -41,11 +40,9 @@ void	update_pwd(t_shell *s, t_command *c, char *oldpwd)
 		return ;
 	}
 	tmp = ft_strjoin("OLDPWD=", oldpwd);
-	// printf("%s\n", tmp);
 	internal_export(s, tmp);
 	free(tmp);
 	tmp = ft_strjoin("PWD=", cwd);
-	// printf("%s\n", tmp);
 	internal_export(s, tmp);
 	free(tmp);
 	free(cwd);

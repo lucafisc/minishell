@@ -3,15 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lde-ross <lde-ross@student.42berlin.de     +#+  +:+       +#+        */
+/*   By: lde-ross <lde-ross@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/30 15:46:57 by lde-ross          #+#    #+#             */
-/*   Updated: 2023/04/24 16:10:15 by lde-ross         ###   ########.fr       */
+/*   Updated: 2023/04/28 11:59:15 by lde-ross         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 // ft_echo works assuming a null terminated 2D array of args is given as input.
-// if the option -n is enabled, the string "-n" should be at index 0 of this array
+// if the option -n is enabled, the string
+// "-n" should be at index 0 of this array
 // it assumes the parser will interpret the arguments before
 
 //in this case args[1] should equal "hello         hi":
@@ -75,7 +76,7 @@ void	ft_echo(t_shell *s, t_command *c)
 	while (args[i])
 	{
 		ft_putstr_fd(args[i], c->outfile);
-		if (args[i][0] && args[i + 1])
+		if (args[i + 1])
 			ft_putchar_fd(' ', c->outfile);
 		i++;
 	}

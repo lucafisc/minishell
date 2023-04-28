@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   par_redir_utils.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lde-ross <lde-ross@student.42berlin.de     +#+  +:+       +#+        */
+/*   By: lde-ross <lde-ross@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/27 16:56:58 by lde-ross          #+#    #+#             */
-/*   Updated: 2023/04/27 17:00:32 by lde-ross         ###   ########.fr       */
+/*   Updated: 2023/04/28 12:02:12 by lde-ross         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,11 +70,13 @@ t_redir	is_redir(char *str)
 void	new_redir(int redir, t_lexer **lexer_node, t_command **cmd_node)
 {
 	t_lexer	*start;
+	char	*err;
 
+	err = "minishell: syntax error near unexpected token 'newline'\n";
 	start = *lexer_node;
 	if (!start->next && redir)
 	{
-		ft_putstr_fd("minishell: syntax error near unexpected token 'newline'\n", 2);
+		ft_putstr_fd(err, 2);
 		start = start->next;
 		return ;
 	}

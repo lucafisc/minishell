@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lex_list.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lde-ross <lde-ross@student.42berlin.de     +#+  +:+       +#+        */
+/*   By: lde-ross <lde-ross@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 18:56:58 by tfregni           #+#    #+#             */
-/*   Updated: 2023/04/27 15:59:22 by lde-ross         ###   ########.fr       */
+/*   Updated: 2023/04/28 11:56:14 by lde-ross         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,6 @@ t_lexer	*lex_list_new_node(char *data, int info)
 	if (!new)
 		return (NULL);
 	new->data = ft_strdup(data);
-	// printf("lex new node data: %s trimmed: %s\n", data, new->data);
-	// new->data = ft_strdup(data);
 	new->info = info;
 	new->pipe = 0;
 	new->prev = NULL;

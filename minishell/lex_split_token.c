@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lex_split_token.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lde-ross <lde-ross@student.42berlin.de     +#+  +:+       +#+        */
+/*   By: lde-ross <lde-ross@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/01 12:54:23 by tfregni           #+#    #+#             */
-/*   Updated: 2023/04/27 18:11:36 by lde-ross         ###   ########.fr       */
+/*   Updated: 2023/04/28 12:10:03 by lde-ross         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,6 +85,7 @@ int	count_tokens(char *str)
 	return (count);
 }
 
+
 char	**lex_split_token(char *str)
 {
 	int		n_cmds;
@@ -132,7 +133,5 @@ char	**lex_split_token(char *str)
 		else
 			i++;
 	}
-	i = -1;
-
 	return (arr);
 }

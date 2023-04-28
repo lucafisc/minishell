@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lex_split_list.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lde-ross <lde-ross@student.42berlin.de     +#+  +:+       +#+        */
+/*   By: lde-ross <lde-ross@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/03 15:53:30 by lde-ross          #+#    #+#             */
-/*   Updated: 2023/04/26 17:27:49 by lde-ross         ###   ########.fr       */
+/*   Updated: 2023/04/28 11:42:22 by lde-ross         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,9 +104,7 @@ void	lex_split_list(t_lexer **list)
 			matrix = ft_split_keep(cur->data, c);
 			new = lex_list_from_table(matrix);
 			ft_free_str_arr(matrix);
-			// *list = replace_node_by_list(list, cur, &new);
-			// cur = *list;
-			cur = replace_node(cur, new, list); // I'm returning the beginning of the list but maybe it can on form there
+			cur = replace_node(cur, new, list);
 		}
 		else
 			cur = cur->next;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lex_expander.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lde-ross <lde-ross@student.42berlin.de     +#+  +:+       +#+        */
+/*   By: lde-ross <lde-ross@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/12 14:59:28 by lde-ross          #+#    #+#             */
-/*   Updated: 2023/04/27 20:08:40 by lde-ross         ###   ########.fr       */
+/*   Updated: 2023/04/28 11:58:50 by lde-ross         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,6 @@ char	*expand_var(char *cur, char *cmds, int i)
 		free(trimmed);
 	}
 	free(cmds);
-	// printf("segfault\n");
 	return (new_cmd);
 }
 
@@ -104,9 +103,11 @@ char	*lex_expander(char *cmds)
 	return (cmds);
 }
 
-char **expander(char **arr)
+char	**expander(char **arr)
 {
-	int	i = 0;
+	int	i;
+
+	i = 0;
 	while (arr[i])
 	{
 		arr[i] = lex_expander(arr[i]);
