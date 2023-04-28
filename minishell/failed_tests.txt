@@ -1,5 +1,5 @@
 
- 
+
 
 SOLVED cd
 -----
@@ -27,6 +27,8 @@ Note that the behavior of the "cd" command might vary depending on the implement
 SOLVED cd $PWD/file_tests
 ------
 SOLVED cd $OLDPWD/builtins
+------
+cd "~/Desktop" -> bash: cd: ~/Desktop: No such file or directory (check expansion in error message)
 
 TODO Escape spaces in dir name (or it's fine not to)
 
@@ -53,11 +55,11 @@ SOLVED echo text"'$USER'" ' $USER ' -> text'tim'  $USER
 ------
 SOLVED echo               text "$USER"            "$USER"text -> text tim timtext
 ------
-SOLVED echo ''''''''''$USER'''''''''' -> tim
+echo ''''''''''$USER'''''''''' -> tim (it triggers the unclosed quotes error)
 ------
-SOLVED echo """"""""$USER"""""""" -> tim
+echo """"""""$USER"""""""" -> tim
 ------
-SOLVED echo $USER'$USER'text oui oui     oui  oui $USER oui      $USER '' -> tim$USERtext oui oui oui oui tim oui tim
+echo $USER'$USER'text oui oui     oui  oui $USER oui      $USER '' -> tim$USERtext oui oui oui oui tim oui tim
 ------
 SOLVED echo ' \' ' \' ->  \  \
 ------
@@ -65,7 +67,7 @@ echo '\" ' " \"\"" -> \"   ""
 ------
 echo \\\" \\\" \\\" \\\"\\\"\\\" \\\'\\\'\\\' -> \" \" \" \"\"\" \'\'\'
 ------
-echo '$'
+SOLVED echo '$'
 ------
 SOLVED echo "'$   bla'" -> '$   bla'
 ------
@@ -79,6 +81,24 @@ SOLVED echo text"$USER"test -> texttimtest
 ------
 SOLVED echo '$USER' "$USER" "text \' text" -> $USER tfregni text \' text
 ------
-export | grep "SHLVL" -> declare -x SHLVL="3"
-
-export test=" foo   bar " 
+SOLVED (undefined) export | grep "SHLVL" -> declare -x SHLVL="3"
+------
+export test=" foo   bar " -> foo bar
+------
+export test="  ' foo    bar'  " -> ' foo bar'
+------
+export test="   '   $USER  bla ' " -> ' tfregni bla '
+------
+echo hello $test -> hello ' tfregni bla '
+In bash:
+	cmd							stored									output			clean
+	export test="'$USER'" -> 				test='tfregni'				'tfregni'
+	export test='$USER' -> 					test=$USER					$USER
+	export test=$USER -> 					test=tfregni				tfregni
+	export test="  ' foo  bar'" -> 			test=  ' foo  bar'			' foo bar'		yes
+	export test="  '  foo  $USER   ' " -> 	test=  '  foo  tfregni   '	' foo tfregni '	yes
+	export test="    foo   $USER    " -> 	test=    foo   tfregni		foo tfregni		yes
+	export test=" '  $USER   foo '  "		test= '  tfregni   foo '	' tfregni foo '	yes
+	export test="'   foo  $USER ' "			test='   foo  tfregni '		' foo tfregni '	yes
+	export test="'foo  $USER ' "			test='foo  tfregni '		'foo tfregni '	yes
+	export test="foo    $USER  "			test=foo    tfregni			foo tfregni
