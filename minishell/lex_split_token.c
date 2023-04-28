@@ -6,7 +6,7 @@
 /*   By: lde-ross <lde-ross@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/01 12:54:23 by tfregni           #+#    #+#             */
-/*   Updated: 2023/04/28 12:10:03 by lde-ross         ###   ########.fr       */
+/*   Updated: 2023/04/28 12:32:37 by lde-ross         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,42 +21,6 @@ t_bool	is_token(char c, int state)
 		|| (state == IN_NORMAL && !ft_is_space(c)))
 		return (true);
 	return (false);
-}
-
-void	loop_token(int *state, int *cmd, char **arr, char *str)
-{
-	int	j;
-	int	new_cmd_flag;
-	int	i;
-
-	i = 0;
-	while (str[i])
-	{
-		if (!is_token(str[i], *state))
-			new_cmd_flag = lex_update_state(str, &i, state);
-		else
-		{
-			j = i;
-			while (str[j] && is_token(str[j], *state))
-			{
-				new_cmd_flag = lex_update_state(str, &j, state);
-				if (new_cmd_flag == 1 || lex_check_state(str, j, *state) == 2)
-					break ;
-			}
-			arr[*cmd++] = ft_substr(str + i, 0, j - i);
-			i = j;
-		}
-	}
-}
-
-int	split_token(char **arr, char *str, int *state)
-{
-	int	cmd;
-
-	cmd = 0;
-	loop_token(state, &cmd, arr, str);
-	arr[cmd] = NULL;
-	return (cmd);
 }
 
 t_bool	is_next_new_tok(char *str, int i)
@@ -85,6 +49,32 @@ int	count_tokens(char *str)
 	return (count);
 }
 
+char	*fill_new_token(char *str, int *i)
+{
+	char	*arr;
+	int		start;
+	int		len;
+	int		prev;
+
+	if (*i != 0)
+		*i += 1;
+	start = *i;
+	len = 0;
+	while (str[*i] && !ft_is_space(str[*i]))
+	{
+		if (str[*i] == '\"' || str[*i] == '\'')
+		{
+			prev = *i;
+			*i = ft_skip_char(str, str[*i], *i);
+			len += *i + 1 - prev;
+		}
+		else
+			len++;
+		*i += 1;
+	}
+	arr = ft_substr(str, start, len);
+	return (arr);
+}
 
 char	**lex_split_token(char *str)
 {
@@ -92,12 +82,8 @@ char	**lex_split_token(char *str)
 	char	**arr;
 	int		i;
 	int		j;
-	int		start;
-	int		len;
-	int		prev;
 
 	n_cmds = count_tokens(str);
-	len = 0;
 	arr = malloc(sizeof(*arr) * (n_cmds + 1));
 	if (!arr)
 		return (NULL);
@@ -108,26 +94,7 @@ char	**lex_split_token(char *str)
 	{
 		if (is_next_new_tok(str, i))
 		{
-			if (i != 0)
-				i++;
-			start = i;
-			len = 0;
-			while (str[i] && !ft_is_space(str[i]))
-			{
-				if (str[i] == '\"' || str[i] == '\'')
-				{
-					prev = i;
-					i = ft_skip_char(str, str[i], i);
-					i++;
-					len += i - prev;
-				}
-				else
-				{
-					i++;
-					len++;
-				}
-			}
-			arr[j] = ft_substr(str, start, len);
+			arr[j] = fill_new_token(str, &i);
 			j++;
 		}
 		else
