@@ -6,7 +6,7 @@
 /*   By: tfregni <tfregni@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/12 16:41:40 by lde-ross          #+#    #+#             */
-/*   Updated: 2023/04/28 21:04:48 by tfregni          ###   ########.fr       */
+/*   Updated: 2023/04/28 23:08:35 by tfregni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,25 @@ t_bool	is_in_quote(char *str)
 	return (false);
 }
 
+void	add_flag_char(char **data)
+{
+	char	*flagged;
+	int		len;
+	int		i;
+
+	len = ft_strlen(*data);
+	flagged = ft_calloc(sizeof(*flagged), len + 2);
+	if (!flagged)
+		return ;
+	ft_strlcpy(flagged, *data, len + 1);
+	i = 0;
+	while (flagged[i])
+		i++;
+	flagged[i] = (char) FLAG_CHAR;
+	// free(*data);
+	*data = flagged;
+}
+
 /* Given a string without spaces it cleans it from outer quotes
 keeping inner quotes */
 char	*trim_quotes(char *data)
@@ -86,6 +105,7 @@ char	*trim_quotes(char *data)
 
 	i = 0;
 	j = 0;
+	// printf("trim quotes to %s\n", data);
 	if (!ft_strchr(data, FLAG_CHAR))
 	{
 		trimmed = ft_calloc(ft_strlen(data) + 1, sizeof(*trimmed));
@@ -106,6 +126,9 @@ char	*trim_quotes(char *data)
 		}
 		return (trimmed);
 	}
-	*(ft_strchr(data, FLAG_CHAR)) = '\0';
+	// printf("second last: %c\n", *(ft_strchr(data, FLAG_CHAR) - 1));
+	// if (*(ft_strchr(data, FLAG_CHAR) - 1) == '"')
+	// 	*(ft_strchr(data, FLAG_CHAR) - 1) = '\0';
+	*ft_strchr(data, FLAG_CHAR) = '\0';
 	return (data);
 }

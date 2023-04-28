@@ -102,3 +102,6 @@ In bash:
 	export test="'   foo  $USER ' "			test='   foo  tfregni '		' foo tfregni '	yes
 	export test="'foo  $USER ' "			test='foo  tfregni '		'foo tfregni '	yes
 	export test="foo    $USER  "			test=foo    tfregni			foo tfregni
+
+	test="'$USER'"
+	echo "'$USER' $test"												'tim' 'tim'

@@ -6,7 +6,7 @@
 /*   By: tfregni <tfregni@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/30 15:46:57 by lde-ross          #+#    #+#             */
-/*   Updated: 2023/04/28 20:33:21 by tfregni          ###   ########.fr       */
+/*   Updated: 2023/04/28 23:11:59 by tfregni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,11 +97,11 @@ void	ft_echo(t_shell *s, t_command *c)
 	if (!c || !c->cmd)
 		return ;
 	args = c->cmd;
-	n = check_echo_flag(args);
-	printf("flag: %d\n", n);
+	// n = check_echo_flag(args);
+	// printf("flag -n: %d\n", n);
 	i = 1;
-	printf("echo args\n");
-	ft_print_strarr(args);
+	// printf("echo args\n");
+	// ft_print_strarr(args);
 	if (args[i] && !ft_strncmp(args[i], "-n", 2))
 	{
 		i++;
@@ -112,13 +112,13 @@ void	ft_echo(t_shell *s, t_command *c)
 	while (args[i])
 	{
 		var = clean_variable(args[i]);
-		ft_putstr_fd(var, c->outfile);
+		ft_putstr_fd(trim_quotes(var), c->outfile);
 		if (var[0] && args[i + 1])
 			ft_putchar_fd(' ', c->outfile);
 		i++;
 		free(var);
 	}
-	if (!n)
+	if (n)
 		ft_putchar_fd('\n', c->outfile);
 	// printf("echo var: %p\n", var);
 }

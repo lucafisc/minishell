@@ -6,7 +6,7 @@
 /*   By: tfregni <tfregni@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 16:02:25 by tfregni           #+#    #+#             */
-/*   Updated: 2023/04/28 20:27:06 by tfregni          ###   ########.fr       */
+/*   Updated: 2023/04/28 21:35:30 by tfregni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,6 +108,7 @@ void		free_lex(t_lexer **list);
 void		for_each_lex_node(t_lexer **list, void (*f)(t_lexer **cmd));
 void		lex_split_list(t_lexer **list);
 char		**expander(char **arr);
+void		add_flag_char(char **data);
 
 /* PARSER */
 t_command	*parser(t_lexer *lex);

@@ -6,7 +6,7 @@
 /*   By: tfregni <tfregni@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/12 14:59:28 by lde-ross          #+#    #+#             */
-/*   Updated: 2023/04/28 21:05:13 by tfregni          ###   ########.fr       */
+/*   Updated: 2023/04/28 23:08:53 by tfregni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,25 +32,6 @@ char	*retrieve_param(char *key)
 	return (ft_getenv(key));
 }
 
-void	add_flag_char(char **data)
-{
-	char	*flagged;
-	int		len;
-	int		i;
-
-	len = ft_strlen(*data);
-	flagged = ft_calloc(sizeof(*flagged), len + 2);
-	if (!flagged)
-		return ;
-	ft_strlcpy(flagged, *data, len + 1);
-	i = 0;
-	while (flagged[i])
-		i++;
-	flagged[i] = (char) FLAG_CHAR;
-	// free(*data);
-	*data = flagged;
-}
-
 char	*expand_var(char *cur, char *cmds, int i)
 {
 	char	*trimmed;
@@ -66,12 +47,17 @@ char	*expand_var(char *cur, char *cmds, int i)
 		if (len_trim == 0)
 			new_cmd = ft_strins(cmds, "$", len_trim + 1, i);
 		else
-			new_cmd = ft_strins(cmds, retrieve_param(trimmed), len_trim + 1, i);
+		{
+			char *param = retrieve_param(trimmed);
+			new_cmd = ft_strins(cmds, param, len_trim + 1, i);
+			if (ft_strchr(param, QUOTES[0]) || ft_strchr(param, QUOTES[1]))
+			{
+				add_flag_char(&new_cmd);
+				// ("expanded to %s: flag to not trim\n", new_cmd);
+			}
+		}
 		free(trimmed);
 	}
-	printf("expand_var before flag\n");
-	add_flag_char(&new_cmd);
-	// printf("Flagged: %s\n", new_cmd);
 	free(cmds);
 	return (new_cmd);
 }
