@@ -1,17 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   echo.c                                             :+:      :+:    :+:   */
+/*   echo copy.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tfregni <tfregni@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/30 15:46:57 by lde-ross          #+#    #+#             */
-/*   Updated: 2023/04/28 17:27:41 by tfregni          ###   ########.fr       */
+/*   Updated: 2023/04/28 17:22:34 by tfregni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 // ft_echo works assuming a null terminated 2D array of args is given as input.
-// if the option -n is enabled, the string "-n" should be at index 0 of this array
+// if the option -n is enabled, the string
+// "-n" should be at index 0 of this array
 // it assumes the parser will interpret the arguments before
 
 //in this case args[1] should equal "hello         hi":
@@ -23,34 +24,6 @@
 // hello hi
 
 #include "../minishell.h"
-
-// void	ft_echo(char **args)
-// {
-// 	t_bool	n;
-// 	int		i;
-
-// 	if (!args)
-// 		return ;
-// 	n = true;
-// 	i = 0;
-// 	if (args[i] && !ft_strcmp(args[i], "-n"))
-// 	{
-// 		i++;
-// 		n = false;
-// 	}
-// 	while (args[i])
-// 	{
-// 		ft_putstr_fd(args[i], 1);
-// 		// printf("%s", args[i]);
-// 		if (args[i + 1])
-// 			// printf(" ");
-// 			ft_putchar(" ", 1);
-// 		i++;
-// 	}
-// 	if (n)
-// 		ft_putchar("\n", 1);
-// 		// printf("\n");
-// }
 
 char	*clean_variable(char *input)
 {
@@ -84,13 +57,9 @@ void	ft_echo(t_shell *s, t_command *c)
 		i++;
 		n = false;
 	}
-	// printf("echo before clean: %s\n", args[i]);
-	// printf("echo after clean: %s\n", args[i]);
 	while (args[i])
 	{
-		// args[i] = lex_expander(args[i]);
 		var = clean_variable(args[i]);
-		// args[i] = trim_quotes(args[i]);
 		ft_putstr_fd(var, c->outfile);
 		if (var[0] && args[i + 1])
 			ft_putchar_fd(' ', c->outfile);
@@ -98,7 +67,6 @@ void	ft_echo(t_shell *s, t_command *c)
 	}
 	if (n)
 		ft_putchar_fd('\n', c->outfile);
-	// printf("echo var: %p\n", var);
 	free(var);
 }
 

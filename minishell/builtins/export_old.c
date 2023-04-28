@@ -1,30 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   export.c                                           :+:      :+:    :+:   */
+/*   export copy.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tfregni <tfregni@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/29 15:19:22 by tfregni           #+#    #+#             */
-/*   Updated: 2023/04/28 17:28:07 by tfregni          ###   ########.fr       */
+/*   Updated: 2023/04/28 17:19:40 by tfregni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
-
-// /* First version of the parameter validating function */
-// t_bool	is_export_valid(char *var)
-// {
-// 	while (*var && *var != '=')
-// 	{
-// 		if (ft_isdigit(var[0]) || ft_is_space(*var) || !ft_isalnum(*var))
-// 			return (false);
-// 		var++;
-// 	}
-// 	if (!*var)
-// 		return (false);
-// 	return (true);
-// }
 
 void	ft_export_replace(char **env, char *var, int index)
 {
@@ -45,27 +31,7 @@ void	ft_export_append(char ***env, char *var)
 /xcu_chap02.html#tag_02_05_02 */
 /* A param should have =, not start with a digit and not have
 any of the special chars macroed in SP_PARAM */
-// t_bool	is_param(char *input)
-// {
-// 	int		i;
-// 	char	*clean;
-
-// 	i = -1;
-// 	if (!ft_strchr(input, '=') || ft_isdigit(*input))
-// 		return (false);
-// 	clean = clean_variable(input);
-// 	printf("input: %s\n", input);
-// 	while (input && input[++i])
-// 	{
-// 		// printf("%c\n", input[i]);
-// 		if (ft_strchr(QUOTES, input[i]))
-// 			i = ft_skip_char(input, input[i], i);
-// 		if (ft_strchr(SP_PARAM, input[i]) || ft_is_space(input[i]))
-// 			return (false);
-// 	}
-// 	return (true);
-// }
-
+/* Compare to t_bool is_export_valid(char *var) in export.c */
 t_bool	is_param(char *input)
 {
 	int		i;
@@ -98,7 +64,7 @@ t_bool	is_param(char *input)
 /* Export will set the variable also in the shell->params so that
 the expander can always get the latest occurrence */
 /* export AR_=bla doesn't throw an error but doesn't set the var */
-/* From the manual: When no arguments are given, the results are unspecified. */
+/* It should be a valid one: check is_param in main.c */
 void	ft_export(t_shell *s, t_command *c)
 {
 	int		var_index;
@@ -118,7 +84,6 @@ void	ft_export(t_shell *s, t_command *c)
 		ft_export_replace(s->env, var, var_index);
 	else
 		ft_export_append(&s->env, var);
-	// printf("export free var %p\n", var);
 	free(var);
 }
 
