@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lde-ross <lde-ross@student.42berlin.de     +#+  +:+       +#+        */
+/*   By: tfregni <tfregni@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/28 16:31:54 by tfregni           #+#    #+#             */
-/*   Updated: 2023/04/27 16:39:09 by lde-ross         ###   ########.fr       */
+/*   Updated: 2023/04/28 17:51:53 by tfregni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,6 @@ t_command	*parser(t_lexer *lex)
 	n_cmds = par_count_cmds(lex);
 	cmd = par_list_from_lex(lex, n_cmds);
 	free_lex_list(&lex);
-	for_each_par_node(&cmd, trim_cmd);
 	if (g_shell->pipe)
 		setup_pipe(cmd, n_cmds);
 	return (cmd);
