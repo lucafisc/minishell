@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: lde-ross <lde-ross@student.42berlin.de     +#+  +:+       +#+         #
+#    By: tfregni <tfregni@student.42berlin.de>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/04/17 13:03:17 by tfregni           #+#    #+#              #
-#    Updated: 2023/04/27 17:09:18 by lde-ross         ###   ########.fr        #
+#    Updated: 2023/04/29 19:16:56 by tfregni          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,18 +20,42 @@ OBJ = $(addprefix $(OBJDIR)/, $(SRC:.c=.o))
 CC = cc
 CFLAGS = -Wall -Wextra -Werror -g
 NAME = minishell
-CLIENT = client
+OS := $(shell uname)
+ARCH := $(shell uname -m)
 LIBFT = ./libft/libft.a
 # Check the includes and libs on Linux or ARM64
-INCLUDES = -I /usr/local/Cellar/readline/8.2.1/include
-LIBS = -L /usr/local/Cellar/readline/8.2.1/lib -lreadline
+# INCLUDES = -I /usr/local/Cellar/readline/8.2.1/include
+# LIBS = -L /usr/local/Cellar/readline/8.2.1/lib -lreadline
+LIBS = -lreadline
 MAKE = make
+
+ifeq ($(OS), Darwin)
+ifeq ($(ARCH), x86_64)
+INCLUDES += -I /usr/local/Cellar/readline/8.2.1/include
+LIBS += -L /usr/local/Cellar/readline/8.2.1/lib
+endif
+endif
 
 all: $(NAME)
 
 $(NAME): $(OBJ)
-	make $(LIBFT)
-	$(CC) $(CFLAGS) $(OBJ) $(LIBFT) $(INCLUDES) -o $(NAME) $(LIBS)
+	@clear
+	@make $(LIBFT)
+	@printf "Building minishell... "
+	@$(CC) $(CFLAGS) $(OBJ) $(LIBFT) $(INCLUDES) -o $(NAME) $(LIBS)
+	@echo "Done!"
+	@echo
+	@echo "  __  __ _       _ _    _      _ _ "
+	@echo " |  \/  (_)     (_) |  | |    | | | "
+	@echo " | \  / |_ _ __  _| |__| | ___| | | "
+	@echo " | |\/| | | '_ \| |  __  |/ _ \ | | "
+	@echo " | |  | | | | | | | |  | |  __/ | | "
+	@echo " |_|  |_|_|_| |_|_|_|  |_|\___|_|_| "
+	@echo
+	@echo
+	@echo "	by lde-ross & tfregni @42Berlin"
+	@echo
+	@./minishell
 
 $(LIBFT):
 	@$(MAKE) -C libft
@@ -42,26 +66,29 @@ $(LIBFT):
 $(OBJ): | $(OBJDIR)
 
 $(OBJDIR):
-	mkdir -p $(OBJDIR)
-	mkdir -p $(OBJDIR)/builtins
+	@mkdir -p $(OBJDIR)
+	@mkdir -p $(OBJDIR)/builtins
 
 $(OBJDIR)/%.o: %.c
-	$(CC) -c $(CFLAGS) $(INCLUDES) $< -o $@
+	@$(CC) -c $(CFLAGS) $(INCLUDES) $< -o $@
 
 clean:
+	@printf "Cleaning up... "
 ifneq ("$(wildcard $(OBJ))", "")
-	rm -f $(OBJ)
-	rm -rf obj
+	@rm -f $(OBJ)
+	@rm -rf obj
 endif
 	@$(MAKE) -C libft clean
+	@echo "Done"
+	@echo
 
 fclean: clean
 ifneq ("$(wildcard $(NAME))", "")
-	rm -f $(NAME)
+	@rm -f $(NAME)
 endif
 	@$(MAKE) -C libft fclean
 
 re: fclean
-	$(MAKE) all
+	@$(MAKE) all
 
 .PHONY: all clean fclean

@@ -106,6 +106,22 @@ In bash:
 	test="'$USER'"
 	echo "'$USER' $test"												'tim' 'tim'
 
+bash-3.2$ test="    ' foo    bar  '"
+bash-3.2$ echo $test
+' foo bar '
+bash-3.2$ export test="    ' foo    bar  '"
+bash-3.2$ echo $test
+' foo bar '
+bash-3.2$ env | grep test
+test=    ' foo    bar  '
+bash-3.2$ export test="    ' foo    $USER  '"
+bash-3.2$ env | grep test
+test=    ' foo    tim  '
+bash-3.2$ echo $test
+' foo tim '
+bash-3.2$ echo "   ' $test  '"
+   '     ' foo    tim  '  '
+
 par_node trim_cmd removed free
 
 fixed leak in add param: exec_utils add_param: free(trimmed)

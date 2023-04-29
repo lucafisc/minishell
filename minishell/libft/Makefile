@@ -9,19 +9,21 @@ NAME = libft.a
 all: $(NAME)
 
 $(NAME): ${OBJECTS} ${B_OBJECTS}
-	ar rc ${NAME} ${OBJECTS} ${B_OBJECTS}
+	@printf "Building libft... "
+	@ar rc ${NAME} ${OBJECTS} ${B_OBJECTS}
+	@echo "Done!"
 
 %.o: %.c
-	${CC} -c ${CFLAGS} $< -o $@
+	@${CC} -c ${CFLAGS} $< -o $@
 
 clean:
 ifneq ("$(wildcard $(OBJECTS))", "")
-	rm -f ${OBJECTS} ${B_OBJECTS}
+	@rm -f ${OBJECTS} ${B_OBJECTS}
 endif
 
 fclean: clean
 ifneq ("$(wildcard $(NAME))", "")
-	rm -f $(NAME)
+	@rm -f $(NAME)
 endif
 
 re: fclean all

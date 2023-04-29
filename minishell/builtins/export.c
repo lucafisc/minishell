@@ -6,7 +6,7 @@
 /*   By: tfregni <tfregni@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/29 15:19:22 by tfregni           #+#    #+#             */
-/*   Updated: 2023/04/29 11:58:06 by tfregni          ###   ########.fr       */
+/*   Updated: 2023/04/29 18:12:07 by tfregni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,6 @@ t_bool	is_param(char *input)
 
 /* Export will set the variable also in the shell->params so that
 the expander can always get the latest occurrence */
-/* export AR_=bla doesn't throw an error but doesn't set the var */
 /* From the manual: When no arguments are given, the results are unspecified. */
 void	ft_export(t_shell *s, t_command *c)
 {
