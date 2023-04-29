@@ -6,7 +6,7 @@
 /*   By: tfregni <tfregni@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/12 16:54:04 by lde-ross          #+#    #+#             */
-/*   Updated: 2023/04/28 16:42:20 by tfregni          ###   ########.fr       */
+/*   Updated: 2023/04/29 16:36:13 by tfregni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ static t_command	*init_command(int len)
 		return (NULL);
 	new->infile = 0;
 	new->outfile = 1;
+	new->script_line = 0;
 	new->prev = NULL;
 	new->next = NULL;
 	return (new);

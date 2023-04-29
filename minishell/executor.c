@@ -6,7 +6,7 @@
 /*   By: tfregni <tfregni@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/04 12:58:08 by tfregni           #+#    #+#             */
-/*   Updated: 2023/04/29 12:39:15 by tfregni          ###   ########.fr       */
+/*   Updated: 2023/04/29 16:45:17 by tfregni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,15 @@ void	child_routine(t_shell *s, t_command *command)
 {
 	create_redir(command);
 	execve(command->cmd[0], command->cmd, s->env);
-	ft_error("minishell", command->cmd[0],
-		"command not found", 127);
+	if (command->script_line)
+	{
+		ft_putstr_fd("minishell: line ", 2);
+		ft_putnbr_fd(command->script_line, 2);
+		ft_error(NULL, command->cmd[0], "command not found", 127);
+	}
+	else
+		ft_error("minishell", command->cmd[0],
+			"command not found", 127);
 	exit(1);
 }
 

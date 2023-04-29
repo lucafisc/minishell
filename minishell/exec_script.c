@@ -6,7 +6,7 @@
 /*   By: tfregni <tfregni@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 10:07:19 by tfregni           #+#    #+#             */
-/*   Updated: 2023/04/29 13:07:33 by tfregni          ###   ########.fr       */
+/*   Updated: 2023/04/29 16:44:15 by tfregni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,7 @@ void	exec_script(t_shell *s, int fd)
 		if (s->lexer)
 		{
 			s->cmd = parser(s->lexer);
+			s->cmd->script_line = i;
 			execute(s, s->cmd);
 		}
 		free(input);
