@@ -6,7 +6,7 @@
 /*   By: tfregni <tfregni@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/27 16:32:00 by lde-ross          #+#    #+#             */
-/*   Updated: 2023/04/29 16:27:04 by tfregni          ###   ########.fr       */
+/*   Updated: 2023/04/29 22:46:26 by tfregni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,17 +36,17 @@ void	print_cmd_node(t_command **cmd)
 void	trim_cmd(t_command **cmd)
 {
 	int			i;
-	char		*temp;
 	t_command	*command;
+	char		*trimmed;
 
 	i = 0;
 	command = *cmd;
 	while (command->cmd[i])
 	{
-		temp = trim_quotes(command->cmd[i]);
+		trimmed = trim_quotes(command->cmd[i]);
 		free(command->cmd[i]);
-		command->cmd[i] = temp;
-		// printf("trim_cmd cmd[i] %p\n", command->cmd[i]);
+		command->cmd[i] = trimmed;
+		// command->cmd[i] = trim_quotes(command->cmd[i]);
 		i++;
 	}
 }

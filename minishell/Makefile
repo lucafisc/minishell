@@ -6,7 +6,7 @@
 #    By: tfregni <tfregni@student.42berlin.de>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/04/17 13:03:17 by tfregni           #+#    #+#              #
-#    Updated: 2023/04/29 19:16:56 by tfregni          ###   ########.fr        #
+#    Updated: 2023/04/29 21:50:51 by tfregni          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,12 +23,10 @@ NAME = minishell
 OS := $(shell uname)
 ARCH := $(shell uname -m)
 LIBFT = ./libft/libft.a
-# Check the includes and libs on Linux or ARM64
-# INCLUDES = -I /usr/local/Cellar/readline/8.2.1/include
-# LIBS = -L /usr/local/Cellar/readline/8.2.1/lib -lreadline
 LIBS = -lreadline
 MAKE = make
 
+# Check the includes and libs on Linux or ARM64
 ifeq ($(OS), Darwin)
 ifeq ($(ARCH), x86_64)
 INCLUDES += -I /usr/local/Cellar/readline/8.2.1/include
@@ -37,6 +35,10 @@ endif
 endif
 
 all: $(NAME)
+	@./minishell
+
+val: $(NAME)
+	@valgrind --leak-check=full --track-fds=yes ./minishell
 
 $(NAME): $(OBJ)
 	@clear
@@ -55,7 +57,6 @@ $(NAME): $(OBJ)
 	@echo
 	@echo "	by lde-ross & tfregni @42Berlin"
 	@echo
-	@./minishell
 
 $(LIBFT):
 	@$(MAKE) -C libft

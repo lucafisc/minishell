@@ -6,7 +6,7 @@
 /*   By: tfregni <tfregni@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/30 15:46:57 by lde-ross          #+#    #+#             */
-/*   Updated: 2023/04/29 16:26:44 by tfregni          ###   ########.fr       */
+/*   Updated: 2023/04/29 22:10:26 by tfregni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,14 +65,20 @@ void	ft_echo(t_shell *s, t_command *c)
 	(void) s;
 	if (!c || !c->cmd)
 		return ;
+	printf("echo --- node\n");
+	ft_print_strarr(c->cmd);
 	trim_cmd(&c);
+	printf("echo --- trimmed node\n");
+	ft_print_strarr(c->cmd);
 	args = c->cmd;
 	i = 1;
 	n = check_echo_flag(args, &i);
+	printf("echo --- printing node\n");
 	while (args[i])
 	{
 		// var = clean_variable(args[i]);
 		var = ft_strdup(args[i]);
+		printf("%s$ %p\n", args[i], args[i]);
 		ft_putstr_fd(var, c->outfile);
 		if (var[0] && args[i + 1])
 			ft_putchar_fd(' ', c->outfile);

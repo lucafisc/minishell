@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_print_strarr.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lde-ross <lde-ross@student.42berlin.de     +#+  +:+       +#+        */
+/*   By: tfregni <tfregni@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/01 13:38:49 by tfregni           #+#    #+#             */
-/*   Updated: 2023/04/24 17:07:41 by lde-ross         ###   ########.fr       */
+/*   Updated: 2023/04/29 21:58:33 by tfregni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	ft_print_strarr(char **arr)
 	i = 0;
 	while (arr[i])
 	{
-		printf("%s$\n", arr[i]);
+		printf("%s$ %p\n", arr[i], arr[i]);
 		i++;
 	}
 }
