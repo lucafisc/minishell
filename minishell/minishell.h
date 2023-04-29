@@ -6,7 +6,7 @@
 /*   By: tfregni <tfregni@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 16:02:25 by tfregni           #+#    #+#             */
-/*   Updated: 2023/04/30 00:40:21 by tfregni          ###   ########.fr       */
+/*   Updated: 2023/04/30 01:00:10 by tfregni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@
 # include "colors.h"
 # define TRAIL_CHAR " \n\t><|\"$/\'="
 # define SPLIT_CHAR "><|"
-# define SP_PARAM "@*#?-!\\."
+# define SP_PARAM "@*#?-!\\.+"
 # define N_BUILTINS 7
 # define HEREDOC_NAME "_heredoc_temp"
 # define QUOTES "\'\""

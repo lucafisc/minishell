@@ -6,7 +6,7 @@
 /*   By: tfregni <tfregni@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/29 15:19:22 by tfregni           #+#    #+#             */
-/*   Updated: 2023/04/30 00:49:05 by tfregni          ###   ########.fr       */
+/*   Updated: 2023/04/30 00:59:20 by tfregni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ void	ft_export(t_shell *s, t_command *c)
 	else
 		ft_export_append(&s->env, var);
 	// printf("export free var %p\n", var);
-	free(var);
+	// free(var);
 }
 
 // int	main(int ac, char **av, char **env)
