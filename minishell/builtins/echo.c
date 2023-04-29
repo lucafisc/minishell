@@ -6,7 +6,7 @@
 /*   By: tfregni <tfregni@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/30 15:46:57 by lde-ross          #+#    #+#             */
-/*   Updated: 2023/04/28 23:11:59 by tfregni          ###   ########.fr       */
+/*   Updated: 2023/04/29 10:13:09 by tfregni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,24 +63,36 @@ char	*clean_variable(char *input)
 	return (var);
 }
 
-t_bool	check_echo_flag(char **args)
+int	is_flag_in_token(char *str)
 {
-	char	*flag;
-	int		i;
-	int		j;
+	int	j;
 
 	j = 1;
-	i = 0;
-	flag = trim_quotes(args[j]);
-	if (!ft_strncmp(flag, "-n", 2))
+	if (str && ft_strncmp(str, "-n", 2) == 0)
 	{
-		while (flag[++i] == 'n')
-			printf("skipping %c\n", flag[i]);
-		printf("after skipping point at %c\n", flag[i]);
-		if (!flag[i])
+		while (str[j] == 'n')
+			j++;
+		if (!str[j])
 			return (true);
 	}
 	return (false);
+}
+
+t_bool	check_echo_flag(char **args, int *i)
+{
+	int			j;
+	t_bool		flag;
+
+	j = 1;
+	flag = 0;
+	if (is_flag_in_token(args[*i]))
+	{
+		flag = true;
+		(*i)++;
+		while (is_flag_in_token(args[(*i)]))
+			(*i)++;
+	}
+	return (flag);
 }
 
 /* The variable expansion works already even if it's not
@@ -96,31 +108,21 @@ void	ft_echo(t_shell *s, t_command *c)
 	(void) s;
 	if (!c || !c->cmd)
 		return ;
+	trim_cmd(&c);
 	args = c->cmd;
-	// n = check_echo_flag(args);
-	// printf("flag -n: %d\n", n);
 	i = 1;
-	// printf("echo args\n");
-	// ft_print_strarr(args);
-	if (args[i] && !ft_strncmp(args[i], "-n", 2))
-	{
-		i++;
-		n = false;
-	}
-	// printf("echo before clean: %s\n", args[i]);
-	// printf("echo after clean: %s\n", args[i]);
+	n = check_echo_flag(args, &i);
 	while (args[i])
 	{
 		var = clean_variable(args[i]);
-		ft_putstr_fd(trim_quotes(var), c->outfile);
+		ft_putstr_fd(var, c->outfile);
 		if (var[0] && args[i + 1])
 			ft_putchar_fd(' ', c->outfile);
 		i++;
 		free(var);
 	}
-	if (n)
+	if (!n)
 		ft_putchar_fd('\n', c->outfile);
-	// printf("echo var: %p\n", var);
 }
 
 // int	main(int ac, char **av, char **env)

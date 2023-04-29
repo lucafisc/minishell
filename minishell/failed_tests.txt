@@ -33,17 +33,17 @@ cd "~/Desktop" -> bash: cd: ~/Desktop: No such file or directory (check expansio
 TODO Escape spaces in dir name (or it's fine not to)
 
 ------
-SOLVED echo $
+SOLVED echo $ -> $
 ------
-echo -n -n -n bonjour -> bonjour$	4 args
+SOLVED echo -n -n -n bonjour -> bonjour$
 ------
-echo -n"-n" bonjour -> -n-n bonjour 2 args		quotes are not trimmed
+SOLVED echo -n"-n" bonjour -> -n-n bonjour 2 args		quotes are not trimmed
 ------
-echo "-nnnn" -n bonjour	-> bonjour$
+SOLVED echo "-nnnn" -n bonjour	-> bonjour$
 ------
-echo "-n -n -n"-n bonjour -> -n -n -n-n bonjour
+SOLVED echo "-n -n -n"-n bonjour -> -n -n -n-n bonjour
 ------
-echo "-n '-n'" bonjour -> -n '-n' bonjour
+SOLVED echo "-n '-n'" bonjour -> -n '-n' bonjour
 ------
 SOLVED echo "'$USER'" -> 'tim'
 ------
