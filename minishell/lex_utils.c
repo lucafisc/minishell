@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lex_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lde-ross <lde-ross@student.42berlin.de     +#+  +:+       +#+        */
+/*   By: tfregni <tfregni@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/12 15:48:10 by lde-ross          #+#    #+#             */
-/*   Updated: 2023/04/27 14:57:58 by lde-ross         ###   ########.fr       */
+/*   Updated: 2023/04/29 23:31:39 by tfregni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,9 @@ t_bool	has_unclosed_quotes(char *str)
 	{
 		if (str[i] == '\'' || str[i] == '\"')
 		{
-			open_quotes = true;
 			c = str[i];
+			if (str[i + 1] != c)
+				open_quotes = true;
 			i++;
 			while (str[i] && str[i] != c)
 			{
