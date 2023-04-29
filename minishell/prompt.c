@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   prompt.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lde-ross <lde-ross@student.42berlin.de     +#+  +:+       +#+        */
+/*   By: tfregni <tfregni@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/27 17:07:46 by lde-ross          #+#    #+#             */
-/*   Updated: 2023/04/27 17:35:53 by lde-ross         ###   ########.fr       */
+/*   Updated: 2023/04/29 12:50:51 by tfregni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ char	*create_prompt(t_shell *s)
 	return (prompt);
 }
 
-void	prompt_routine(t_shell *s, char		*input)
+void	prompt_routine(t_shell *s, char	*input)
 {
 	add_history(input);
 	s->lexer = lexer(input);

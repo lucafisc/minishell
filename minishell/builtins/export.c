@@ -6,7 +6,7 @@
 /*   By: tfregni <tfregni@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/29 15:19:22 by tfregni           #+#    #+#             */
-/*   Updated: 2023/04/28 17:28:07 by tfregni          ###   ########.fr       */
+/*   Updated: 2023/04/29 11:58:06 by tfregni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,10 +81,7 @@ t_bool	is_param(char *input)
 	while (input[i])
 	{
 		if (input[i] && ft_strchr(QUOTES, input[i]))
-		{
 			i = ft_skip_char(input, input[i], i);
-			i++;
-		}
 		else if (input[i] && input[i] == '!' && input[i + 1])
 		{
 			ft_error("minishell", "event not found", input + i, 1);

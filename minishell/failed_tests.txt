@@ -47,7 +47,7 @@ SOLVED echo "-n '-n'" bonjour -> -n '-n' bonjour
 ------
 SOLVED echo "'$USER'" -> 'tim'
 ------
-SOLVED echo " '$USER' " ->  'tim'
+SOLVED echo "   '$USER' " ->    'tim'
 ------
 SOLVED echo text"$USER" -> texttim
 ------
@@ -105,3 +105,28 @@ In bash:
 
 	test="'$USER'"
 	echo "'$USER' $test"												'tim' 'tim'
+
+par_node trim_cmd removed free
+
+fixed leak in add param: exec_utils add_param: free(trimmed)
+fixed invalid read export.c is_param by deleting i++ after ft_skip_char
+
+test="   foo   bar"
+echo $test
+==17738== 18 bytes in 2 blocks are definitely lost in loss record 16 of 113
+==17738==    at 0x1000B72C5: malloc (vg_replace_malloc.c:388)
+==17738==    by 0x100005E9D: ft_strdup (in ./minishell)
+==17738==    by 0x10000378A: par_fill_cmd (par_redir.c:54)
+==17738==    by 0x1000034ED: par_list_new_node (par_list.c:48)
+==17738==    by 0x100002CED: par_list_from_lex (parser.c:51)
+==17738==    by 0x100002DD3: parser (parser.c:84)
+==17738==    by 0x1000013E5: prompt_routine (prompt.c:59)
+==17738==    by 0x100001485: get_prompt (prompt.c:80)
+==17738==    by 0x1000011ED: main (main.c:96)
+gets fixed removing trim_cmd from echo. why?
+fixed by putting back free in par_node trim_cmd
+
+SOLVED echo $ARG (where ARG is not a valid var) segfaults. Fixed in expand_var: protect if !param
+
+whoami | cat -e | cat -e > tmp/file displayes 4 errors: should cut it shorter
+

@@ -6,7 +6,7 @@
 /*   By: tfregni <tfregni@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 10:07:19 by tfregni           #+#    #+#             */
-/*   Updated: 2023/04/24 14:04:56 by tfregni          ###   ########.fr       */
+/*   Updated: 2023/04/29 13:07:33 by tfregni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,12 +25,13 @@ static int	validate_line(char **input)
 }
 
 /* It trims the \n char, frees the input and returns the trimmed*/
-static char	*trim_new_line(char *input)
+static char	*trim_new_line(char **input)
 {
 	char	*trimmed;
 
-	trimmed = ft_strtrim(input, "\n");
-	free(input);
+	trimmed = ft_strtrim(*input, "\n");
+	free(*input);
+	*input = trimmed;
 	return (trimmed);
 }
 
@@ -48,15 +49,13 @@ void	exec_script(t_shell *s, int fd)
 			break ;
 		if (!validate_line(&input))
 			continue ;
-		input = trim_new_line(input);
-		if (!is_param(input))
+		input = trim_new_line(&input);
+		s->lexer = lexer(input);
+		if (s->lexer)
 		{
-			s->lexer = lexer(input);
 			s->cmd = parser(s->lexer);
 			execute(s, s->cmd);
 		}
-		else
-			s->params = env_append(s->params, input);
 		free(input);
 	}
 	close(fd);

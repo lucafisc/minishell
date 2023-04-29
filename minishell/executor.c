@@ -6,7 +6,7 @@
 /*   By: tfregni <tfregni@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/04 12:58:08 by tfregni           #+#    #+#             */
-/*   Updated: 2023/04/28 17:40:21 by tfregni          ###   ########.fr       */
+/*   Updated: 2023/04/29 12:39:15 by tfregni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,8 @@ void	execute(t_shell *s, t_command *parsed_cmd)
 	pid_t		pid;
 	int			builtin_idx;
 
+	// printf("Executing\n");
+	// ft_print_strarr(parsed_cmd->cmd);
 	while (parsed_cmd)
 	{
 		pid = -1;

@@ -6,7 +6,7 @@
 /*   By: tfregni <tfregni@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/12 16:41:40 by lde-ross          #+#    #+#             */
-/*   Updated: 2023/04/28 23:08:35 by tfregni          ###   ########.fr       */
+/*   Updated: 2023/04/29 12:23:32 by tfregni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,6 @@ void	add_flag_char(char **data)
 	while (flagged[i])
 		i++;
 	flagged[i] = (char) FLAG_CHAR;
-	// free(*data);
 	*data = flagged;
 }
 
@@ -124,11 +123,9 @@ char	*trim_quotes(char *data)
 			else
 				trimmed[j++] = data[i++];
 		}
+		// printf("trim_quotes trimmed %p\n", trimmed);
 		return (trimmed);
 	}
-	// printf("second last: %c\n", *(ft_strchr(data, FLAG_CHAR) - 1));
-	// if (*(ft_strchr(data, FLAG_CHAR) - 1) == '"')
-	// 	*(ft_strchr(data, FLAG_CHAR) - 1) = '\0';
 	*ft_strchr(data, FLAG_CHAR) = '\0';
 	return (data);
 }

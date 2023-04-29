@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_skip_char.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lde-ross <lde-ross@student.42berlin.de     +#+  +:+       +#+        */
+/*   By: tfregni <tfregni@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/25 21:19:00 by lde-ross          #+#    #+#             */
-/*   Updated: 2023/04/27 20:09:10 by lde-ross         ###   ########.fr       */
+/*   Updated: 2023/04/29 11:53:09 by tfregni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 
 int	ft_skip_char(char *str, char c, int i)
 {
+	if (!str)
+		return (i);
 	i++;
 	while (str[i] && str[i] != c)
 		i++;

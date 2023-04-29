@@ -6,7 +6,7 @@
 /*   By: tfregni <tfregni@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/12 14:59:28 by lde-ross          #+#    #+#             */
-/*   Updated: 2023/04/28 23:08:53 by tfregni          ###   ########.fr       */
+/*   Updated: 2023/04/29 13:15:00 by tfregni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ char	*expand_var(char *cur, char *cmds, int i)
 	char	*trimmed;
 	int		len_trim;
 	char	*new_cmd;
+	char	*param;
 
 	if (cur[i] == '~')
 		new_cmd = ft_strins(cmds, ft_getenv("HOME"), 1, i);
@@ -48,13 +49,11 @@ char	*expand_var(char *cur, char *cmds, int i)
 			new_cmd = ft_strins(cmds, "$", len_trim + 1, i);
 		else
 		{
-			char *param = retrieve_param(trimmed);
+			param = retrieve_param(trimmed);
 			new_cmd = ft_strins(cmds, param, len_trim + 1, i);
-			if (ft_strchr(param, QUOTES[0]) || ft_strchr(param, QUOTES[1]))
-			{
+			if (param && (ft_strchr(param, QUOTES[0]) || \
+			ft_strchr(param, QUOTES[1])))
 				add_flag_char(&new_cmd);
-				// ("expanded to %s: flag to not trim\n", new_cmd);
-			}
 		}
 		free(trimmed);
 	}

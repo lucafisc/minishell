@@ -6,7 +6,7 @@
 /*   By: tfregni <tfregni@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/30 15:46:57 by lde-ross          #+#    #+#             */
-/*   Updated: 2023/04/29 10:13:09 by tfregni          ###   ########.fr       */
+/*   Updated: 2023/04/29 13:12:14 by tfregni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,6 +115,7 @@ void	ft_echo(t_shell *s, t_command *c)
 	while (args[i])
 	{
 		var = clean_variable(args[i]);
+		// var = ft_strdup(args[i]);
 		ft_putstr_fd(var, c->outfile);
 		if (var[0] && args[i + 1])
 			ft_putchar_fd(' ', c->outfile);
