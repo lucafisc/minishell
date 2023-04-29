@@ -166,3 +166,189 @@ leak in unset
 ==46414==    by 0x100000EF6: matrix_dup (main.c:52)
 ==46414==    by 0x100000F71: init (main.c:65)
 ==46414==    by 0x100001045: main (main.c:82)
+
+exit 0 0															--> working
+exit 42 42															--> working
+exit -42 -24														--> working
+exit 42																--> working
+exit 42 53 68														--> working
+exit 259															--> working
+exit -12030															--> working
+exit --1239312														--> working
+exit ++++1203020103													--> working
+exit +0																--> working
+exit ++++++0														--> NOT WORING!
+exit -----0															--> NOT WORING!
+exit azerty															--> working
+exit kewkwqke														--> working
+exit a																--> working
+exit z																--> working
+exit "1"															--> working
+exit "2"															--> working
+exit "+102"															--> working
+exit "1230"															--> working
+exit "+++1230"
+exit "1"23															--> working
+exit "2"32"32"
+exit "'42'"															--> working
+exit '42'"42"42
+exit +'42'"42"42
+exit -'42'"42"42
+exit 9223372036854775807 											--> working
+TO FIX, MAYBE exit 9223372036854775808
+exit -4																--> working
+exit 1																--> working
+exit -1																--> working
+exit 42																--> working
+exit 0																--> working
+exit --000															--> working
+exit +++++++000														--> working
+exit ++++3193912939													--> working
+exit ---31232103012													--> working
+exit "something"													--> working
+exit echo															--> working
+exit cd ..															--> working
+exit 0 0															--> working
+exit 42 42 42 42 42													--> working
+exit echo something													--> working
+exit exit															--> working
+
+EXPORT:
+
+env | grep "_="														--> working
+export | grep "SHLVL"												--> working
+export | grep "OLDPWD"												--> working
+export | grep "PWD"													--> working
+export $?															--> working
+export TEST															--> working
+export TEST=														--> working
+export TEST=123														--> working
+export ___TEST=123													--> working
+export --TEST=123													--> working
+export ""=""														--> working
+export ''=''														--> working
+export "="="="														--> working
+export '='='='														--> working
+export TE\\\ST=100													--> working
+export TE-ST=100													--> working
+export -TEST=100													--> working
+export TEST-=100													--> working
+export _TEST=100													--> working
+export TEST															--> working
+export ==========													--> working
+export 1TEST=														--> working
+export TEST															--> working
+export ""=""														--> working
+export TES=T=""														--> working
+export TE+S=T=""													--> working
+export TES\\\\T=123
+export TES.T=123
+export TES\\\$T=123
+export TES\\\\T
+export TES.T=123
+export TES+T=123
+export TES=T=123
+export TES}T=123
+export TES{T=123
+export TES-T=123
+export -TEST=123
+export _TEST=123
+export TES_T=123
+export TEST_=123
+export TE*ST=123
+export TES#T=123
+export TES@T=123
+export TES!T=123
+export TES$?T=123
+export =============123
+export +++++++=123
+export ________=123
+export export
+export echo
+export pwd
+export cd
+export export
+export unset
+export sudo
+export TES^T=123
+export TES!T=123
+export TES\~T=123
+export TEST+=100
+
+PIPES:
+
+env | grep "_="																--> working
+env | grep "SHLVL"															--> working
+echo oui | cat -e															--> working
+echo oui | echo non | echo something | grep oui								--> working
+echo oui | echo non | echo something | grep non								--> working
+echo oui | echo non | echo something | grep something						--> working
+cd .. | echo "something"													--> working
+cd .. | echo "something"													--> working
+cd / | echo "something"														--> working
+cd .. | pwd																	--> working
+ifconfig | grep ":"															--> working
+ifconfig | grep nothing														--> working
+whoami | grep $USER															--> working
+whoami | grep $USER > tmp/file												--> working
+whoami | cat -e | cat -e > tmp/file											--> working
+cat Makefile | grep "FLAGS"													--> working
+cat Makefile | cat -e | cat -e												--> working
+cat Makefile | grep "FLAGS" | grep "FLAGS" | cat -e							--> working
+export TEST=123 | cat -e | cat -e											--> working
+unset TEST | cat -e															--> working
+echo test | cat -e | cat -e | cat -e										--> working
+whereis ls | cat -e | cat -e > test											--> working
+echo test | cat -e | cat -e | cat -e | cat -e | cat -e | cat -e | cat -e | cat -e | cat -e | cat -e | cat -e | cat -e | cat -e | cat -e | cat -e | cat -e | cat -e | cat -e | cat -e | cat -e
+ls -la | grep "."															--> working
+whereis grep > tmp/file														--> working
+whereis grep > tmp/file														--> working
+ls -la > tmp/file															--> working
+ls -la > tmp/file															--> working
+
+UNSET:
+
+unset
+export TEST=100
+unset doesntexist
+unset PWD
+unset PWD
+unset OLDPWD
+unset PATH
+unset PATH
+unset PATH
+unset TES\\\\T
+unset TES;T
+unset TES.T
+unset TES+T
+unset TES=T
+unset TES}T
+unset TES{T
+unset TES-T
+unset -TEST
+unset _TEST
+unset TES_T
+unset TEST_
+unset TE*ST
+unset TES#T
+unset TES@T
+unset TES!T
+unset TES$?T
+unset ============
+unset +++++++
+unset ________
+unset export
+unset echo
+unset pwd
+unset cd
+unset unset
+unset sudo
+unset TES^T
+unset TES!T
+unset TES\~T
+8:20
+<in cmd "str1 str2 str3" | cmd2 -arg | cmd3 >out >out2
+cmd "str1 str2 str3" >out | cmd2 -arg | cmd3 >out2 >out3
+cmd "str1 str2 str3" >out | cmd2 -arg str | cmd3 str >out2 >out3
+cmd <in -arg | cmd2 "str |" >out>>out2
+cmd1 <in1 -arg1 > out1 | cmd2 <in2 -arg2 > out2

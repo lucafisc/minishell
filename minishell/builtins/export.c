@@ -6,25 +6,11 @@
 /*   By: tfregni <tfregni@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/29 15:19:22 by tfregni           #+#    #+#             */
-/*   Updated: 2023/04/29 18:12:07 by tfregni          ###   ########.fr       */
+/*   Updated: 2023/04/30 00:49:05 by tfregni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
-
-// /* First version of the parameter validating function */
-// t_bool	is_export_valid(char *var)
-// {
-// 	while (*var && *var != '=')
-// 	{
-// 		if (ft_isdigit(var[0]) || ft_is_space(*var) || !ft_isalnum(*var))
-// 			return (false);
-// 		var++;
-// 	}
-// 	if (!*var)
-// 		return (false);
-// 	return (true);
-// }
 
 void	ft_export_replace(char **env, char *var, int index)
 {
@@ -45,33 +31,12 @@ void	ft_export_append(char ***env, char *var)
 /xcu_chap02.html#tag_02_05_02 */
 /* A param should have =, not start with a digit and not have
 any of the special chars macroed in SP_PARAM */
-// t_bool	is_param(char *input)
-// {
-// 	int		i;
-// 	char	*clean;
-
-// 	i = -1;
-// 	if (!ft_strchr(input, '=') || ft_isdigit(*input))
-// 		return (false);
-// 	clean = clean_variable(input);
-// 	printf("input: %s\n", input);
-// 	while (input && input[++i])
-// 	{
-// 		// printf("%c\n", input[i]);
-// 		if (ft_strchr(QUOTES, input[i]))
-// 			i = ft_skip_char(input, input[i], i);
-// 		if (ft_strchr(SP_PARAM, input[i]) || ft_is_space(input[i]))
-// 			return (false);
-// 	}
-// 	return (true);
-// }
-
 t_bool	is_param(char *input)
 {
 	int		i;
 
 	i = -1;
-	if (!ft_strchr(input, '=') || ft_isdigit(*input))
+	if (!ft_strchr(input, '=') || ft_isdigit(*input) || *input == '=')
 		return (false);
 	while (++i <= (ft_strchr(input, '=') - input))
 	{
@@ -102,10 +67,12 @@ void	ft_export(t_shell *s, t_command *c)
 
 	if (!c || !s || !c->cmd || !c->cmd[0] || !c->cmd[1])
 		return ;
-	var = trim_quotes(c->cmd[1]);
-	if (!is_param(var))
+	// var = trim_quotes(c->cmd[1]);
+	trim_cmd(&c);
+    var = c->cmd[1];
+    if (!is_param(var))
 	{
-		ft_error("minishell: export", "not a valid identifier", var, 1);
+        ft_error("minishell: export", "not a valid identifier", var, 1);
 		return ;
 	}
 	s->params = env_append(s->params, var);

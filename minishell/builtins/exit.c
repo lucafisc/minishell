@@ -6,7 +6,7 @@
 /*   By: tfregni <tfregni@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 21:31:44 by tfregni           #+#    #+#             */
-/*   Updated: 2023/04/29 17:33:04 by tfregni          ###   ########.fr       */
+/*   Updated: 2023/04/30 00:34:57 by tfregni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,17 +35,22 @@ void	ft_exit(t_shell *s, t_command *c)
 	uint8_t	exit_code;
 	int		len;
 
+    trim_cmd(&c);
 	len = ft_arrlen(c->cmd);
-	if (len > 2)
-		return (ft_error("minishell", "too many arguments", c->cmd[0], 1));
 	exit_code = 0;
 	if (c->cmd[1])
 	{
 		if (!validate_exit_arg(c->cmd[1]))
-			return (ft_error("minishell", "numeric argument required", \
-			c->cmd[0], 255));
+        {
+			ft_error("minishell", "numeric argument required", c->cmd[0], 255);
+            s->exit = true;
+            free_shell(s);
+            exit(255);
+        }
 		exit_code = (uint8_t)ft_atoi(c->cmd[1]);
 	}
+	if (len > 2)
+		return (ft_error("minishell", "too many arguments", c->cmd[0], 1));
 	s->exit = true;
 	free_shell(s);
 	exit(exit_code);
