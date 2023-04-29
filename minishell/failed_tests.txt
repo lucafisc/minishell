@@ -132,3 +132,21 @@ fixed leak in expand_var by adding a free in expander
 
 whoami | cat -e | cat -e > tmp/file displayes 4 errors: should cut it shorter
 
+export test='   $USER   foo '; echo $test; unset test
+leak in unset
+==46414== 4 bytes in 1 blocks are definitely lost in loss record 1 of 114
+==46414==    at 0x1000B72C5: malloc (vg_replace_malloc.c:388)
+==46414==    by 0x100005DAD: ft_strdup (in ./minishell)
+==46414==    by 0x1000051EC: env_append (builtins_util.c:57)
+==46414==    by 0x1000056AE: add_status (error_handling.c:25)
+==46414==    by 0x100003F02: execute (executor.c:84)
+==46414==    by 0x1000012EE: prompt_routine (prompt.c:60)
+==46414==    by 0x100001375: get_prompt (prompt.c:80)
+==46414==    by 0x1000010DD: main (main.c:96)
+
+==46414== 91 bytes in 1 blocks are definitely lost in loss record 47 of 114
+==46414==    at 0x1000B72C5: malloc (vg_replace_malloc.c:388)
+==46414==    by 0x100005DAD: ft_strdup (in ./minishell)
+==46414==    by 0x100000EF6: matrix_dup (main.c:52)
+==46414==    by 0x100000F71: init (main.c:65)
+==46414==    by 0x100001045: main (main.c:82)

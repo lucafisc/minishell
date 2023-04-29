@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   error_handling.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lde-ross <lde-ross@student.42berlin.de     +#+  +:+       +#+        */
+/*   By: tfregni <tfregni@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/26 18:22:43 by lde-ross          #+#    #+#             */
-/*   Updated: 2023/04/26 19:47:02 by lde-ross         ###   ########.fr       */
+/*   Updated: 2023/04/29 17:43:50 by tfregni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,10 +16,10 @@ void	add_status(int status)
 {
 	char	*stat;
 	char	*value;
+	uint8_t	err_code;
 
-	if (status >= 255)
-		status = 1;
-	stat = ft_itoa(status);
+	err_code = (uint8_t)status;
+	stat = ft_itoa(err_code);
 	value = ft_strjoin("?=", stat);
 	free(stat);
 	g_shell->params = env_append(g_shell->params, value);
@@ -45,7 +45,7 @@ int	throw_err(char *str, char *arg)
 
 /* It takes up to 3 strings to describe the error, if error_code is
 positive it adds it to $? */
-void	ft_error(char *general, char *err, char *arg, int error_code)
+void	ft_error(char *general, char *err, char *arg, uint8_t error_code)
 {
 	if (general && general[0])
 	{
