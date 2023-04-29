@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lex_split_token.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lde-ross <lde-ross@student.42berlin.de>    +#+  +:+       +#+        */
+/*   By: tfregni <tfregni@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/01 12:54:23 by tfregni           #+#    #+#             */
-/*   Updated: 2023/04/28 12:32:37 by lde-ross         ###   ########.fr       */
+/*   Updated: 2023/04/29 15:18:20 by tfregni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,7 @@ char	*fill_new_token(char *str, int *i)
 	return (arr);
 }
 
+/* Splits the str to an array. The return is freeable */
 char	**lex_split_token(char *str)
 {
 	int		n_cmds;

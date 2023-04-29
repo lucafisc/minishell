@@ -6,51 +6,11 @@
 /*   By: tfregni <tfregni@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/30 15:46:57 by lde-ross          #+#    #+#             */
-/*   Updated: 2023/04/29 13:12:14 by tfregni          ###   ########.fr       */
+/*   Updated: 2023/04/29 16:26:44 by tfregni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-// ft_echo works assuming a null terminated 2D array of args is given as input.
-// if the option -n is enabled, the string "-n" should be at index 0 of this array
-// it assumes the parser will interpret the arguments before
-
-//in this case args[1] should equal "hello         hi":
-// echo "hello         hi"
-// hello         hi
-
-//in this case args[1] should equal "hello" and args[2] should equal "hi":
-// echo hello         hi
-// hello hi
-
 #include "../minishell.h"
-
-// void	ft_echo(char **args)
-// {
-// 	t_bool	n;
-// 	int		i;
-
-// 	if (!args)
-// 		return ;
-// 	n = true;
-// 	i = 0;
-// 	if (args[i] && !ft_strcmp(args[i], "-n"))
-// 	{
-// 		i++;
-// 		n = false;
-// 	}
-// 	while (args[i])
-// 	{
-// 		ft_putstr_fd(args[i], 1);
-// 		// printf("%s", args[i]);
-// 		if (args[i + 1])
-// 			// printf(" ");
-// 			ft_putchar(" ", 1);
-// 		i++;
-// 	}
-// 	if (n)
-// 		ft_putchar("\n", 1);
-// 		// printf("\n");
-// }
 
 char	*clean_variable(char *input)
 {
@@ -95,9 +55,6 @@ t_bool	check_echo_flag(char **args, int *i)
 	return (flag);
 }
 
-/* The variable expansion works already even if it's not
-implemented in the function: it means it's running on every
-string passed to the shell before calling any cmd */
 void	ft_echo(t_shell *s, t_command *c)
 {
 	char	**args;
@@ -114,8 +71,8 @@ void	ft_echo(t_shell *s, t_command *c)
 	n = check_echo_flag(args, &i);
 	while (args[i])
 	{
-		var = clean_variable(args[i]);
-		// var = ft_strdup(args[i]);
+		// var = clean_variable(args[i]);
+		var = ft_strdup(args[i]);
 		ft_putstr_fd(var, c->outfile);
 		if (var[0] && args[i + 1])
 			ft_putchar_fd(' ', c->outfile);

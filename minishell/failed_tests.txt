@@ -128,5 +128,7 @@ fixed by putting back free in par_node trim_cmd
 
 SOLVED echo $ARG (where ARG is not a valid var) segfaults. Fixed in expand_var: protect if !param
 
+fixed leak in expand_var by adding a free in expander
+
 whoami | cat -e | cat -e > tmp/file displayes 4 errors: should cut it shorter
 
