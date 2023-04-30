@@ -6,7 +6,7 @@
 #    By: tfregni <tfregni@student.42berlin.de>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/04/17 13:03:17 by tfregni           #+#    #+#              #
-#    Updated: 2023/04/30 09:41:55 by tfregni          ###   ########.fr        #
+#    Updated: 2023/04/30 14:13:37 by tfregni          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,7 +24,8 @@ OS := $(shell uname)
 ARCH := $(shell uname -m)
 LIBFT = ./libft/libft.a
 LIBS = -lreadline
-MAKE = make
+# the -s flag hides the outputs
+MAKE = make -s
 
 # Check the includes and libs on Linux or ARM64
 ifeq ($(OS), Darwin)
