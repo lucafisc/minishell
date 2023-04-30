@@ -6,7 +6,7 @@
 /*   By: tfregni <tfregni@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 21:31:44 by tfregni           #+#    #+#             */
-/*   Updated: 2023/04/30 00:34:57 by tfregni          ###   ########.fr       */
+/*   Updated: 2023/04/30 14:46:26 by tfregni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,6 @@ t_bool	validate_exit_arg(char *arg)
 	if (*arg)
 		return (false);
 	return (true);
-
 }
 
 /* Need to validate numeric argument
@@ -35,18 +34,18 @@ void	ft_exit(t_shell *s, t_command *c)
 	uint8_t	exit_code;
 	int		len;
 
-    trim_cmd(&c);
+	trim_cmd(&c);
 	len = ft_arrlen(c->cmd);
 	exit_code = 0;
 	if (c->cmd[1])
 	{
 		if (!validate_exit_arg(c->cmd[1]))
-        {
+		{
 			ft_error("minishell", "numeric argument required", c->cmd[0], 255);
-            s->exit = true;
-            free_shell(s);
-            exit(255);
-        }
+			s->exit = true;
+			free_shell(s);
+			exit(255);
+		}
 		exit_code = (uint8_t)ft_atoi(c->cmd[1]);
 	}
 	if (len > 2)

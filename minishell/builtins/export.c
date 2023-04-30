@@ -6,7 +6,7 @@
 /*   By: tfregni <tfregni@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/29 15:19:22 by tfregni           #+#    #+#             */
-/*   Updated: 2023/04/30 00:59:20 by tfregni          ###   ########.fr       */
+/*   Updated: 2023/04/30 14:45:02 by tfregni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,12 +67,11 @@ void	ft_export(t_shell *s, t_command *c)
 
 	if (!c || !s || !c->cmd || !c->cmd[0] || !c->cmd[1])
 		return ;
-	// var = trim_quotes(c->cmd[1]);
 	trim_cmd(&c);
-    var = c->cmd[1];
-    if (!is_param(var))
+	var = c->cmd[1];
+	if (!is_param(var))
 	{
-        ft_error("minishell: export", "not a valid identifier", var, 1);
+		ft_error("minishell: export", "not a valid identifier", var, 1);
 		return ;
 	}
 	s->params = env_append(s->params, var);
@@ -81,8 +80,6 @@ void	ft_export(t_shell *s, t_command *c)
 		ft_export_replace(s->env, var, var_index);
 	else
 		ft_export_append(&s->env, var);
-	// printf("export free var %p\n", var);
-	// free(var);
 }
 
 // int	main(int ac, char **av, char **env)

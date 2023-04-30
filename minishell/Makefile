@@ -6,7 +6,7 @@
 #    By: tfregni <tfregni@student.42berlin.de>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/04/17 13:03:17 by tfregni           #+#    #+#              #
-#    Updated: 2023/04/30 14:13:37 by tfregni          ###   ########.fr        #
+#    Updated: 2023/04/30 14:50:13 by tfregni          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -47,7 +47,7 @@ val: $(NAME)
 
 $(NAME): $(OBJ)
 	@clear
-	@make $(LIBFT)
+	@$(MAKE) $(LIBFT)
 	@printf "Building minishell... "
 	@$(CC) $(CFLAGS) $(OBJ) $(LIBFT) $(INCLUDES) -o $(NAME) $(LIBS)
 	@echo "Done!"

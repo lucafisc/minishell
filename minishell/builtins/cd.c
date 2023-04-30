@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   cd copy.c                                          :+:      :+:    :+:   */
+/*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tfregni <tfregni@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/30 07:33:56 by tfregni           #+#    #+#             */
-/*   Updated: 2023/04/28 17:08:31 by tfregni          ###   ########.fr       */
+/*   Updated: 2023/04/30 14:44:14 by tfregni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ void	free_cd(char *path, char *oldpwd)
 void	set_path(t_command *c, char **path)
 {
 	char	*trimmed;
-	
+
 	if (!c->cmd[1])
 	{
 		*path = ft_strdup(ft_getenv("HOME"));
@@ -68,7 +68,7 @@ void	set_path(t_command *c, char **path)
 	{
 		trimmed = trim_quotes(c->cmd[1]);
 		free(c->cmd[1]);
-		c->cmd[1] = trimmed;	
+		c->cmd[1] = trimmed;
 		if (!c->cmd[1][0])
 			*path = ft_strdup(".");
 		else if (!ft_strncmp(c->cmd[1], "-", 2))
