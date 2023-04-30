@@ -6,7 +6,7 @@
 /*   By: tfregni <tfregni@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/27 16:32:00 by lde-ross          #+#    #+#             */
-/*   Updated: 2023/04/29 22:46:26 by tfregni          ###   ########.fr       */
+/*   Updated: 2023/04/30 14:30:34 by tfregni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,6 @@ void	trim_cmd(t_command **cmd)
 		trimmed = trim_quotes(command->cmd[i]);
 		free(command->cmd[i]);
 		command->cmd[i] = trimmed;
-		// command->cmd[i] = trim_quotes(command->cmd[i]);
 		i++;
 	}
 }

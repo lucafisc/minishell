@@ -6,7 +6,7 @@
 /*   By: tfregni <tfregni@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/12 16:41:40 by lde-ross          #+#    #+#             */
-/*   Updated: 2023/04/29 12:23:32 by tfregni          ###   ########.fr       */
+/*   Updated: 2023/04/30 14:29:38 by tfregni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,67 +65,43 @@ char	*expand_escaped(char *str)
 	return (new);
 }
 
-t_bool	is_in_quote(char *str)
+static void	copy_quote_content(char **dst, char *src)
 {
-	int	len;
-
-	len = ft_strlen(str);
-	if ((str[0] == '\'' || str[0] == '\"') && str[len - 1] == str[0])
-		return (true);
-	return (false);
-}
-
-void	add_flag_char(char **data)
-{
-	char	*flagged;
-	int		len;
 	int		i;
+	int		j;
+	char	c;
 
-	len = ft_strlen(*data);
-	flagged = ft_calloc(sizeof(*flagged), len + 2);
-	if (!flagged)
-		return ;
-	ft_strlcpy(flagged, *data, len + 1);
 	i = 0;
-	while (flagged[i])
-		i++;
-	flagged[i] = (char) FLAG_CHAR;
-	*data = flagged;
+	j = 0;
+	while (src[i])
+	{
+		if (ft_strchr(QUOTES, src[i]))
+		{
+			c = src[i];
+			i++;
+			while (src[i] && src[i] != c)
+				(*dst)[j++] = src[i++];
+			i++;
+		}
+		else
+			(*dst)[j++] = src[i++];
+	}
 }
 
 /* Given a string without spaces it cleans it from outer quotes
 keeping inner quotes */
 char	*trim_quotes(char *data)
 {
-	int		i;
-	int		j;
 	char	*trimmed;
-	char	c;
 
-	i = 0;
-	j = 0;
-	// printf("trim quotes to %s\n", data);
 	if (!ft_strchr(data, FLAG_CHAR))
 	{
 		trimmed = ft_calloc(ft_strlen(data) + 1, sizeof(*trimmed));
 		if (!trimmed)
-			return (data);
-		while (data[i])
-		{
-			if (ft_strchr(QUOTES, data[i]))
-			{
-				c = data[i];
-				i++;
-				while (data[i] && data[i] != c)
-					trimmed[j++] = data[i++];
-				i++;
-			}
-			else
-				trimmed[j++] = data[i++];
-		}
-		// printf("trim_quotes trimmed %p\n", trimmed);
+			return (NULL);
+		copy_quote_content(&trimmed, data);
 		return (trimmed);
 	}
 	*ft_strchr(data, FLAG_CHAR) = '\0';
-	return (data);
+	return (ft_strdup(data));
 }
