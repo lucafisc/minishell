@@ -6,7 +6,7 @@
 /*   By: tfregni <tfregni@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/12 14:59:28 by lde-ross          #+#    #+#             */
-/*   Updated: 2023/04/30 14:15:04 by tfregni          ###   ########.fr       */
+/*   Updated: 2023/04/30 14:41:59 by tfregni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ char	*expand_var(char *cur, char *cmds, int i)
 // 		{
 // 			param = retrieve_param(trimmed);
 // 			new_cmd = ft_strins(*cmds, param, len_trim + 1, i);
-// 			if (param && (ft_strchr(param, QUOTES[0]) || \
+// 			if (param && (ft_strchr(param, QUOTES[0]) || 
 // 			ft_strchr(param, QUOTES[1])))
 // 				add_flag_char(&new_cmd);
 // 		}
@@ -144,18 +144,11 @@ char	**expander(char **arr)
 {
 	int		i;
 
-	// printf("Expander before\n");
-	// ft_print_strarr(arr);
 	i = 0;
 	while (arr[i])
 	{
-		// char *exp = lex_expander(arr[i]);
-		// free(arr[i]);
-		// arr[i] = exp;
 		arr[i] = lex_expander(arr[i]);
 		i++;
 	}
-	// printf("Expander after\n");
-	// ft_print_strarr(arr);
 	return (arr);
 }

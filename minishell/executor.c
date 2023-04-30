@@ -6,7 +6,7 @@
 /*   By: tfregni <tfregni@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/04 12:58:08 by tfregni           #+#    #+#             */
-/*   Updated: 2023/04/29 16:49:31 by tfregni          ###   ########.fr       */
+/*   Updated: 2023/04/30 14:38:15 by tfregni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,12 +57,10 @@ void	parent_routine(t_command **command)
 
 void	execute(t_shell *s, t_command *parsed_cmd)
 {
-	pid_t		pid;
 	int			builtin_idx;
 
 	while (parsed_cmd)
 	{
-		pid = -1;
 		builtin_idx = find_builtin(s, parsed_cmd->cmd[0]);
 		if (is_param(parsed_cmd->cmd[0]))
 			add_param(s, parsed_cmd);
@@ -72,14 +70,14 @@ void	execute(t_shell *s, t_command *parsed_cmd)
 		{
 			trim_cmd(&parsed_cmd);
 			parsed_cmd->cmd[0] = find_cmd(s, parsed_cmd->cmd[0]);
-			pid = fork();
+			s->pid = fork();
 			g_shell->forked = true;
-			if (pid == 0)
+			if (s->pid == 0)
 				child_routine(s, parsed_cmd);
 		}
 		parent_routine(&parsed_cmd);
 	}
-	wait_for_child(pid);
+	wait_for_child(s->pid);
 	g_shell->forked = false;
 	add_status(g_shell->status);
 	g_shell->status = 0;

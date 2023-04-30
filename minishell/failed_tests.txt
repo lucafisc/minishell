@@ -356,3 +356,5 @@ cmd1 <in1 -arg1 > out1 | cmd2 <in2 -arg2 > out2
 
 TO FIX THE LEAK:
 I wasn't freeing in add_flag_char. I noticed the leak was there only for double expansions (not echo $USER)
+
+added pid to g_shell to avoid init in executor and save lines

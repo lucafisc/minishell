@@ -6,7 +6,7 @@
 /*   By: tfregni <tfregni@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/12 16:55:28 by lde-ross          #+#    #+#             */
-/*   Updated: 2023/04/30 00:20:03 by tfregni          ###   ########.fr       */
+/*   Updated: 2023/04/30 14:41:21 by tfregni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,5 @@ void	par_fill_cmd(int *i, t_lexer *start, t_command **cmd_node)
 
 	new = *cmd_node;
 	new->cmd[*i] = ft_strdup(start->data);
-	// printf("par_fill_cmd --- Created node %s %p\n", new->cmd[*i], new->cmd[*i]);
 	*i += 1;
 }

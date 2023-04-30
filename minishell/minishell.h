@@ -6,7 +6,7 @@
 /*   By: tfregni <tfregni@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 16:02:25 by tfregni           #+#    #+#             */
-/*   Updated: 2023/04/30 11:17:01 by tfregni          ###   ########.fr       */
+/*   Updated: 2023/04/30 14:36:33 by tfregni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,6 +92,7 @@ struct s_shell
 	t_builtins	*builtins;
 	uint8_t		status;
 	t_bool		forked;
+	pid_t		pid;
 };
 
 extern t_shell	*g_shell;
