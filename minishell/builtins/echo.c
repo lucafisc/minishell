@@ -6,7 +6,7 @@
 /*   By: tfregni <tfregni@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/30 15:46:57 by lde-ross          #+#    #+#             */
-/*   Updated: 2023/04/30 00:21:05 by tfregni          ###   ########.fr       */
+/*   Updated: 2023/04/30 09:42:15 by tfregni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,10 +40,8 @@ int	is_flag_in_token(char *str)
 
 t_bool	check_echo_flag(char **args, int *i)
 {
-	int			j;
 	t_bool		flag;
 
-	j = 1;
 	flag = 0;
 	if (is_flag_in_token(args[*i]))
 	{

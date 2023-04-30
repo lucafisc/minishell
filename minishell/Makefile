@@ -6,7 +6,7 @@
 #    By: tfregni <tfregni@student.42berlin.de>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/04/17 13:03:17 by tfregni           #+#    #+#              #
-#    Updated: 2023/04/30 00:00:15 by tfregni          ###   ########.fr        #
+#    Updated: 2023/04/30 09:41:55 by tfregni          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -31,6 +31,10 @@ ifeq ($(OS), Darwin)
 ifeq ($(ARCH), x86_64)
 INCLUDES += -I /usr/local/Cellar/readline/8.2.1/include
 LIBS += -L /usr/local/Cellar/readline/8.2.1/lib
+endif
+ifeq ($(ARCH), arm64)
+INCLUDES += -I /opt/homebrew/Cellar/readline/8.2.1/include
+LIBS += -L /opt/homebrew/Cellar/readline/8.2.1/lib
 endif
 endif
 
