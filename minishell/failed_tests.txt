@@ -353,6 +353,17 @@ cmd "str1 str2 str3" >out | cmd2 -arg str | cmd3 str >out2 >out3
 cmd <in -arg | cmd2 "str |" >out>>out2
 cmd1 <in1 -arg1 > out1 | cmd2 <in2 -arg2 > out2
 
+cd
+ cd .. hi (should not change directory)
+
+ unset HOME
+ cd
+
+ ls |
+
+# Check if there isn't a zombie process called `cat`
+echo "hi" | cat | cat | cat | cat | cat | cat | cat
+ps -a
 
 TO FIX THE LEAK:
 I wasn't freeing in add_flag_char. I noticed the leak was there only for double expansions (not echo $USER)
