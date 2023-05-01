@@ -37,7 +37,7 @@ SOLVED echo $ -> $
 ------
 SOLVED echo -n -n -n bonjour -> bonjour$
 ------
-SOLVED echo -n"-n" bonjour -> -n-n bonjour 2 args		quotes are not trimmed
+SOLVED echo -n"-n" bonjour -> -n-n bonjour
 ------
 SOLVED echo "-nnnn" -n bonjour	-> bonjour$
 ------
@@ -55,17 +55,17 @@ SOLVED echo text"'$USER'" ' $USER ' -> text'tim'  $USER
 ------
 SOLVED echo               text "$USER"            "$USER"text -> text tim timtext
 ------
-echo ''''''''''$USER'''''''''' -> tim (it triggers the unclosed quotes error)
+SOLVED echo ''''''''''$USER'''''''''' -> tim
 ------
-echo """"""""$USER"""""""" -> tim
+SOLVED echo """"""""$USER"""""""" -> tim
 ------
-echo $USER'$USER'text oui oui     oui  oui $USER oui      $USER '' -> tim$USERtext oui oui oui oui tim oui tim
+SOLVED echo $USER'$USER'text oui oui     oui  oui $USER oui      $USER '' -> tim$USERtext oui oui oui oui tim oui tim
 ------
 SOLVED echo ' \' ' \' ->  \  \
 ------
-echo '\" ' " \"\"" -> \"   ""
+echo '\" ' " \"\"" -> \"   ""  FIX ESCAPED
 ------
-echo \\\" \\\" \\\" \\\"\\\"\\\" \\\'\\\'\\\' -> \" \" \" \"\"\" \'\'\'
+echo \\\" \\\" \\\" \\\"\\\"\\\" \\\'\\\'\\\' -> \" \" \" \"\"\" \'\'\'  INVALID READ
 ------
 SOLVED echo '$'
 ------
