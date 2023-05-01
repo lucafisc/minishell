@@ -24,7 +24,7 @@ SOLVED echo $?HELLO
 ------
 export hello world
 ------
-cd $PWD hi	too many args (err 1)	in bash on my Mac this does not throw an error
+FIXED cd $PWD hi	too many args (err 1)	in bash on my Mac this does not throw an error
 ------
 cat ./test_files/infile_big | grep oi   should exit at 1
 ------
@@ -36,4 +36,4 @@ cat <"1""2""3""4""5" exit code
 ______
 cat <"./test_files/infile" trimming
 ------
-cat wrong_cmd	wrong exit code
+cat wrong_cmd	wrong exit code (it gives 0)
