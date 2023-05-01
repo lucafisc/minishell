@@ -6,7 +6,7 @@
 /*   By: tfregni <tfregni@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/29 19:48:25 by lde-ross          #+#    #+#             */
-/*   Updated: 2023/05/01 22:36:45 by tfregni          ###   ########.fr       */
+/*   Updated: 2023/05/01 23:28:24 by tfregni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,8 +77,10 @@ void	ft_unset(t_shell *s, t_command *c)
 		ft_error(NULL, NULL, NULL, 1);
 		return ;
 	}
-	if (!c->cmd[1])
+	if (!c->cmd[1] || !c->cmd[1][0])
 		return ;
+	if (!is_param_name(c->cmd[1]))
+		return (ft_error("minishell", "not a valid identifier", c->cmd[1], 1));
 	var = c->cmd[1];
 	var_index = 1;
 	while (var_index >= 0)
@@ -89,8 +91,6 @@ void	ft_unset(t_shell *s, t_command *c)
 	var_index = arg_index(s->env, var);
 	if (var_index >= 0)
 		ft_unset_remove(&(s->env), var_index);
-	free(var);
-	return ;
 }
 
 // int	main(int ac, char **av, char **env)

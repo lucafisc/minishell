@@ -6,7 +6,7 @@
 /*   By: tfregni <tfregni@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 16:02:25 by tfregni           #+#    #+#             */
-/*   Updated: 2023/05/01 22:25:16 by tfregni          ###   ########.fr       */
+/*   Updated: 2023/05/01 23:29:34 by tfregni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@
 # include "colors.h"
 # define TRAIL_CHAR " \n\t><|\"$/\'="
 # define SPLIT_CHAR "><|"
-# define SP_PARAM "@*#?-!\\.+"
+# define SP_PARAM "@*#?-!\\/.+"
 # define N_BUILTINS 7
 # define HEREDOC_NAME "_heredoc_temp"
 # define QUOTES "\'\""
@@ -149,7 +149,7 @@ void			init_signal(void);
 char			*find_cmd(t_shell *s, char *cmd);
 char			**ft_split_keep(char *s, char c);
 
-/* EXEC SCRI	PT */
+/* EXEC SCRIPT */
 void			exec_script(t_shell *s, int fd);
 
 /* FREE */
@@ -178,8 +178,9 @@ char			*ft_getenv(char *key);
 void			ft_export_append(char ***env, char *var);
 void			ft_export_replace(char **env, char *var, int index);
 t_bool			is_param(char *input);
+t_bool			is_param_name(char *input);
 
-/* ERROR HAN	DLING*/
+/* ERROR HANDLING*/
 int				throw_err(char *str, char *arg);
 void			ft_error(char *general, char *err, char *arg, \
 				uint8_t error_code);
