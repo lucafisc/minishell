@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tfregni <tfregni@student.42berlin.de>      +#+  +:+       +#+        */
+/*   By: lde-ross <lde-ross@student.42berlin.de     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/28 16:31:54 by tfregni           #+#    #+#             */
-/*   Updated: 2023/04/29 11:15:33 by tfregni          ###   ########.fr       */
+/*   Updated: 2023/05/01 17:45:23 by lde-ross         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ void	setup_pipe(t_command *cmd, int n_cmds)
 	while (++i < n_cmds - 1)
 	{
 		if (pipe(fd_p) == -1)
-			throw_err("minishell", "pipe");
+			ft_error("minishell", "could not setup the pipe", "pipe", 1);
 		cmd->outfile = fd_p[1];
 		cmd->next->infile = fd_p[0];
 		cmd = cmd->next;

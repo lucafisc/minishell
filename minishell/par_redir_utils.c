@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   par_redir_utils.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lde-ross <lde-ross@student.42berlin.de>    +#+  +:+       +#+        */
+/*   By: lde-ross <lde-ross@student.42berlin.de     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/27 16:56:58 by lde-ross          #+#    #+#             */
-/*   Updated: 2023/04/28 12:02:12 by lde-ross         ###   ########.fr       */
+/*   Updated: 2023/05/01 17:41:32 by lde-ross         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void	open_out(int redir, t_lexer *start, t_command **cmd_node)
 		open_flag = (O_WRONLY | O_CREAT | O_APPEND);
 	new->outfile = open(start->next->data, open_flag, 0644);
 	if (new->outfile == -1)
-		ft_error(new->cmd[0], strerror(errno), start->next->data, errno);
+		ft_error(new->cmd[0], strerror(errno), start->next->data, 1);
 }
 
 /* If start->next == NULL we got a problem (should go to stdin or stdout) */

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executor.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tfregni <tfregni@student.42berlin.de>      +#+  +:+       +#+        */
+/*   By: lde-ross <lde-ross@student.42berlin.de     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/04 12:58:08 by tfregni           #+#    #+#             */
-/*   Updated: 2023/04/30 14:38:15 by tfregni          ###   ########.fr       */
+/*   Updated: 2023/05/01 17:44:19 by lde-ross         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ void	wait_for_child(int pid)
 {
 	while (g_shell->status != 130 && waitpid(pid, NULL, WNOHANG) == 0)
 	{
-		if (g_shell->status == 130)
+		if (g_shell->status == 130 || g_shell->status == 255)
 			kill(pid, SIGINT);
 	}
 }

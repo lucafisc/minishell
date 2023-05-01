@@ -369,3 +369,15 @@ TO FIX THE LEAK:
 I wasn't freeing in add_flag_char. I noticed the leak was there only for double expansions (not echo $USER)
 
 added pid to g_shell to avoid init in executor and save lines
+
+echo $?HELLO
+
+export hello world 
+
+cd $PWD hi	too many args (err 1)
+
+env | sort | grep -v SHLVL | grep -v	exit code empty
+
+cat ./test_files/infile_big | grep oi
+
+export GHOST=123 | env | grep GHOST 	if outfile =! 1 don't write
