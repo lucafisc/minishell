@@ -12,7 +12,7 @@ SOLVED exit 0 0    when exit throws an error it prints exit\n first
 ------
 SOLVED exit 9223372036854775808    should throw the numeric argument error
 ------
-export cd   export followed by something without = but no forbidden chars shouldn't do anything but it throws "not a valid identifier" atm
+SOLVED export cd   export followed by something without = but no forbidden chars shouldn't do anything but it throws "not a valid identifier" atm
 ------
 export TES\~T=123       expands ~ so you can see a different text in error message, but right error code
 ------
@@ -22,13 +22,13 @@ unset TES\\\\T      should throw "not a valid identifier"
 ------
 SOLVED echo $?HELLO
 ------
-export hello world
+SOLVED export hello world
 ------
 FIXED cd $PWD hi	too many args (err 1)	in bash on my Mac this does not throw an error
 ------
 cat ./test_files/infile_big | grep oi   should exit at 1
 ------
-export GHOST=123 | env | grep GHOST 	if outfile =! 1 don't write
+export GHOST=123 | env | grep GHOST 	if outfile =! 1 don't write - grep hangs
 ------
 echo <"./test_files/infile" "bonjour       42"      trim quotes!
 ______

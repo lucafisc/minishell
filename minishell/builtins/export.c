@@ -6,7 +6,7 @@
 /*   By: tfregni <tfregni@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/29 15:19:22 by tfregni           #+#    #+#             */
-/*   Updated: 2023/05/01 22:05:03 by tfregni          ###   ########.fr       */
+/*   Updated: 2023/05/01 22:14:10 by tfregni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,12 @@ t_bool	is_param_name(char *input)
 	return (true);
 }
 
+/* Checks if input is a parameter */
+/* https://pubs.opengroup.org/onlinepubs/009695399/utilities
+/xcu_chap02.html#tag_02_05_02 */
+/* A param should not start with a digit and not have
+any of the special chars macroed in SP_PARAM. If it has a =
+it's valid to write or retrieve */
 t_bool	is_param(char *input)
 {
 	int		i;
@@ -65,12 +71,6 @@ t_bool	is_param(char *input)
 	return (true);
 }
 
-/* Checks if input is a parameter */
-/* https://pubs.opengroup.org/onlinepubs/009695399/utilities
-/xcu_chap02.html#tag_02_05_02 */
-/* A param should not start with a digit and not have
-any of the special chars macroed in SP_PARAM. If it has a =
-it's valid to write or retrieve */
 // t_bool	is_param(char *input)
 // {
 // 	int		i;
@@ -114,7 +114,7 @@ void	ft_export(t_shell *s, t_command *c)
 		ft_error("minishell: export", "not a valid identifier", var, 1);
 		return ;
 	}
-	if (is_param(var))
+	if (is_param(var) && c->outfile == 1)
 	{
 		s->params = env_append(s->params, var);
 		var_index = search_array(s->env, var);
