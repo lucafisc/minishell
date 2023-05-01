@@ -6,7 +6,7 @@
 /*   By: tfregni <tfregni@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/29 19:48:25 by lde-ross          #+#    #+#             */
-/*   Updated: 2023/04/30 00:42:33 by tfregni          ###   ########.fr       */
+/*   Updated: 2023/05/01 22:36:45 by tfregni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,11 +78,8 @@ void	ft_unset(t_shell *s, t_command *c)
 		return ;
 	}
 	if (!c->cmd[1])
-	{
-		ft_putendl_fd("unset: not enough arguments", 2);
 		return ;
-	}
-	var = trim_quotes(c->cmd[1]);
+	var = c->cmd[1];
 	var_index = 1;
 	while (var_index >= 0)
 	{
