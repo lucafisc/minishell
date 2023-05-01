@@ -6,7 +6,7 @@
 /*   By: lde-ross <lde-ross@student.42berlin.de     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/27 14:49:58 by lde-ross          #+#    #+#             */
-/*   Updated: 2023/05/01 15:52:23 by lde-ross         ###   ########.fr       */
+/*   Updated: 2023/05/01 17:05:09 by lde-ross         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,15 +21,9 @@ void	free_command(t_command *cmd)
 void	close_fd(t_command *cmd)
 {
 	if (cmd->infile != 0)
-	{
 		close(cmd->infile);
-		printf("closing infile %d\n", cmd->infile);
-	}
 	if (cmd->outfile != 1)
-	{
-		printf("closing outfile %d\n", cmd->outfile);
 		close(cmd->outfile);
-	}
 }
 
 void	create_redir(t_command *cmd)

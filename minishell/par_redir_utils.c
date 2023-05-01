@@ -6,7 +6,7 @@
 /*   By: lde-ross <lde-ross@student.42berlin.de     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/27 16:56:58 by lde-ross          #+#    #+#             */
-/*   Updated: 2023/05/01 15:53:10 by lde-ross         ###   ########.fr       */
+/*   Updated: 2023/05/01 17:04:25 by lde-ross         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,6 @@ void	open_out(int redir, t_lexer *start, t_command **cmd_node)
 	else
 		open_flag = (O_WRONLY | O_CREAT | O_APPEND);
 	new->outfile = open(start->next->data, open_flag, 0644);
-	printf("opening outfile %d\n", new->outfile);
 	if (new->outfile == -1)
 		ft_error(new->cmd[0], strerror(errno), start->next->data, errno);
 }
@@ -51,7 +50,6 @@ void	open_in(int redir, t_lexer *start, t_command **cmd_node)
 	}
 	else
 		new->infile = open(start->next->data, open_flag);
-	printf("opening infile %d\n", new->infile);
 	if (new->infile == -1)
 		ft_error(new->cmd[0], strerror(errno), start->next->data, 1);
 }
