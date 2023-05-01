@@ -6,7 +6,7 @@
 /*   By: lde-ross <lde-ross@student.42berlin.de     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/28 16:31:54 by tfregni           #+#    #+#             */
-/*   Updated: 2023/05/01 16:06:26 by lde-ross         ###   ########.fr       */
+/*   Updated: 2023/05/01 16:23:50 by lde-ross         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,10 +29,14 @@ void	setup_pipe(t_command *cmd, int n_cmds)
 	{
 		if (pipe(fd_p) == -1)
 			throw_err("minishell", "pipe");
+		if (cmd->outfile != 1)
+			close(cmd->outfile);
+		if (cmd->next->infile != 0)
+			close(cmd->next->infile);
 		cmd->outfile = fd_p[1];
 		cmd->next->infile = fd_p[0];
 		if (cmd->infile)
-		cmd = cmd->next;
+			cmd = cmd->next;
 	}
 }
 
