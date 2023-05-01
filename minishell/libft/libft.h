@@ -6,7 +6,7 @@
 /*   By: tfregni <tfregni@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/30 17:35:35 by lde-ross          #+#    #+#             */
-/*   Updated: 2023/04/27 01:27:28 by tfregni          ###   ########.fr       */
+/*   Updated: 2023/05/01 20:08:38 by tfregni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 # include <unistd.h>
 # include <stdio.h>
 # include <stdlib.h>
+# include <stdint.h>
 
 typedef struct s_list
 {
@@ -86,5 +87,5 @@ char		*get_next_line(int fd);
 int			ft_skip_char(char *str, char c, int i);
 char		*ft_strjoinchar(char const *s1, char const *s2, char c);
 char		*ft_strnjoinchar(char **arr, char c);
-
+uint64_t	ft_atollu(const char *str);
 #endif
