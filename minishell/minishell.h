@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tfregni <tfregni@student.42berlin.de>      +#+  +:+       +#+        */
+/*   By: lde-ross <lde-ross@student.42berlin.de     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 16:02:25 by tfregni           #+#    #+#             */
-/*   Updated: 2023/04/30 14:49:27 by tfregni          ###   ########.fr       */
+/*   Updated: 2023/05/01 16:18:34 by lde-ross         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,7 @@ struct s_shell
 	t_builtins	*builtins;
 	uint8_t		status;
 	t_bool		forked;
-	pid_t		pid;
+	pid_t		*pids;
 };
 
 /* LEXER */
@@ -138,6 +138,8 @@ void			close_fd(t_command *cmd);
 void			free_command(t_command *cmd);
 int				find_builtin(t_shell *s, char *cmd);
 void			add_param(t_shell *s, t_command *c);
+void			parent_routine(t_command **command);
+void			child_routine(t_shell *s, t_command *command);
 
 /* ETC? */
 void			get_prompt(t_shell *s);

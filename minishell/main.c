@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tfregni <tfregni@student.42berlin.de>      +#+  +:+       +#+        */
+/*   By: lde-ross <lde-ross@student.42berlin.de     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 15:41:38 by tfregni           #+#    #+#             */
-/*   Updated: 2023/04/30 14:37:05 by tfregni          ###   ########.fr       */
+/*   Updated: 2023/05/01 15:33:52 by lde-ross         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ void	init(char ***env)
 	g_shell->params = NULL;
 	g_shell->status = 0;
 	g_shell->forked = false;
-	g_shell->pid = -1;
+	g_shell->pids = NULL;
 	add_status(0);
 }
 

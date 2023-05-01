@@ -6,7 +6,7 @@
 /*   By: lde-ross <lde-ross@student.42berlin.de     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/28 16:31:54 by tfregni           #+#    #+#             */
-/*   Updated: 2023/05/01 17:45:23 by lde-ross         ###   ########.fr       */
+/*   Updated: 2023/05/01 17:46:43 by lde-ross         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,8 @@ void	setup_pipe(t_command *cmd, int n_cmds)
 			ft_error("minishell", "could not setup the pipe", "pipe", 1);
 		cmd->outfile = fd_p[1];
 		cmd->next->infile = fd_p[0];
-		cmd = cmd->next;
+		if (cmd->infile)
+			cmd = cmd->next;
 	}
 }
 
