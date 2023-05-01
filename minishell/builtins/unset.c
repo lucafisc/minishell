@@ -6,7 +6,7 @@
 /*   By: tfregni <tfregni@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/29 19:48:25 by lde-ross          #+#    #+#             */
-/*   Updated: 2023/05/01 23:43:21 by tfregni          ###   ########.fr       */
+/*   Updated: 2023/05/02 00:35:44 by tfregni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,13 +39,13 @@
 // 	return (new);
 // }
 
-char	**env_remove(char **env, int index)
+void	env_remove(char **env, int index)
 {
 	int	i;
 	int	len;
 
 	if (!env || index < 0)
-		return (env);
+		return ;
 	i = index;
 	len = ft_arrlen(env);
 	while (i < len - 1)
@@ -56,15 +56,14 @@ char	**env_remove(char **env, int index)
 	}
 	free(env[i]);
 	env[i] = NULL;
-	return (env);
 }
 
 void	ft_unset_remove(char ***env, int index)
 {
-	char	**new_env;
+	// char	**new_env;
 
-	new_env = env_remove(*env, index);
-	*env = new_env;
+	env_remove(*env, index);
+	// *env = new_env;
 }
 
 void	ft_unset(t_shell *s, t_command *c)

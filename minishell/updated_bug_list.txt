@@ -16,9 +16,9 @@ SOLVED export cd   export followed by something without = but no forbidden chars
 ------
 export TES\~T=123       expands ~ so you can see a different text in error message, but right error code
 ------
-unset           throws "not enough arguments error" instead of doing nothing
+FIXED unset           throws "not enough arguments error" instead of doing nothing
 ------
-unset TES\\\\T      should throw "not a valid identifier"
+FIXED unset TES\\\\T      should throw "not a valid identifier"
 ------
 SOLVED echo $?HELLO
 ------
