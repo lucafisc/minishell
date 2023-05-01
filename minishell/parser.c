@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tfregni <tfregni@student.42berlin.de>      +#+  +:+       +#+        */
+/*   By: lde-ross <lde-ross@student.42berlin.de     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/28 16:31:54 by tfregni           #+#    #+#             */
-/*   Updated: 2023/04/29 11:15:33 by tfregni          ###   ########.fr       */
+/*   Updated: 2023/05/01 16:06:26 by lde-ross         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ void	setup_pipe(t_command *cmd, int n_cmds)
 			throw_err("minishell", "pipe");
 		cmd->outfile = fd_p[1];
 		cmd->next->infile = fd_p[0];
+		if (cmd->infile)
 		cmd = cmd->next;
 	}
 }
