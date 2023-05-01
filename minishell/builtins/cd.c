@@ -6,7 +6,7 @@
 /*   By: tfregni <tfregni@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/30 07:33:56 by tfregni           #+#    #+#             */
-/*   Updated: 2023/04/30 14:44:14 by tfregni          ###   ########.fr       */
+/*   Updated: 2023/05/01 21:45:20 by tfregni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,9 +82,13 @@ void	ft_cd(t_shell *s, t_command *c)
 {
 	char	*oldpwd;
 	char	*path;
+	int		len;
 
 	if (!s || !c || !c->cmd || !c->cmd[0])
 		return ;
+	len = ft_arrlen(c->cmd);
+	if (len > 2)
+		return (ft_error("minishell", "too many arguments", c->cmd[0], 1));
 	set_path(c, &path);
 	oldpwd = getcwd(NULL, 0);
 	if (!oldpwd || chdir(path) < 0)
