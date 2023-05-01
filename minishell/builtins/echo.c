@@ -6,7 +6,7 @@
 /*   By: tfregni <tfregni@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/30 15:46:57 by lde-ross          #+#    #+#             */
-/*   Updated: 2023/04/30 12:40:54 by tfregni          ###   ########.fr       */
+/*   Updated: 2023/05/01 22:26:33 by tfregni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ void	ft_echo(t_shell *s, t_command *c)
 	(void) s;
 	if (!c || !c->cmd)
 		return ;
-	trim_cmd(&c);
+	// trim_cmd(&c);
 	args = c->cmd;
 	i = 1;
 	n = check_echo_flag(args, &i);

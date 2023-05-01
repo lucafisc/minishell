@@ -28,7 +28,7 @@ FIXED cd $PWD hi	too many args (err 1)	in bash on my Mac this does not throw an 
 ------
 cat ./test_files/infile_big | grep oi   should exit at 1
 ------
-export GHOST=123 | env | grep GHOST 	if outfile =! 1 don't write - grep hangs
+FIXED WRITING, NOT HANGING export GHOST=123 | env | grep GHOST 	if outfile =! 1 don't write - grep hangs
 ------
 echo <"./test_files/infile" "bonjour       42"      trim quotes!
 ______

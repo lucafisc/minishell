@@ -6,7 +6,7 @@
 /*   By: tfregni <tfregni@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 16:02:25 by tfregni           #+#    #+#             */
-/*   Updated: 2023/05/01 21:04:09 by tfregni          ###   ########.fr       */
+/*   Updated: 2023/05/01 22:25:16 by tfregni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,6 +128,7 @@ char			*trim_quotes(char *data);
 void			free_lex_list(t_lexer **lex);
 void			print_cmd_node(t_command **cmd);
 void			trim_cmd(t_command **cmd);
+void			trim_lex(t_lexer **token);
 int				get_node_len(t_lexer **lex);
 t_bool			is_pipe(char *str);
 void			handle_heredoc(t_lexer *lex, int *open_flag);
