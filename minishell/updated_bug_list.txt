@@ -8,9 +8,9 @@ echo hello $test -> hello ' tfregni bla '   INVALID READ
 whoami | cat -e | cat -e > tmp/file                             displays 4 errors: should cut it shorter
 <in cmd "str1 str2 str3" | cmd2 -arg | cmd3 >out >out2          on the other hand this displays 3 command not found: food for thoughts
 ------
-exit 0 0    when exit throws an error it prints exit\n first
+SOLVED exit 0 0    when exit throws an error it prints exit\n first
 ------
-exit 9223372036854775808    should throw the numeric argument error
+SOLVED exit 9223372036854775808    should throw the numeric argument error
 ------
 export cd   export followed by something without = but no forbidden chars shouldn't do anything but it throws "not a valid identifier" atm
 ------
@@ -22,7 +22,7 @@ unset TES\\\\T      should throw "not a valid identifier"
 ------
 echo $?HELLO
 ------
-export hello world 
+export hello world
 ------
 cd $PWD hi	too many args (err 1)
 ------
