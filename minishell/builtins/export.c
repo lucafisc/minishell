@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lde-ross <lde-ross@student.42berlin.de     +#+  +:+       +#+        */
+/*   By: tfregni <tfregni@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/29 15:19:22 by tfregni           #+#    #+#             */
-/*   Updated: 2023/05/02 17:53:35 by lde-ross         ###   ########.fr       */
+/*   Updated: 2023/05/02 19:28:54 by tfregni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,13 +28,28 @@ void	ft_export_append(char ***env, char *var)
 
 t_bool	is_param_name(char *input)
 {
-	int	i;
+	int		i;
+	char	*quote_err;
 
 	i = -1;
 	while (input[++i])
 	{
 		if (ft_strchr(SP_PARAM, input[i]))
+		{
+			if (ft_strchr(BRACKETS, input[i]))
+			{
+				quote_err = ft_calloc(sizeof(*quote_err), 37);
+				ft_strlcpy(quote_err, \
+					"syntax error near unexpected token ", 36);
+				quote_err[35] = input[i];
+				ft_error("minishell", quote_err, NULL, 255);
+				free(quote_err);
+			}
+			else
+				ft_error("minishell: export", \
+					"not a valid identifier", input, 1);
 			return (false);
+		}
 	}
 	return (true);
 }
@@ -84,7 +99,7 @@ void	ft_export(t_shell *s, t_command *c)
 	var = c->cmd[1];
 	if (!is_param_name(var))
 	{
-		ft_error("minishell: export", "not a valid identifier", var, 1);
+
 		return ;
 	}
 	if (is_param(var) && c->outfile == 1)

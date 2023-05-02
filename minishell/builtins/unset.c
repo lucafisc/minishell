@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   unset.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lde-ross <lde-ross@student.42berlin.de     +#+  +:+       +#+        */
+/*   By: tfregni <tfregni@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/29 19:48:25 by lde-ross          #+#    #+#             */
-/*   Updated: 2023/05/02 17:54:05 by lde-ross         ###   ########.fr       */
+/*   Updated: 2023/05/02 19:24:24 by tfregni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ void	ft_unset(t_shell *s, t_command *c)
 	if (!c->cmd[1] || !c->cmd[1][0])
 		return ;
 	if (!is_param_name(c->cmd[1]))
-		return (ft_error("minishell", "not a valid identifier", c->cmd[1], 1));
+		return ;
 	var = c->cmd[1];
 	var_index = 1;
 	while (var_index >= 0)

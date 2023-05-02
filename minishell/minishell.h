@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lde-ross <lde-ross@student.42berlin.de     +#+  +:+       +#+        */
+/*   By: tfregni <tfregni@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 16:02:25 by tfregni           #+#    #+#             */
-/*   Updated: 2023/05/02 17:57:13 by lde-ross         ###   ########.fr       */
+/*   Updated: 2023/05/02 19:01:16 by tfregni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,8 @@
 # include "colors.h"
 # define TRAIL_CHAR " \n\t><|\"$/\'="
 # define SPLIT_CHAR "><|"
-# define SP_PARAM "@*#?-!\\/.+"
+# define SP_PARAM "@*#?-!\\/.+()[]{}"
+# define BRACKETS "()"
 # define N_BUILTINS 7
 # define HEREDOC_NAME "_heredoc_temp"
 # define QUOTES "\'\""
