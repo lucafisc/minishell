@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lde-ross <lde-ross@student.42berlin.de     +#+  +:+       +#+        */
+/*   By: tfregni <tfregni@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/28 16:31:54 by tfregni           #+#    #+#             */
-/*   Updated: 2023/05/01 17:46:43 by lde-ross         ###   ########.fr       */
+/*   Updated: 2023/05/02 14:19:14 by tfregni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,11 @@ void	setup_pipe(t_command *cmd, int n_cmds)
 	{
 		if (pipe(fd_p) == -1)
 			ft_error("minishell", "could not setup the pipe", "pipe", 1);
+		// if (cmd->outfile != 1)
+		// 	close(cmd->outfile);
 		cmd->outfile = fd_p[1];
+		// if (cmd->next->infile != 0)
+		// 	close(cmd->next->infile);
 		cmd->next->infile = fd_p[0];
 		if (cmd->infile)
 			cmd = cmd->next;
@@ -76,6 +80,27 @@ int	par_count_cmds(t_lexer *lex)
 	return (n_cmds);
 }
 
+void	close_ins(t_command *c)
+{
+	c = c->next;
+	while (c)
+	{
+		if (c->infile == 0)
+			close(c->infile);
+		c = c->next;
+	}
+}
+
+void	close_outs(t_command *c)
+{
+	while (c->next)
+	{
+		if (c->outfile == 1)
+			close(c->outfile);
+		c = c->next;
+	}
+}
+
 t_command	*parser(t_lexer *lex)
 {
 	t_command	*cmd;
@@ -86,5 +111,7 @@ t_command	*parser(t_lexer *lex)
 	free_lex_list(&lex);
 	if (g_shell->pipe)
 		setup_pipe(cmd, n_cmds);
+	// close_ins(cmd);
+	// close_outs(cmd);
 	return (cmd);
 }
