@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tfregni <tfregni@student.42berlin.de>      +#+  +:+       +#+        */
+/*   By: lde-ross <lde-ross@student.42berlin.de     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/30 07:33:56 by tfregni           #+#    #+#             */
-/*   Updated: 2023/05/01 22:38:22 by tfregni          ###   ########.fr       */
+/*   Updated: 2023/05/02 17:43:53 by lde-ross         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,17 +50,19 @@ void	update_pwd(t_shell *s, t_command *c, char *oldpwd)
 
 void	free_cd(char *path, char *oldpwd)
 {
-	free(path);
-	free(oldpwd);
+		free(path);
+		free(oldpwd);
 }
 
 /* It sets the value of path expanding - or "" */
-void	set_path(t_command *c, char **path)
+int	set_path(t_command *c, char **path)
 {
 	// char	*trimmed;
 
 	if (!c->cmd[1])
 	{
+		if (!ft_getenv("HOME"))
+			return (1);
 		*path = ft_strdup(ft_getenv("HOME"));
 		c->cmd = env_append(c->cmd, *path);
 	}
@@ -76,6 +78,7 @@ void	set_path(t_command *c, char **path)
 		else
 			*path = ft_strdup(c->cmd[1]);
 	}
+	return (0);
 }
 
 void	ft_cd(t_shell *s, t_command *c)
@@ -89,7 +92,8 @@ void	ft_cd(t_shell *s, t_command *c)
 	len = ft_arrlen(c->cmd);
 	if (len > 2)
 		return (ft_error("minishell", "too many arguments", c->cmd[0], 1));
-	set_path(c, &path);
+	if (set_path(c, &path) == 1)
+		return ;
 	oldpwd = getcwd(NULL, 0);
 	if (!oldpwd || chdir(path) < 0)
 	{
