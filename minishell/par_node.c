@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   par_node.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tfregni <tfregni@student.42berlin.de>      +#+  +:+       +#+        */
+/*   By: lde-ross <lde-ross@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/27 16:32:00 by lde-ross          #+#    #+#             */
-/*   Updated: 2023/05/01 22:22:58 by tfregni          ###   ########.fr       */
+/*   Updated: 2023/05/02 09:47:00 by lde-ross         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,11 +35,9 @@ void	print_cmd_node(t_command **cmd)
 
 void	trim_lex(t_lexer **token)
 {
-	int			i;
 	t_lexer		*lex;
 	char		*trimmed;
 
-	i = 0;
 	lex = *token;
 	while (lex)
 	{

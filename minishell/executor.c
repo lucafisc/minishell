@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executor.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tfregni <tfregni@student.42berlin.de>      +#+  +:+       +#+        */
+/*   By: lde-ross <lde-ross@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/04 12:58:08 by tfregni           #+#    #+#             */
-/*   Updated: 2023/05/01 22:23:47 by tfregni          ###   ########.fr       */
+/*   Updated: 2023/05/02 10:08:53 by lde-ross         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,16 +27,15 @@ void	wait_for_child(int *pids, int n_children)
 		return ;
 	}
 	i = n_children - 1;
-	while (g_shell->status != 130 && waitpid(pids[i], NULL, WNOHANG) == 0)
+	while (g_shell->status != 130 && waitpid(pids[i], &g_shell->status, WNOHANG) == 0)
 	{
 		if (g_shell->status == 130)
 			kill(pids[i], SIGINT);
 	}
-	i--;
 	while (i >= 0)
 	{
 		kill(pids[i], SIGINT);
-		wait(&pids[i]);
+		waitpid(pids[i], &g_shell->status, 0);
 		i--;
 	}
 	free(pids);
@@ -71,7 +70,6 @@ void	execute_routine(t_command **parsed_cmd, int **pids_p, int *i)
 		exec_builtin(g_shell, cmd, builtin_idx);
 	else
 	{
-		// trim_cmd(&cmd);
 		cmd->cmd[0] = find_cmd(g_shell, cmd->cmd[0]);
 		pids[*i] = fork();
 		g_shell->forked = true;

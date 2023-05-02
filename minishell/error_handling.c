@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   error_handling.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tfregni <tfregni@student.42berlin.de>      +#+  +:+       +#+        */
+/*   By: lde-ross <lde-ross@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/26 18:22:43 by lde-ross          #+#    #+#             */
-/*   Updated: 2023/04/29 17:43:50 by tfregni          ###   ########.fr       */
+/*   Updated: 2023/05/02 10:03:09 by lde-ross         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@ void	add_status(int status)
 	char	*value;
 	uint8_t	err_code;
 
+	if (status > 255)
+		status = status / 255;
 	err_code = (uint8_t)status;
 	stat = ft_itoa(err_code);
 	value = ft_strjoin("?=", stat);
