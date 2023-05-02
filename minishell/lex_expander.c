@@ -6,7 +6,7 @@
 /*   By: lde-ross <lde-ross@student.42berlin.de     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/12 14:59:28 by lde-ross          #+#    #+#             */
-/*   Updated: 2023/05/02 18:26:33 by lde-ross         ###   ########.fr       */
+/*   Updated: 2023/05/02 18:27:46 by lde-ross         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,7 +111,6 @@ char	*lex_expander(char *cmds)
 			cmds = expand_var(cur, cmds, i);
 			free(cur);
 			cur = cmds;
-			i = 0;
 		}
 		else
 			i++;
