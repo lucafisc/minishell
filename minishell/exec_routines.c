@@ -6,7 +6,7 @@
 /*   By: lde-ross <lde-ross@student.42berlin.de     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/01 16:16:56 by lde-ross          #+#    #+#             */
-/*   Updated: 2023/05/02 15:34:27 by lde-ross         ###   ########.fr       */
+/*   Updated: 2023/05/02 16:41:14 by lde-ross         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ void	close_extra_fds(t_command *command, t_command *first)
 
 void	child_routine(t_shell *s, t_command *command, t_command *first)
 {
-	printf("command: %s outfile: %d infile: %d\n", command->cmd[0], command->outfile, command->infile);
+	// printf("command: %s outfile: %d infile: %d\n", command->cmd[0], command->outfile, command->infile);
 	close_extra_fds(first, command);
 	create_redir(command);
 	execve(command->cmd[0], command->cmd, s->env);
