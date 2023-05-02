@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lex_expander.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tfregni <tfregni@student.42berlin.de>      +#+  +:+       +#+        */
+/*   By: lde-ross <lde-ross@student.42berlin.de     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/12 14:59:28 by lde-ross          #+#    #+#             */
-/*   Updated: 2023/05/02 00:43:33 by tfregni          ###   ########.fr       */
+/*   Updated: 2023/05/02 17:22:23 by lde-ross         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,6 @@ char	*retrieve_param(char *key)
 	{
 		len = ft_strlen(key);
 		i = ft_arrlen(params);
-		printf("retrieve - len_param: %d\n", i);
-		ft_print_strarr(params);
 		while (--i >= 0 && params[i])
 		{
 			if (!ft_strncmp(params[i], key, len) && params[i][len] == '=')

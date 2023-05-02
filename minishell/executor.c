@@ -6,7 +6,7 @@
 /*   By: lde-ross <lde-ross@student.42berlin.de     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/04 12:58:08 by tfregni           #+#    #+#             */
-/*   Updated: 2023/05/02 16:55:01 by lde-ross         ###   ########.fr       */
+/*   Updated: 2023/05/02 17:21:13 by lde-ross         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ void	wait_for_child(int *pids, int n_children)
 		return ;
 	}
 	i = n_children - 1;
-	while (g_shell->status != 130 && waitpid(pids[i], NULL, WNOHANG) == 0)
+	while (g_shell->status != 130 && waitpid(pids[i], &g_shell->status, WNOHANG) == 0)
 	{
 		if (g_shell->status == 130)
 			kill(pids[i], SIGINT);

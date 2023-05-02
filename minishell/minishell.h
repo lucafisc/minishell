@@ -6,7 +6,7 @@
 /*   By: lde-ross <lde-ross@student.42berlin.de     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 16:02:25 by tfregni           #+#    #+#             */
-/*   Updated: 2023/05/02 16:54:49 by lde-ross         ###   ########.fr       */
+/*   Updated: 2023/05/02 17:21:52 by lde-ross         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,7 @@ struct s_shell
 	t_lexer		*lexer;
 	t_command	*cmd;
 	t_builtins	*builtins;
-	uint8_t		status;
+	int			status;
 	t_bool		forked;
 	pid_t		*pids;
 };
