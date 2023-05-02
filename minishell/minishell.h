@@ -6,7 +6,7 @@
 /*   By: lde-ross <lde-ross@student.42berlin.de     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 16:02:25 by tfregni           #+#    #+#             */
-/*   Updated: 2023/05/01 16:18:34 by lde-ross         ###   ########.fr       */
+/*   Updated: 2023/05/02 15:33:46 by lde-ross         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -139,7 +139,7 @@ void			free_command(t_command *cmd);
 int				find_builtin(t_shell *s, char *cmd);
 void			add_param(t_shell *s, t_command *c);
 void			parent_routine(t_command **command);
-void			child_routine(t_shell *s, t_command *command);
+void	child_routine(t_shell *s, t_command *command, t_command *first);
 
 /* ETC? */
 void			get_prompt(t_shell *s);

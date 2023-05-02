@@ -6,7 +6,7 @@
 /*   By: lde-ross <lde-ross@student.42berlin.de     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/04 12:58:08 by tfregni           #+#    #+#             */
-/*   Updated: 2023/05/01 17:50:37 by lde-ross         ###   ########.fr       */
+/*   Updated: 2023/05/02 15:31:24 by lde-ross         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,8 +60,10 @@ void	execute_routine(t_command **parsed_cmd, int **pids_p, int *i)
 {
 	int			builtin_idx;
 	t_command	*cmd;
+	t_command	*first;
 	int			*pids;
 
+	first = *parsed_cmd;
 	cmd = *parsed_cmd;
 	pids = *pids_p;
 	builtin_idx = find_builtin(g_shell, cmd->cmd[0]);
@@ -76,7 +78,7 @@ void	execute_routine(t_command **parsed_cmd, int **pids_p, int *i)
 		pids[*i] = fork();
 		g_shell->forked = true;
 		if (pids[*i] == 0)
-			child_routine(g_shell, cmd);
+			child_routine(g_shell, cmd, first);
 		(*i)++;
 	}
 	parent_routine(parsed_cmd);
