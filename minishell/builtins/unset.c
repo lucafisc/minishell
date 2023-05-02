@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   unset.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tfregni <tfregni@student.42berlin.de>      +#+  +:+       +#+        */
+/*   By: lde-ross <lde-ross@student.42berlin.de     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/29 19:48:25 by lde-ross          #+#    #+#             */
-/*   Updated: 2023/05/02 00:35:44 by tfregni          ###   ########.fr       */
+/*   Updated: 2023/05/02 17:54:05 by lde-ross         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,10 +60,7 @@ void	env_remove(char **env, int index)
 
 void	ft_unset_remove(char ***env, int index)
 {
-	// char	**new_env;
-
 	env_remove(*env, index);
-	// *env = new_env;
 }
 
 void	ft_unset(t_shell *s, t_command *c)
@@ -91,22 +88,3 @@ void	ft_unset(t_shell *s, t_command *c)
 	if (var_index >= 0)
 		ft_unset_remove(&(s->env), var_index);
 }
-
-// int	main(int ac, char **av, char **env)
-// {
-// 	t_shell *s = malloc(sizeof(t_shell));
-// 	t_command *c = malloc(sizeof(t_command));
-// 	c->cmd = malloc(sizeof(*c->cmd) * ac + 1);
-// 	for (int i = 0; i < ac; i++)
-// 		c->cmd[i] = malloc(sizeof(char) * 100);
-// 	for (int j = 0; j < ac; j++)
-// 		ft_strlcpy(c->cmd[j], av[j], ft_strlen(av[j]) + 1);
-// 	c->cmd[ac] = NULL;
-// 	s->env = env_dup(env);
-// 	ft_unset(s, c);
-// 	ft_print_strarr(s->env);
-// 	ft_free_str_arr(c->cmd);
-// 	ft_free_str_arr(s->env);
-// 	free(s);
-// 	free(c);
-// }

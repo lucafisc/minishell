@@ -6,7 +6,7 @@
 /*   By: lde-ross <lde-ross@student.42berlin.de     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/30 07:33:56 by tfregni           #+#    #+#             */
-/*   Updated: 2023/05/02 17:43:53 by lde-ross         ###   ########.fr       */
+/*   Updated: 2023/05/02 17:54:17 by lde-ross         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,15 +50,13 @@ void	update_pwd(t_shell *s, t_command *c, char *oldpwd)
 
 void	free_cd(char *path, char *oldpwd)
 {
-		free(path);
-		free(oldpwd);
+	free(path);
+	free(oldpwd);
 }
 
 /* It sets the value of path expanding - or "" */
 int	set_path(t_command *c, char **path)
 {
-	// char	*trimmed;
-
 	if (!c->cmd[1])
 	{
 		if (!ft_getenv("HOME"))
@@ -68,9 +66,6 @@ int	set_path(t_command *c, char **path)
 	}
 	else
 	{
-		// trimmed = trim_quotes(c->cmd[1]);
-		// free(c->cmd[1]);
-		// c->cmd[1] = trimmed;
 		if (!c->cmd[1][0])
 			*path = ft_strdup(".");
 		else if (!ft_strncmp(c->cmd[1], "-", 2))

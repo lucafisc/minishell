@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tfregni <tfregni@student.42berlin.de>      +#+  +:+       +#+        */
+/*   By: lde-ross <lde-ross@student.42berlin.de     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/29 15:19:22 by tfregni           #+#    #+#             */
-/*   Updated: 2023/05/01 22:26:41 by tfregni          ###   ########.fr       */
+/*   Updated: 2023/05/02 17:53:35 by lde-ross         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,32 +71,6 @@ t_bool	is_param(char *input)
 	return (true);
 }
 
-// t_bool	is_param(char *input)
-// {
-// 	int		i;
-
-// 	i = -1;
-// 	if (!ft_strchr(input, '=') || ft_isdigit(*input) || *input == '=')
-// 		return (false);
-// 	while (++i <= (ft_strchr(input, '=') - input))
-// 	{
-// 		if (ft_strchr(SP_PARAM, input[i]))
-// 			return (false);
-// 	}
-// 	while (input[i])
-// 	{
-// 		if (input[i] && ft_strchr(QUOTES, input[i]))
-// 			i = ft_skip_char(input, input[i], i);
-// 		else if (input[i] && input[i] == '!' && input[i + 1])
-// 		{
-// 			ft_error("minishell", "event not found", input + i, 1);
-// 			return (false);
-// 		}
-// 		i++;
-// 	}
-// 	return (true);
-// }
-
 /* Export will set the variable also in the shell->params so that
 the expander can always get the latest occurrence */
 /* From the manual: When no arguments are given, the results are unspecified. */
@@ -107,7 +81,6 @@ void	ft_export(t_shell *s, t_command *c)
 
 	if (!c || !s || !c->cmd || !c->cmd[0] || !c->cmd[1])
 		return ;
-	// trim_cmd(&c);
 	var = c->cmd[1];
 	if (!is_param_name(var))
 	{

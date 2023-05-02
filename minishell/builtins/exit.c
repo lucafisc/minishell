@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tfregni <tfregni@student.42berlin.de>      +#+  +:+       +#+        */
+/*   By: lde-ross <lde-ross@student.42berlin.de     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 21:31:44 by tfregni           #+#    #+#             */
-/*   Updated: 2023/05/01 22:26:37 by tfregni          ###   ########.fr       */
+/*   Updated: 2023/05/02 17:53:16 by lde-ross         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,6 @@ void	ft_exit(t_shell *s, t_command *c)
 	uint8_t	exit_code;
 	int		len;
 
-	// trim_cmd(&c);
 	len = ft_arrlen(c->cmd);
 	exit_code = 0;
 	if (c->cmd[1])

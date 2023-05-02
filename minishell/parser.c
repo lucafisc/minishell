@@ -6,7 +6,7 @@
 /*   By: lde-ross <lde-ross@student.42berlin.de     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/28 16:31:54 by tfregni           #+#    #+#             */
-/*   Updated: 2023/05/02 16:41:21 by lde-ross         ###   ########.fr       */
+/*   Updated: 2023/05/02 17:55:55 by lde-ross         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,6 @@ void	setup_pipe(t_command *cmd, int n_cmds)
 			ft_error("minishell", "could not setup the pipe", "pipe", 1);
 		cmd->outfile = fd_p[1];
 		cmd->next->infile = fd_p[0];
-		// printf("i is %d, commad is %s, outfile: %d, infile: %d\n", i, cmd->cmd[0], cmd->outfile, cmd->infile);
 		if (cmd->next)
 			cmd = cmd->next;
 	}
@@ -85,7 +84,6 @@ t_command	*parser(t_lexer *lex)
 	n_cmds = par_count_cmds(lex);
 	cmd = par_list_from_lex(lex, n_cmds);
 	free_lex_list(&lex);
-	// printf("n_cmds: %d\n", n_cmds);
 	if (g_shell->pipe)
 		setup_pipe(cmd, n_cmds);
 	return (cmd);

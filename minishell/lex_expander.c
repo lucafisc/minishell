@@ -6,7 +6,7 @@
 /*   By: lde-ross <lde-ross@student.42berlin.de     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/12 14:59:28 by lde-ross          #+#    #+#             */
-/*   Updated: 2023/05/02 17:22:23 by lde-ross         ###   ########.fr       */
+/*   Updated: 2023/05/02 17:54:54 by lde-ross         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,36 +66,6 @@ char	*expand_var(char *cur, char *cmds, int i)
 	}
 	return (new_cmd);
 }
-
-// char	*expand_var(char *cur, char **cmds, int i)
-// {
-// 	char	*trimmed;
-// 	int		len_trim;
-// 	char	*new_cmd;
-// 	char	*param;
-
-// 	if (cur[i] == '~')
-// 		new_cmd = ft_strins(*cmds, ft_getenv("HOME"), 1, i);
-// 	else
-// 	{
-// 		trimmed = ft_strtrunc(&cur[i + 1], TRAIL_CHAR);
-// 		len_trim = ft_strlen(trimmed);
-// 		if (len_trim == 0)
-// 			new_cmd = ft_strins(*cmds, "$", len_trim + 1, i);
-// 		else
-// 		{
-// 			param = retrieve_param(trimmed);
-// 			new_cmd = ft_strins(*cmds, param, len_trim + 1, i);
-// 			if (param && (ft_strchr(param, QUOTES[0]) ||
-// 			ft_strchr(param, QUOTES[1])))
-// 				add_flag_char(&new_cmd);
-// 		}
-// 		free(trimmed);
-// 	}
-// 	free(*cmds);
-// 	*cmds = new_cmd;
-// 	return (new_cmd);
-// }
 
 void	ft_update_state(char c, int *state, int *prev_state)
 {

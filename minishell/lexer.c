@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tfregni <tfregni@student.42berlin.de>      +#+  +:+       +#+        */
+/*   By: lde-ross <lde-ross@student.42berlin.de     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/27 17:14:03 by lde-ross          #+#    #+#             */
-/*   Updated: 2023/05/01 22:24:50 by tfregni          ###   ########.fr       */
+/*   Updated: 2023/05/02 17:56:48 by lde-ross         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,6 @@ t_lexer	*lexer(char *fmt)
 	list = lex_list_from_table(raw_tokens);
 	ft_free_str_arr(raw_tokens);
 	lex_split_list(&list);
-	// I changed this
 	trim_lex(&list);
 	return (list);
 }
