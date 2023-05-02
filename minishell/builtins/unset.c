@@ -6,7 +6,7 @@
 /*   By: tfregni <tfregni@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/29 19:48:25 by lde-ross          #+#    #+#             */
-/*   Updated: 2023/04/30 00:42:33 by tfregni          ###   ########.fr       */
+/*   Updated: 2023/05/02 00:35:44 by tfregni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,13 +39,13 @@
 // 	return (new);
 // }
 
-char	**env_remove(char **env, int index)
+void	env_remove(char **env, int index)
 {
 	int	i;
 	int	len;
 
 	if (!env || index < 0)
-		return (env);
+		return ;
 	i = index;
 	len = ft_arrlen(env);
 	while (i < len - 1)
@@ -56,15 +56,14 @@ char	**env_remove(char **env, int index)
 	}
 	free(env[i]);
 	env[i] = NULL;
-	return (env);
 }
 
 void	ft_unset_remove(char ***env, int index)
 {
-	char	**new_env;
+	// char	**new_env;
 
-	new_env = env_remove(*env, index);
-	*env = new_env;
+	env_remove(*env, index);
+	// *env = new_env;
 }
 
 void	ft_unset(t_shell *s, t_command *c)
@@ -77,12 +76,11 @@ void	ft_unset(t_shell *s, t_command *c)
 		ft_error(NULL, NULL, NULL, 1);
 		return ;
 	}
-	if (!c->cmd[1])
-	{
-		ft_putendl_fd("unset: not enough arguments", 2);
+	if (!c->cmd[1] || !c->cmd[1][0])
 		return ;
-	}
-	var = trim_quotes(c->cmd[1]);
+	if (!is_param_name(c->cmd[1]))
+		return (ft_error("minishell", "not a valid identifier", c->cmd[1], 1));
+	var = c->cmd[1];
 	var_index = 1;
 	while (var_index >= 0)
 	{
@@ -92,8 +90,6 @@ void	ft_unset(t_shell *s, t_command *c)
 	var_index = arg_index(s->env, var);
 	if (var_index >= 0)
 		ft_unset_remove(&(s->env), var_index);
-	free(var);
-	return ;
 }
 
 // int	main(int ac, char **av, char **env)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lde-ross <lde-ross@student.42berlin.de     +#+  +:+       +#+        */
+/*   By: tfregni <tfregni@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/27 14:49:58 by lde-ross          #+#    #+#             */
-/*   Updated: 2023/05/01 17:05:09 by lde-ross         ###   ########.fr       */
+/*   Updated: 2023/05/01 23:03:47 by tfregni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,10 +69,10 @@ int	find_builtin(t_shell *s, char *cmd)
 
 void	add_param(t_shell *s, t_command *c)
 {
-	char		*trimmed;
+	// char		*trimmed;
 
-	trimmed = trim_quotes(c->cmd[0]);
-	free(c->cmd[0]);
-	c->cmd[0] = trimmed;
-	s->params = env_append(s->params, trimmed);
+	// trimmed = clean_variable(&(c->cmd[0]));
+	// free(c->cmd[0]);
+	// c->cmd[0] = trimmed;
+	s->params = env_append(s->params, c->cmd[0]);
 }

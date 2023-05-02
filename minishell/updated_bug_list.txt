@@ -8,30 +8,32 @@ echo hello $test -> hello ' tfregni bla '   INVALID READ
 whoami | cat -e | cat -e > tmp/file                             displays 4 errors: should cut it shorter
 <in cmd "str1 str2 str3" | cmd2 -arg | cmd3 >out >out2          on the other hand this displays 3 command not found: food for thoughts
 ------
-exit 0 0    when exit throws an error it prints exit\n first
+SOLVED exit 0 0    when exit throws an error it prints exit\n first
 ------
-exit 9223372036854775808    should throw the numeric argument error
+SOLVED exit 9223372036854775808    should throw the numeric argument error
 ------
-export cd   export followed by something without = but no forbidden chars shouldn't do anything but it throws "not a valid identifier" atm
+SOLVED export cd   export followed by something without = but no forbidden chars shouldn't do anything but it throws "not a valid identifier" atm
 ------
 export TES\~T=123       expands ~ so you can see a different text in error message, but right error code
 ------
-unset           throws "not enough arguments error" instead of doing nothing
+FIXED unset           throws "not enough arguments error" instead of doing nothing
 ------
-unset TES\\\\T      should throw "not a valid identifier"
+FIXED unset TES\\\\T      should throw "not a valid identifier"
 ------
-echo $?HELLO
+SOLVED echo $?HELLO
 ------
-export hello world 
+SOLVED export hello world
 ------
-cd $PWD hi	too many args (err 1)
+FIXED cd $PWD hi	too many args (err 1)	in bash on my Mac this does not throw an error
 ------
 cat ./test_files/infile_big | grep oi   should exit at 1
 ------
-export GHOST=123 | env | grep GHOST 	if outfile =! 1 don't write
+FIXED WRITING, NOT THE HANGING export GHOST=123 | env | grep GHOST 	if outfile =! 1 don't write - grep hangs
 ------
-echo <"./test_files/infile" "bonjour       42"      trim quotes!
+SOLVED echo <"./test_files/infile" "bonjour       42"      trim quotes!
 ______
-cat <"1""2""3""4""5" exit code
+SOLVED cat <"1""2""3""4""5"
 ______
-cat <"./test_files/infile" trimming
+SOLVED cat <"./test_files/infile" trimming
+------
+cat wrong_cmd	wrong exit code (it gives 0)

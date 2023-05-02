@@ -6,7 +6,7 @@
 /*   By: lde-ross <lde-ross@student.42berlin.de     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/04 12:58:08 by tfregni           #+#    #+#             */
-/*   Updated: 2023/05/02 15:31:24 by lde-ross         ###   ########.fr       */
+/*   Updated: 2023/05/02 16:55:01 by lde-ross         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ void	execute_routine(t_command **parsed_cmd, int **pids_p, int *i)
 		exec_builtin(g_shell, cmd, builtin_idx);
 	else
 	{
-		trim_cmd(&cmd);
+		// trim_cmd(&cmd);
 		cmd->cmd[0] = find_cmd(g_shell, cmd->cmd[0]);
 		pids[*i] = fork();
 		g_shell->forked = true;

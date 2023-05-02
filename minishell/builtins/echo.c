@@ -6,22 +6,22 @@
 /*   By: tfregni <tfregni@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/30 15:46:57 by lde-ross          #+#    #+#             */
-/*   Updated: 2023/04/30 12:40:54 by tfregni          ###   ########.fr       */
+/*   Updated: 2023/05/01 23:03:28 by tfregni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-char	*clean_variable(char *input)
-{
-	char	*var;
-	char	**arr;
+// char	*clean_variable(char *input)
+// {
+// 	char	*var;
+// 	char	**arr;
 
-	arr = ft_split(input, ' ');
-	var = ft_strnjoinchar(arr, ' ');
-	ft_free_str_arr(arr);
-	return (var);
-}
+// 	arr = ft_split(input, ' ');
+// 	var = ft_strnjoinchar(arr, ' ');
+// 	ft_free_str_arr(arr);
+// 	return (var);
+// }
 
 int	is_flag_in_token(char *str)
 {
@@ -62,7 +62,7 @@ void	ft_echo(t_shell *s, t_command *c)
 	(void) s;
 	if (!c || !c->cmd)
 		return ;
-	trim_cmd(&c);
+	// trim_cmd(&c);
 	args = c->cmd;
 	i = 1;
 	n = check_echo_flag(args, &i);

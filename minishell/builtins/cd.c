@@ -6,7 +6,7 @@
 /*   By: tfregni <tfregni@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/30 07:33:56 by tfregni           #+#    #+#             */
-/*   Updated: 2023/04/30 14:44:14 by tfregni          ###   ########.fr       */
+/*   Updated: 2023/05/01 22:38:22 by tfregni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ void	free_cd(char *path, char *oldpwd)
 /* It sets the value of path expanding - or "" */
 void	set_path(t_command *c, char **path)
 {
-	char	*trimmed;
+	// char	*trimmed;
 
 	if (!c->cmd[1])
 	{
@@ -66,9 +66,9 @@ void	set_path(t_command *c, char **path)
 	}
 	else
 	{
-		trimmed = trim_quotes(c->cmd[1]);
-		free(c->cmd[1]);
-		c->cmd[1] = trimmed;
+		// trimmed = trim_quotes(c->cmd[1]);
+		// free(c->cmd[1]);
+		// c->cmd[1] = trimmed;
 		if (!c->cmd[1][0])
 			*path = ft_strdup(".");
 		else if (!ft_strncmp(c->cmd[1], "-", 2))
@@ -82,9 +82,13 @@ void	ft_cd(t_shell *s, t_command *c)
 {
 	char	*oldpwd;
 	char	*path;
+	int		len;
 
 	if (!s || !c || !c->cmd || !c->cmd[0])
 		return ;
+	len = ft_arrlen(c->cmd);
+	if (len > 2)
+		return (ft_error("minishell", "too many arguments", c->cmd[0], 1));
 	set_path(c, &path);
 	oldpwd = getcwd(NULL, 0);
 	if (!oldpwd || chdir(path) < 0)

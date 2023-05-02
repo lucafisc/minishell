@@ -6,7 +6,7 @@
 /*   By: lde-ross <lde-ross@student.42berlin.de     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 16:02:25 by tfregni           #+#    #+#             */
-/*   Updated: 2023/05/02 15:33:46 by lde-ross         ###   ########.fr       */
+/*   Updated: 2023/05/02 16:54:49 by lde-ross         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,11 +31,12 @@
 # include "colors.h"
 # define TRAIL_CHAR " \n\t><|\"$/\'="
 # define SPLIT_CHAR "><|"
-# define SP_PARAM "@*#?-!\\.+"
+# define SP_PARAM "@*#?-!\\/.+"
 # define N_BUILTINS 7
 # define HEREDOC_NAME "_heredoc_temp"
 # define QUOTES "\'\""
 # define FLAG_CHAR 255
+# define MAX_INT64 9223372036854775807
 
 typedef enum s_bool
 {
@@ -127,6 +128,7 @@ char			*trim_quotes(char *data);
 void			free_lex_list(t_lexer **lex);
 void			print_cmd_node(t_command **cmd);
 void			trim_cmd(t_command **cmd);
+void			trim_lex(t_lexer **token);
 int				get_node_len(t_lexer **lex);
 t_bool			is_pipe(char *str);
 void			handle_heredoc(t_lexer *lex, int *open_flag);
@@ -147,7 +149,7 @@ void			init_signal(void);
 char			*find_cmd(t_shell *s, char *cmd);
 char			**ft_split_keep(char *s, char c);
 
-/* EXEC SCRI	PT */
+/* EXEC SCRIPT */
 void			exec_script(t_shell *s, int fd);
 
 /* FREE */
@@ -176,8 +178,9 @@ char			*ft_getenv(char *key);
 void			ft_export_append(char ***env, char *var);
 void			ft_export_replace(char **env, char *var, int index);
 t_bool			is_param(char *input);
+t_bool			is_param_name(char *input);
 
-/* ERROR HAN	DLING*/
+/* ERROR HANDLING*/
 int				throw_err(char *str, char *arg);
 void			ft_error(char *general, char *err, char *arg, \
 				uint8_t error_code);

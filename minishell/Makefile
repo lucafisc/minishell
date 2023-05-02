@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: lde-ross <lde-ross@student.42berlin.de     +#+  +:+       +#+         #
+#    By: tfregni <tfregni@student.42berlin.de>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/04/17 13:03:17 by tfregni           #+#    #+#              #
-#    Updated: 2023/05/01 16:19:00 by lde-ross         ###   ########.fr        #
+#    Updated: 2023/05/01 23:17:40 by tfregni          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -52,7 +52,7 @@ $(NAME): $(OBJ)
 	@$(CC) $(CFLAGS) $(OBJ) $(LIBFT) $(INCLUDES) -o $(NAME) $(LIBS)
 	@echo "Done!"
 	@echo
-	@echo "__  __ _       _    __ __  _    _      _ _ "
+	@echo " __  __ _       _    __ __  _    _      _ _ "
 	@echo "|  \/  (_)     (_)  / / \ \| |  | |    | | |"
 	@echo "| \  / |_ _ __  _  | |___| | |__| | ___| | |"
 	@echo "| |\/| | | '_ \| | | / __| |  __  |/ _ \ | |"

@@ -6,7 +6,7 @@
 /*   By: tfregni <tfregni@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/12 14:59:28 by lde-ross          #+#    #+#             */
-/*   Updated: 2023/04/30 14:41:59 by tfregni          ###   ########.fr       */
+/*   Updated: 2023/05/02 00:43:33 by tfregni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,8 @@ char	*retrieve_param(char *key)
 	{
 		len = ft_strlen(key);
 		i = ft_arrlen(params);
+		printf("retrieve - len_param: %d\n", i);
+		ft_print_strarr(params);
 		while (--i >= 0 && params[i])
 		{
 			if (!ft_strncmp(params[i], key, len) && params[i][len] == '=')
@@ -30,6 +32,13 @@ char	*retrieve_param(char *key)
 		}
 	}
 	return (ft_getenv(key));
+}
+
+static char	*trim_param(char *cur, int i)
+{
+	if (!ft_strncmp(&cur[i + 1], "?", 1))
+		return (ft_strdup("?"));
+	return (ft_strtrunc(&cur[i + 1], TRAIL_CHAR));
 }
 
 char	*expand_var(char *cur, char *cmds, int i)
@@ -43,7 +52,7 @@ char	*expand_var(char *cur, char *cmds, int i)
 		new_cmd = ft_strins(cmds, ft_getenv("HOME"), 1, i);
 	else
 	{
-		trimmed = ft_strtrunc(&cur[i + 1], TRAIL_CHAR);
+		trimmed = trim_param(cur, i);
 		len_trim = ft_strlen(trimmed);
 		if (len_trim == 0)
 			new_cmd = ft_strins(cmds, "$", len_trim + 1, i);
@@ -79,7 +88,7 @@ char	*expand_var(char *cur, char *cmds, int i)
 // 		{
 // 			param = retrieve_param(trimmed);
 // 			new_cmd = ft_strins(*cmds, param, len_trim + 1, i);
-// 			if (param && (ft_strchr(param, QUOTES[0]) || 
+// 			if (param && (ft_strchr(param, QUOTES[0]) ||
 // 			ft_strchr(param, QUOTES[1])))
 // 				add_flag_char(&new_cmd);
 // 		}

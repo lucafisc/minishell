@@ -6,7 +6,7 @@
 /*   By: tfregni <tfregni@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/27 16:32:00 by lde-ross          #+#    #+#             */
-/*   Updated: 2023/04/30 14:30:34 by tfregni          ###   ########.fr       */
+/*   Updated: 2023/05/01 22:22:58 by tfregni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,23 @@ void	print_cmd_node(t_command **cmd)
 
 	c = *cmd;
 	ft_print_strarr(c->cmd);
+}
+
+void	trim_lex(t_lexer **token)
+{
+	int			i;
+	t_lexer		*lex;
+	char		*trimmed;
+
+	i = 0;
+	lex = *token;
+	while (lex)
+	{
+		trimmed = trim_quotes(lex->data);
+		free(lex->data);
+		lex->data = trimmed;
+		lex = lex->next;
+	}
 }
 
 void	trim_cmd(t_command **cmd)
