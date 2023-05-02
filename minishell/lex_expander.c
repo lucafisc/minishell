@@ -6,7 +6,7 @@
 /*   By: lde-ross <lde-ross@student.42berlin.de     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/12 14:59:28 by lde-ross          #+#    #+#             */
-/*   Updated: 2023/05/02 17:54:54 by lde-ross         ###   ########.fr       */
+/*   Updated: 2023/05/02 18:26:33 by lde-ross         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,7 +102,7 @@ char	*lex_expander(char *cmds)
 	i = 0;
 	state = IN_NORMAL;
 	prev_state = state;
-	while (cur[i])
+	while (cur && cur[i])
 	{
 		ft_update_state(cur[i], &state, &prev_state);
 		if ((cur[i] == '~' && state != IN_S_QUOTE) || \
@@ -111,8 +111,10 @@ char	*lex_expander(char *cmds)
 			cmds = expand_var(cur, cmds, i);
 			free(cur);
 			cur = cmds;
+			i = 0;
 		}
-		i++;
+		else
+			i++;
 	}
 	return (cmds);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lex_split_list.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lde-ross <lde-ross@student.42berlin.de>    +#+  +:+       +#+        */
+/*   By: lde-ross <lde-ross@student.42berlin.de     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/03 15:53:30 by lde-ross          #+#    #+#             */
-/*   Updated: 2023/04/28 11:42:22 by lde-ross         ###   ########.fr       */
+/*   Updated: 2023/05/02 18:25:20 by lde-ross         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ char	should_split(char *str)
 	int	i;
 
 	i = 0;
-	if (!str[1])
+	if (!str || !str[0] || !str[1])
 		return (0);
 	while (SPLIT_CHAR[i])
 	{
