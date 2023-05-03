@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tfregni <tfregni@student.42berlin.de>      +#+  +:+       +#+        */
+/*   By: lde-ross <lde-ross@student.42berlin.de     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 16:02:25 by tfregni           #+#    #+#             */
-/*   Updated: 2023/05/02 19:01:16 by tfregni          ###   ########.fr       */
+/*   Updated: 2023/05/03 17:07:00 by lde-ross         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,6 +98,10 @@ struct s_shell
 	pid_t		*pids;
 };
 
+/* PROMPT */
+void			get_prompt(t_shell *s);
+void			init_signal(void);
+
 /* LEXER */
 t_lexer			*lexer(char *fmt);
 char			**lex_split_token(char *str);
@@ -112,6 +116,9 @@ void			for_each_lex_node(t_lexer **list, void (*f)(t_lexer **cmd));
 void			lex_split_list(t_lexer **list);
 char			**expander(char **arr);
 void			add_flag_char(char **data);
+char			*trim_param(char *cur, int i);
+char			*retrieve_param(char *key);
+t_bool			has_unclosed_quotes(char *str);
 
 /* PARSER */
 t_command		*parser(t_lexer *lex);
@@ -143,12 +150,7 @@ int				find_builtin(t_shell *s, char *cmd);
 void			add_param(t_shell *s, t_command *c);
 void			parent_routine(t_command **command);
 void			child_routine(t_shell *s, t_command *command, t_command *first);
-
-/* ETC? */
-void			get_prompt(t_shell *s);
-void			init_signal(void);
 char			*find_cmd(t_shell *s, char *cmd);
-char			**ft_split_keep(char *s, char c);
 
 /* EXEC SCRIPT */
 void			exec_script(t_shell *s, int fd);
@@ -186,9 +188,5 @@ int				throw_err(char *str, char *arg);
 void			ft_error(char *general, char *err, char *arg, \
 				uint8_t error_code);
 void			add_status(int status);
-
-/* TEMP */
-t_command		*simple_parser(t_lexer *lex);
-t_bool			has_unclosed_quotes(char *str);
 
 #endif

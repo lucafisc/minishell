@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tfregni <tfregni@student.42berlin.de>      +#+  +:+       +#+        */
+/*   By: lde-ross <lde-ross@student.42berlin.de     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/29 15:19:22 by tfregni           #+#    #+#             */
-/*   Updated: 2023/05/03 13:36:40 by tfregni          ###   ########.fr       */
+/*   Updated: 2023/05/03 17:02:40 by lde-ross         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,10 +98,7 @@ void	ft_export(t_shell *s, t_command *c)
 		return ;
 	var = c->cmd[1];
 	if (!is_param_name(var))
-	{
-
 		return ;
-	}
 	if (is_param(var) && c->outfile == 1)
 	{
 		s->params = env_append(s->params, var);

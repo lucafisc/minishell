@@ -3,15 +3,15 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: tfregni <tfregni@student.42berlin.de>      +#+  +:+       +#+         #
+#    By: lde-ross <lde-ross@student.42berlin.de     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/04/17 13:03:17 by tfregni           #+#    #+#              #
-#    Updated: 2023/05/01 23:17:40 by tfregni          ###   ########.fr        #
+#    Updated: 2023/05/03 17:04:18 by lde-ross         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 SRC = main.c prompt.c free.c signal.c search_bin.c \
-		lexer.c lex_split_token.c lex_state.c lex_expander.c lex_list.c lex_utils.c lex_split_list.c \
+		lexer.c lex_split_token.c lex_state.c lex_expander.c lex_list.c lex_utils.c lex_split_list.c lex_param.c\
 		parser.c par_utils.c par_trim_expand.c par_list.c par_redir.c par_redir_utils.c par_node.c\
 		 executor.c exec_utils.c exec_routines.c builtins.c $(addprefix builtins/,cd.c echo.c export.c pwd_env.c unset.c exit.c builtins_util.c)\
 		 exec_script.c error_handling.c
