@@ -6,7 +6,7 @@
 /*   By: lde-ross <lde-ross@student.42berlin.de     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/01 16:16:56 by lde-ross          #+#    #+#             */
-/*   Updated: 2023/05/02 17:55:17 by lde-ross         ###   ########.fr       */
+/*   Updated: 2023/05/03 17:51:46 by lde-ross         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,5 +51,5 @@ void	child_routine(t_shell *s, t_command *command, t_command *first)
 	else
 		ft_error("minishell", command->cmd[0],
 			"command not found", 127);
-	exit(1);
+	exit(127);
 }
