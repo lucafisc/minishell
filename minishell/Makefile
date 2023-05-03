@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: lde-ross <lde-ross@student.42berlin.de     +#+  +:+       +#+         #
+#    By: tfregni <tfregni@student.42berlin.de>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/04/17 13:03:17 by tfregni           #+#    #+#              #
-#    Updated: 2023/05/03 17:04:18 by lde-ross         ###   ########.fr        #
+#    Updated: 2023/05/03 18:26:03 by tfregni          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -40,10 +40,9 @@ endif
 endif
 
 all: $(NAME)
-	@./minishell
 
-val: $(NAME)
-	@valgrind --leak-check=full --track-fds=yes ./minishell
+run: $(NAME)
+	@./minishell
 
 $(NAME): $(OBJ)
 	@clear
