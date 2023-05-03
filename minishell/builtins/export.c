@@ -6,7 +6,7 @@
 /*   By: tfregni <tfregni@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/29 15:19:22 by tfregni           #+#    #+#             */
-/*   Updated: 2023/05/02 19:28:54 by tfregni          ###   ########.fr       */
+/*   Updated: 2023/05/03 13:36:40 by tfregni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ t_bool	is_param_name(char *input)
 				ft_strlcpy(quote_err, \
 					"syntax error near unexpected token ", 36);
 				quote_err[35] = input[i];
-				ft_error("minishell", quote_err, NULL, 255);
+				ft_error("minishell", quote_err, NULL, 2);
 				free(quote_err);
 			}
 			else
