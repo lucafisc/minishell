@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strjoinchar.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tfregni <tfregni@student.42berlin.de>      +#+  +:+       +#+        */
+/*   By: lde-ross <lde-ross@student.42berlin.de     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/01 14:55:47 by lde-ross          #+#    #+#             */
-/*   Updated: 2023/04/27 12:27:03 by tfregni          ###   ########.fr       */
+/*   Updated: 2023/05/03 18:48:28 by lde-ross         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,5 @@ char	*ft_strjoinchar(char const *s1, char const *s2, char c)
 	i++;
 	copy_word(s2, &pt, &i);
 	pt[i] = '\0';
-	printf("%s\n", pt);
 	return (pt);
 }

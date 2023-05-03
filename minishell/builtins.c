@@ -3,15 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   builtins.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tfregni <tfregni@student.42berlin.de>      +#+  +:+       +#+        */
+/*   By: lde-ross <lde-ross@student.42berlin.de     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/29 15:19:22 by tfregni           #+#    #+#             */
-/*   Updated: 2023/04/17 21:34:36 by tfregni          ###   ########.fr       */
+/*   Updated: 2023/05/03 18:47:37 by lde-ross         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-// #include "./builtins/cd.c"
 
 void	free_builtins(t_builtins *b)
 {
@@ -33,24 +32,3 @@ void	init_builtins(t_shell *s)
 	b[6] = (t_builtins){"exit", ft_exit};
 	s->builtins = b;
 }
-
-// int	main(int ac, char **av, char **env)
-// {
-// 	t_shell *s = malloc(sizeof(t_shell));
-// 	t_command *c = malloc(sizeof(t_command));
-// 	c->cmd = malloc(sizeof(*c->cmd) * ac + 1);
-// 	for (int i = 0; i < ac; i++)
-// 		c->cmd[i] = malloc(sizeof(char) * 100);
-// 	for (int j = 0; j < ac; j++)
-// 		ft_strlcpy(c->cmd[j], av[j], ft_strlen(av[j]) + 1);
-// 	init_builtins(s);
-// 	c->cmd[ac] = NULL;
-// 	s->env = env_dup(env);
-// 	s->builtins[0].func (s, c);
-// 	printf("cwd: %s\n", getcwd(NULL, 0));
-// 	ft_free_str_arr(c->cmd);
-// 	ft_free_str_arr(s->env);
-// 	free_builtins(s->builtins);
-// 	free(c);
-// 	free(s);
-// }

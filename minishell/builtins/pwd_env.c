@@ -6,7 +6,7 @@
 /*   By: tfregni <tfregni@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/29 19:15:00 by lde-ross          #+#    #+#             */
-/*   Updated: 2023/04/21 18:24:08 by tfregni          ###   ########.fr       */
+/*   Updated: 2023/05/03 18:42:52 by tfregni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,9 +36,3 @@ void	ft_env(t_shell *s, t_command *c)
 		env++;
 	}
 }
-
-// int	main(void)
-// {
-// 	printf("%s\n", getenv("PWD"));
-// 	ft_pwd();
-// }

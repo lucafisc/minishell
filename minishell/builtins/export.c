@@ -6,7 +6,7 @@
 /*   By: lde-ross <lde-ross@student.42berlin.de     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/29 15:19:22 by tfregni           #+#    #+#             */
-/*   Updated: 2023/05/03 17:48:22 by lde-ross         ###   ########.fr       */
+/*   Updated: 2023/05/03 18:47:23 by lde-ross         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,29 +98,3 @@ void	ft_export(t_shell *s, t_command *c)
 			ft_export_append(&s->env, var);
 	}
 }
-
-// int	main(int ac, char **av, char **env)
-// {
-// 	(void) ac;
-// 	(void) av;
-// 	t_shell *s = malloc(sizeof(t_shell));
-// 	t_command *c = malloc(sizeof(t_command));
-// 	c->cmd = malloc(sizeof(*c->cmd) * 3);
-// 	for (int i = 0; i < 2; i++)
-// 		c->cmd[i] = malloc(sizeof(char) * 100);
-// 	ft_strlcpy(c->cmd[0], "export", 3);
-// 	if (ac > 1)
-// 		ft_strlcpy(c->cmd[1], av[1], ft_strlen(av[1]) + 1);
-// 	else
-// 		ft_strlcpy(c->cmd[1], "TRYME=bla", 10);
-// 	c->cmd[2] = NULL;
-// 	s->env = env_dup(env);
-// 	ft_export(s, c);
-// 	char *key =  ft_strtrunc(c->cmd[1], "=");
-// 	printf("%s: %s\n", c->cmd[1], ft_getenv(key));
-// 	free(key);
-// 	ft_free_str_arr(c->cmd);
-// 	ft_free_str_arr(s->env);
-// 	free(s);
-// 	free(c);
-// }

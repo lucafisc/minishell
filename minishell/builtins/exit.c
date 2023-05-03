@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lde-ross <lde-ross@student.42berlin.de     +#+  +:+       +#+        */
+/*   By: tfregni <tfregni@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 21:31:44 by tfregni           #+#    #+#             */
-/*   Updated: 2023/05/02 17:53:16 by lde-ross         ###   ########.fr       */
+/*   Updated: 2023/05/03 18:40:26 by tfregni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,8 +34,6 @@ t_bool	validate_exit_arg(char *arg)
 	return (true);
 }
 
-/* Need to validate numeric argument
-bash: exit: ++++1203020103: numeric argument required -> code 255 */
 void	ft_exit(t_shell *s, t_command *c)
 {
 	uint8_t	exit_code;

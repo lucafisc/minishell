@@ -82,6 +82,8 @@ char	*lex_expander(char *cmds)
 		(cur[i] == '$' && !(state == IN_S_QUOTE && prev_state == IN_NORMAL)))
 		{
 			cmds = expand_var(cur, cmds, i);
+			if (cmds[i] == '$')
+				i++;
 			free(cur);
 			cur = cmds;
 		}

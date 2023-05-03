@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   search_bin.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lde-ross <lde-ross@student.42berlin.de>    +#+  +:+       +#+        */
+/*   By: lde-ross <lde-ross@student.42berlin.de     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/03 16:04:31 by tfregni           #+#    #+#             */
-/*   Updated: 2023/04/23 19:50:07 by lde-ross         ###   ########.fr       */
+/*   Updated: 2023/05/03 20:34:54 by lde-ross         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,9 +20,10 @@ char	*find_cmd(t_shell *s, char *cmd)
 	char	*tmp_prog;
 
 	i = 0;
-	while (s->path[i])
+	while (s->path && s->path[i])
 	{
-		tmp_prog = ft_strnjoin(3, s->path[i], "/", cmd);
+		(void) s;
+		tmp_prog = ft_strnjoin(3, g_shell->path[i], "/", cmd);
 		if (access(tmp_prog, X_OK) != -1)
 		{
 			free(cmd);

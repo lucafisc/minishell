@@ -6,7 +6,7 @@
 /*   By: lde-ross <lde-ross@student.42berlin.de     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 15:41:38 by tfregni           #+#    #+#             */
-/*   Updated: 2023/05/01 15:33:52 by lde-ross         ###   ########.fr       */
+/*   Updated: 2023/05/03 20:28:04 by lde-ross         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,6 @@ void	init(char ***env)
 		return ;
 	g_shell->env = matrix_dup(*env, 0);
 	*env = g_shell->env;
-	g_shell->path = ft_split(getenv("PATH"), ':');
 	g_shell->user = get_username(g_shell);
 	g_shell->exit = false;
 	g_shell->pipe = false;

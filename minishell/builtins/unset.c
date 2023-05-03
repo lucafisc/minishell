@@ -6,38 +6,11 @@
 /*   By: tfregni <tfregni@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/29 19:48:25 by lde-ross          #+#    #+#             */
-/*   Updated: 2023/05/02 19:24:24 by tfregni          ###   ########.fr       */
+/*   Updated: 2023/05/03 18:41:33 by tfregni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
-
-// char	**env_remove(char **env, int index)
-// {
-// 	int		len;
-// 	char	**new;
-// 	int		i;
-// 	int		j;
-
-// 	len = ft_arrlen(env);
-// 	new = malloc(sizeof(char *) * len);
-// 	if (!new)
-// 		return (NULL);
-// 	i = 0;
-// 	j = 0;
-// 	while (env[i])
-// 	{
-// 		if (i != index)
-// 		{
-// 			new[j] = ft_strdup(env[i]);
-// 			j++;
-// 		}
-// 		i++;
-// 	}
-// 	new[len] = NULL;
-// 	ft_free_str_arr(env);
-// 	return (new);
-// }
 
 void	env_remove(char **env, int index)
 {
