@@ -3,33 +3,40 @@
 /*                                                        :::      ::::::::   */
 /*   search_bin.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lde-ross <lde-ross@student.42berlin.de     +#+  +:+       +#+        */
+/*   By: tfregni <tfregni@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/03 16:04:31 by tfregni           #+#    #+#             */
-/*   Updated: 2023/05/03 20:34:54 by lde-ross         ###   ########.fr       */
+/*   Updated: 2023/05/04 18:25:01 by tfregni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+static void	handle_valid_cmd(char **cmd, char **tmp_prog, char ***path)
+{
+	free(*cmd);
+	*cmd = ft_strdup(*tmp_prog);
+	free(*tmp_prog);
+	g_shell->status = 0;
+	ft_free_str_arr(*path);
+}
+
 /* finds the full path of executable bin (if any) */
 /* cmd needs to be freeable */
-char	*find_cmd(t_shell *s, char *cmd)
+char	*find_cmd(char *cmd)
 {
 	int		i;
 	char	*tmp_prog;
+	char	**path;
 
+	path = ft_split(ft_getenv("PATH"), ':');
 	i = 0;
-	while (s->path && s->path[i])
+	while (path && path[i])
 	{
-		(void) s;
-		tmp_prog = ft_strnjoin(3, g_shell->path[i], "/", cmd);
+		tmp_prog = ft_strnjoin(3, path[i], "/", cmd);
 		if (access(tmp_prog, X_OK) != -1)
 		{
-			free(cmd);
-			cmd = ft_strdup(tmp_prog);
-			free(tmp_prog);
-			g_shell->status = 0;
+			handle_valid_cmd(&cmd, &tmp_prog, &path);
 			return (cmd);
 		}
 		else if (access(tmp_prog, F_OK) == -1)
@@ -41,5 +48,6 @@ char	*find_cmd(t_shell *s, char *cmd)
 		free(tmp_prog);
 		i++;
 	}
+	ft_free_str_arr(path);
 	return (cmd);
 }

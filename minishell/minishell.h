@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lde-ross <lde-ross@student.42berlin.de     +#+  +:+       +#+        */
+/*   By: tfregni <tfregni@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 16:02:25 by tfregni           #+#    #+#             */
-/*   Updated: 2023/05/03 17:07:00 by lde-ross         ###   ########.fr       */
+/*   Updated: 2023/05/04 18:25:41 by tfregni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,6 @@ typedef struct s_builtins
 struct s_shell
 {
 	char		**env;
-	char		**path;
 	char		**params;
 	char		*user;
 	char		*prompt;
@@ -150,7 +149,7 @@ int				find_builtin(t_shell *s, char *cmd);
 void			add_param(t_shell *s, t_command *c);
 void			parent_routine(t_command **command);
 void			child_routine(t_shell *s, t_command *command, t_command *first);
-char			*find_cmd(t_shell *s, char *cmd);
+char			*find_cmd(char *cmd);
 
 /* EXEC SCRIPT */
 void			exec_script(t_shell *s, int fd);

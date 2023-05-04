@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   prompt.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lde-ross <lde-ross@student.42berlin.de     +#+  +:+       +#+        */
+/*   By: tfregni <tfregni@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/27 17:07:46 by lde-ross          #+#    #+#             */
-/*   Updated: 2023/05/03 20:33:01 by lde-ross         ###   ########.fr       */
+/*   Updated: 2023/05/04 18:07:07 by tfregni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,6 @@ void	prompt_routine(t_shell *s, char	*input)
 		execute(s, s->cmd);
 	}
 	free(s->prompt);
-	ft_free_str_arr(g_shell->path);
 	free(input);
 }
 
@@ -78,9 +77,6 @@ void	get_prompt(t_shell *s)
 			exit(1);
 		}
 		if (*input)
-		{
 			prompt_routine(s, input);
-			g_shell->path = ft_split(ft_getenv("PATH"), ':');
-		}
 	}
 }

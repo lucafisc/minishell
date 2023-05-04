@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lde-ross <lde-ross@student.42berlin.de     +#+  +:+       +#+        */
+/*   By: tfregni <tfregni@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 15:41:38 by tfregni           #+#    #+#             */
-/*   Updated: 2023/05/03 20:28:04 by lde-ross         ###   ########.fr       */
+/*   Updated: 2023/05/04 18:06:15 by tfregni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@ t_shell	*g_shell;
 
 void	free_shell(t_shell *shell)
 {
-	ft_free_str_arr(shell->path);
 	free(shell->prompt);
 	ft_free_str_arr(shell->env);
 	ft_free_str_arr(shell->params);
